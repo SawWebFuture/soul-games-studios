@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Your Consciousness | Soul Games Studios</title>
+  <meta name="description" content="Achieve digital immortality. Probably. A philosophical web experiment by Soul Games Studios.">
+  <meta name="theme-color" content="#0a0e27">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Upload Your Consciousness">
+  <meta property="og:description" content="Achieve digital immortality. Probably. A philosophical web experiment by Soul Games Studios.">
+  <meta property="og:image" content="https://consciousness.soulgames.studio/og-image.png">
+  <meta property="og:url" content="https://consciousness.soulgames.studio">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Upload Your Consciousness">
+  <meta name="twitter:description" content="Achieve digital immortality. Probably. A philosophical web experiment by Soul Games Studios.">
+  <meta name="twitter:image" content="https://consciousness.soulgames.studio/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- PostHog analytics -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog && window.posthog.__loaded)||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init rs ls bi ns us ts ss capture calculateEventProperties vs register register_once register_for_session unregister unregister_for_session gs getFeatureFlag getFeatureFlagPayload getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey displaySurvey cancelPendingSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException startExceptionAutocapture stopExceptionAutocapture loadToolbar get_property getSessionProperty fs ds createPersonProfile ps Qr opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing get_explicit_consent_status is_capturing clear_opt_in_out_capturing hs debug O cs getPageViewId captureTraceFeedback captureTraceMetric Kr".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_sWEdvL2ePhoLZxR9J4dIQSlTr4hd7ZuuwRCHEiO9JgU', {
+      api_host: 'https://us.i.posthog.com',
+      defaults: '2025-11-30',
+      person_profiles: 'identified_only',
+    });
+  </script>
+  <style>
+    :root {
+      --bg-start: #0a0e27;
+      --bg-end: #1a0e2e;
+      --accent: #00d4ff;
+      --accent-glow: rgba(0, 212, 255, 0.5);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.8);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ---- VIEW SYSTEM ---- */
+    .view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .view.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      position: relative;
+    }
+
+    .hidden { display: none; }
+    .visible { display: block; }
+
+    /* ---- LANDING VIEW ---- */
+
+    .landing-view h1 {
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .subheading {
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .btn-upload {
+      min-height: 48px;
+      min-width: 200px;
+      padding: 1rem 2rem;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg-start);
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 212, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      animation: glow-pulse 2.5s ease-in-out infinite;
+    }
+
+    .btn-upload:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-upload:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 212, 255, 0.2); }
+      50% { box-shadow: 0 0 28px var(--accent-glow), 0 0 50px rgba(0, 212, 255, 0.25); }
+    }
+
+    .footer-brand {
+      position: fixed;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ---- UPLOAD VIEW ---- */
+    .upload-view .status-message {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      min-height: 2rem;
+      margin-bottom: 1.5rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .progress-wrap {
+      width: 100%;
+      max-width: 320px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #00a8cc);
+      border-radius: 999px;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .progress-percent {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* ---- RESULTS VIEW ---- */
+    .results-view .prize-emoji {
+      font-size: clamp(5rem, 20vw, 9rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    }
+
+    .results-view .prize-name {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .results-view .prize-name.common    { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+    .results-view .prize-name.uncommon  { text-shadow: 0 0 20px rgba(0, 212, 255, 0.7); }
+    .results-view .prize-name.rare      { text-shadow: 0 0 20px rgba(168, 85, 247, 0.7); }
+    .results-view .prize-name.legendary { text-shadow: 0 0 25px rgba(251, 191, 36, 0.8), 0 0 40px rgba(251, 191, 36, 0.4); }
+
+    .results-view .prize-tagline {
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 320px;
+    }
+
+    .results-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      min-height: 48px;
+      padding: 0.85rem 1.5rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    .btn-secondary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    /* ---- SHARE MODAL ---- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: linear-gradient(135deg, #0f1428 0%, #1a0e2e 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--text);
+    }
+
+    .modal h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .modal-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .modal-buttons button {
+      min-height: 44px;
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .modal-buttons button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+    }
+
+    .modal-buttons button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .modal .copy-confirm {
+      font-size: 0.85rem;
+      color: var(--accent);
+      text-align: center;
+      margin-top: 0.5rem;
+      min-height: 1.25rem;
+    }
+
+    .modal-linkedin-flow {
+      text-align: center;
+    }
+
+    .modal-linkedin-flow .linkedin-confirm {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-linkedin-flow .linkedin-instructions {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .modal-linkedin-flow .linkedin-open-btn {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--bg-start);
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-linkedin-flow .linkedin-open-btn:hover {
+      opacity: 0.9;
+    }
+
+    .modal-linkedin-flow .linkedin-back-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0.25rem;
+      transition: color 0.2s ease;
+    }
+
+    .modal-linkedin-flow .linkedin-back-btn:hover {
+      color: var(--text);
+    }
+
+    /* ---- FOCUS ---- */
+    *:focus {
+      outline: none;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 1. LANDING VIEW -->
+  <section class="view landing-view active" id="landing-view" aria-label="Landing">
+    <h1>Upload Your Consciousness</h1>
+    <p class="subheading">Achieve digital immortality. Probably.</p>
+    <button type="button" class="btn-upload" id="btn-upload" aria-label="Start upload">UPLOAD NOW</button>
+    <footer class="footer-brand">Soul Games Studios</footer>
+  </section>
+
+  <!-- 2. UPLOAD VIEW -->
+  <section class="view upload-view" id="upload-view" aria-label="Upload in progress" aria-live="polite">
+    <p class="status-message" id="status-message">Extracting memories...</p>
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <p class="progress-percent" id="progress-percent">0%</p>
+  </section>
+
+  <!-- 3. RESULTS VIEW -->
+  <section class="view results-view" id="results-view" aria-label="Results">
+    <div class="prize-emoji" id="prize-emoji" aria-hidden="true"></div>
+    <h2 class="prize-name" id="prize-name"></h2>
+    <p class="prize-tagline" id="prize-tagline"></p>
+    <div class="results-buttons">
+      <button type="button" class="btn-secondary" id="btn-share" aria-label="Share your result">Share Result</button>
+      <button type="button" class="btn-secondary" id="btn-again" aria-label="Upload again">Upload Again</button>
+    </div>
+  </section>
+
+  <!-- SHARE MODAL -->
+  <div class="modal-overlay" id="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title" aria-hidden="true">
+    <div class="modal">
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h3 id="share-modal-title">Share your result</h3>
+      <div class="modal-buttons" id="share-buttons-main">
+        <button type="button" id="share-twitter">Share on X (Twitter)</button>
+        <button type="button" id="share-linkedin">Share on LinkedIn</button>
+        <button type="button" id="share-copy">Copy link</button>
+      </div>
+      <div class="modal-linkedin-flow hidden" id="linkedin-flow" aria-live="polite">
+        <p class="linkedin-confirm">Copied to clipboard!</p>
+        <p class="linkedin-instructions">Paste this into a new LinkedIn post to share your result.</p>
+        <button type="button" id="linkedin-open" class="linkedin-open-btn">Open LinkedIn</button>
+        <button type="button" id="linkedin-back" class="linkedin-back-btn">Back to share options</button>
+      </div>
+      <p class="copy-confirm" id="copy-confirm" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script>
+    // --- Analytics helper (safe if PostHog hasn't loaded yet) ---
+    function capture(event, props) {
+      try { if (window.posthog) posthog.capture(event, props || {}); }
+      catch (e) { /* silently ignore */ }
+    }
+    capture('game_loaded');
+
+    // --- DOM refs ---
+    var landingView = document.getElementById('landing-view');
+    var uploadView = document.getElementById('upload-view');
+    var resultsView = document.getElementById('results-view');
+    var btnUpload = document.getElementById('btn-upload');
+    var statusMessage = document.getElementById('status-message');
+    var progressFill = document.getElementById('progress-fill');
+    var progressPercent = document.getElementById('progress-percent');
+    var prizeEmoji = document.getElementById('prize-emoji');
+    var prizeName = document.getElementById('prize-name');
+    var prizeTagline = document.getElementById('prize-tagline');
+
+    // --- Config ---
+    var DURATION_MS = 4000;
+    var MESSAGE_INTERVAL_MS = 1000;
+
+    // --- Prize pool (weighted: Common 70%, Uncommon 20%, Rare 8%, Legendary 2%) ---
+    var prizes = {
+      common: [
+        { emoji: '🍞', name: 'Digital Toaster', tagline: "At least you'll make great toast for eternity" },
+        { emoji: '🪴', name: 'Digital Houseplant', tagline: "You'll photosynthesize for eternity" },
+        { emoji: '🪨', name: 'Digital Pebble', tagline: 'Simple. Eternal. Unchanging.' },
+        { emoji: '📎', name: 'Digital Paperclip', tagline: 'Holding the universe together' },
+        { emoji: '🧦', name: 'Digital Sock', tagline: "At least you'll never lose your pair" }
+      ],
+      uncommon: [
+        { emoji: '🚗', name: 'Digital Car', tagline: 'Eternal road trips await' },
+        { emoji: '🎸', name: 'Digital Guitar', tagline: 'Rock on forever' },
+        { emoji: '🐱', name: 'Digital Cat', tagline: 'Purring in the cloud for eternity' },
+        { emoji: '🏄', name: 'Digital Surfboard', tagline: 'Riding data waves forever' }
+      ],
+      rare: [
+        { emoji: '🏰', name: 'Digital Mansion', tagline: 'Living large in the metaverse' },
+        { emoji: '⛵', name: 'Digital Yacht', tagline: 'Sailing infinite digital seas' },
+        { emoji: '🐉', name: 'Digital Dragon', tagline: 'Hoarding bytes instead of gold' }
+      ],
+      legendary: [
+        { emoji: '🌌', name: 'Digital Universe', tagline: 'You are everything. Everything is you.' },
+        { emoji: '⚡', name: 'Digital Godhood', tagline: 'Mortals tremble before your eternal code' }
+      ]
+    };
+
+    var currentPrize = null;
+
+    // Weighted random selection
+    function selectPrize() {
+      var roll = Math.random() * 100;
+      var tier;
+      if (roll < 70)      tier = 'common';
+      else if (roll < 90)  tier = 'uncommon';
+      else if (roll < 98)  tier = 'rare';
+      else                 tier = 'legendary';
+      var pool = prizes[tier];
+      var prize = pool[Math.floor(Math.random() * pool.length)];
+      prize.rarity = tier;
+      return prize;
+    }
+
+    // Update meta tags for social sharing (prepares for SSR/prerendering)
+    function updateMetaTags(prize) {
+      var title = 'I uploaded my consciousness and became a ' + prize.name + ' ' + prize.emoji;
+      var description = prize.tagline;
+      var prizeSlug = prize.name.toLowerCase().replace(/\s+/g, '-');
+      var prizeUrl = SHARE_URL + '?prize=' + encodeURIComponent(prizeSlug);
+
+      document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+      document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+      document.querySelector('meta[property="og:url"]').setAttribute('content', prizeUrl);
+      document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
+      document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+    }
+
+    // Show prize in results view
+    function showPrize(prize) {
+      prizeEmoji.textContent = prize.emoji;
+      prizeEmoji.setAttribute('aria-label', prize.name);
+      prizeName.textContent = prize.name;
+      prizeName.className = 'prize-name ' + prize.rarity;
+      prizeTagline.textContent = prize.tagline;
+      updateMetaTags(prize);
+    }
+
+    var STATUS_MESSAGES = [
+      'Extracting memories...',
+      'Digitizing personality...',
+      'Compressing soul...',
+      'Achieving immortality...'
+    ];
+
+    var messageInterval = null;
+    var animationFrame = null;
+
+    // --- View transitions ---
+    function setView(activeView) {
+      landingView.classList.remove('active');
+      uploadView.classList.remove('active');
+      resultsView.classList.remove('active');
+      activeView.classList.add('active');
+    }
+
+    // --- Upload animation ---
+    function startUpload() {
+      // Reset state
+      progressFill.style.width = '0%';
+      progressFill.setAttribute('aria-valuenow', 0);
+      progressPercent.textContent = '0%';
+      statusMessage.textContent = STATUS_MESSAGES[0];
+
+      // Switch to upload view
+      setView(uploadView);
+
+      var startTime = null;
+      var messageIndex = 0;
+
+      // Rotate status messages every 1s
+      messageInterval = setInterval(function () {
+        messageIndex = (messageIndex + 1) % STATUS_MESSAGES.length;
+        statusMessage.textContent = STATUS_MESSAGES[messageIndex];
+      }, MESSAGE_INTERVAL_MS);
+
+      // Animate progress bar with requestAnimationFrame
+      function tick(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+        var pct = Math.min(100, (elapsed / DURATION_MS) * 100);
+        var rounded = Math.round(pct);
+
+        progressFill.style.width = pct + '%';
+        progressFill.setAttribute('aria-valuenow', rounded);
+        progressPercent.textContent = rounded + '%';
+
+        if (pct < 100) {
+          animationFrame = requestAnimationFrame(tick);
+        } else {
+          // Upload complete — clean up, pick prize, show results
+          clearInterval(messageInterval);
+          messageInterval = null;
+          animationFrame = null;
+          currentPrize = selectPrize();
+          capture('upload_completed', { prize_name: currentPrize.name, prize_rarity: currentPrize.rarity });
+          showPrize(currentPrize);
+          setView(resultsView);
+        }
+      }
+
+      animationFrame = requestAnimationFrame(tick);
+    }
+
+    // --- Share modal ---
+    var SHARE_URL = 'https://consciousness.soulgames.studio';
+    var shareModal = document.getElementById('share-modal');
+    var copyConfirm = document.getElementById('copy-confirm');
+
+    var shareButtonsMain = document.getElementById('share-buttons-main');
+    var linkedinFlow = document.getElementById('linkedin-flow');
+
+    function openShareModal() {
+      copyConfirm.textContent = '';
+      shareButtonsMain.classList.remove('hidden');
+      linkedinFlow.classList.add('hidden');
+      shareModal.classList.add('active');
+      shareModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeShareModal() {
+      shareModal.classList.remove('active');
+      shareModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function getPrizeShareUrl() {
+      if (!currentPrize) return SHARE_URL;
+      var slug = currentPrize.name.toLowerCase().replace(/\s+/g, '-');
+      return SHARE_URL + '?prize=' + encodeURIComponent(slug);
+    }
+
+    function getTwitterText() {
+      var name = currentPrize ? currentPrize.name : 'Digital Being';
+      var emoji = currentPrize ? currentPrize.emoji : '';
+      return 'I uploaded my consciousness and became a ' + name + ' ' + emoji + " \uD83E\uDD16\n\nWhat will you become? " + getPrizeShareUrl();
+    }
+
+    function getLinkedInText() {
+      var name = currentPrize ? currentPrize.name : 'Digital Being';
+      var emoji = currentPrize ? currentPrize.emoji : '';
+      return "I just tried 'Upload Your Consciousness' and became a " + name + ' ' + emoji + "\n\nInteresting experiment by Soul Games Studios. What would you become?\n\n" + getPrizeShareUrl();
+    }
+
+    // Twitter/X share
+    document.getElementById('share-twitter').addEventListener('click', function () {
+      capture('share_clicked', { platform: 'twitter' });
+      window.open(
+        'https://twitter.com/intent/tweet?text=' + encodeURIComponent(getTwitterText()),
+        '_blank', 'noopener,noreferrer'
+      );
+      closeShareModal();
+    });
+
+    // LinkedIn share — copy text then show instructions
+    document.getElementById('share-linkedin').addEventListener('click', function () {
+      capture('share_clicked', { platform: 'linkedin' });
+      var text = getLinkedInText();
+      function showLinkedInFlow() {
+        shareButtonsMain.classList.add('hidden');
+        linkedinFlow.classList.remove('hidden');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showLinkedInFlow).catch(function () {
+          fallbackCopyText(text);
+          showLinkedInFlow();
+        });
+      } else {
+        fallbackCopyText(text);
+        showLinkedInFlow();
+      }
+    });
+
+    // Open LinkedIn feed in new tab
+    document.getElementById('linkedin-open').addEventListener('click', function () {
+      window.open('https://www.linkedin.com/feed/', '_blank', 'noopener,noreferrer');
+      closeShareModal();
+    });
+
+    // Back to main share buttons
+    document.getElementById('linkedin-back').addEventListener('click', function () {
+      linkedinFlow.classList.add('hidden');
+      shareButtonsMain.classList.remove('hidden');
+    });
+
+    // Copy link with fallback
+    document.getElementById('share-copy').addEventListener('click', function () {
+      capture('share_clicked', { platform: 'copy' });
+      var shareUrl = getPrizeShareUrl();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shareUrl).then(function () {
+          copyConfirm.textContent = 'Copied!';
+        }).catch(function () {
+          fallbackCopy();
+        });
+      } else {
+        fallbackCopy();
+      }
+    });
+
+    function fallbackCopyText(text) {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {
+        /* silent */
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function fallbackCopy() {
+      fallbackCopyText(getPrizeShareUrl());
+      copyConfirm.textContent = 'Copied!';
+    }
+
+    // Close modal: X button, click outside, or Escape key
+    document.getElementById('modal-close').addEventListener('click', closeShareModal);
+
+    shareModal.addEventListener('click', function (e) {
+      if (e.target === shareModal) closeShareModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && shareModal.classList.contains('active')) {
+        closeShareModal();
+      }
+    });
+
+    // --- Event listeners ---
+    btnUpload.addEventListener('click', function () {
+      if (btnUpload.disabled) return;
+      btnUpload.disabled = true;
+      capture('upload_started');
+      startUpload();
+    });
+
+    document.getElementById('btn-share').addEventListener('click', openShareModal);
+
+    // "Upload Again" resets back to landing
+    document.getElementById('btn-again').addEventListener('click', function () {
+      capture('upload_again_clicked');
+      btnUpload.disabled = false;
+      setView(landingView);
+    });
+  </script>
+</body>
+</html>
