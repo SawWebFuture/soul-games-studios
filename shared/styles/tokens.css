@@ -1,0 +1,18 @@
+:root {
+  /* Colors */
+  --sg-bg: #0b0f14;
+  --sg-surface: #101826;
+  --sg-text: #e7eef8;
+  --sg-muted: #a7b3c5;
+  --sg-accent: #7dd3fc;
+  --sg-border: rgba(255, 255, 255, 0.12);
+
+  /* Typography */
+  --sg-font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --sg-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Layout */
+  --sg-radius: 14px;
+  --sg-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --sg-maxw: 980px;
+}

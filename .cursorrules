@@ -1,0 +1,12 @@
+# Cursor / Claude Code Rules
+
+- Keep experiments simple: plain HTML/CSS/JS unless a framework is explicitly required.
+- Mobile-first, SEO-first.
+- No dark patterns, no artificial urgency, no shame language.
+- Prefer shared styles/components from /shared over one-off styling.
+- Add a short EXPERIMENT.md per experiment documenting:
+  - intent
+  - core loop
+  - philosophical angle
+  - easter eggs
+  - analytics events
