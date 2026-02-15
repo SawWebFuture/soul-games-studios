@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Agent Nursery</title>
+  <meta name="description" content="A sleek sci-fi lab button. Hold to incubate. Reveal a shareable agent offspring card." />
+  <meta property="og:title" content="The Agent Nursery" />
+  <meta property="og:description" content="Hold to incubate. Reveal a shareable agent offspring card." />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="../../shared/styles/base.css" />
+</head>
+<body>
+  <main class="container" style="padding-top: 36px;">
+    <header class="lab-header">
+      <div class="brand">
+        <div class="sigil" aria-hidden="true"></div>
+        <div>
+          <div class="kicker">SOUL GAMES STUDIOS</div>
+          <h1 class="title">The Agent Nursery</h1>
+        </div>
+      </div>
+      <p class="subtitle">Hold the button to incubate an offspring agent. One action. One reveal.</p>
+    </header>
+
+    <section class="card lab" aria-label="Incubation lab">
+      <div class="lab-grid">
+        <div class="panel">
+          <div class="panel-title">Incubation Control</div>
+          <p class="panel-body">A calm interface for an uncanny moment.</p>
+
+          <div class="incubator" id="incubator">
+            <button id="holdBtn" class="hold-btn" type="button" aria-describedby="hint">
+              <span class="hold-btn__label">INCUBATE</span>
+              <span class="hold-btn__sub">hold</span>
+              <span class="ring" aria-hidden="true"></span>
+            </button>
+            <div id="hint" class="hint">Hold for <span id="seconds">8</span>s. Release early to reset.</div>
+          </div>
+
+          <div class="question">“At what point does a tool become a <em>someone</em>?”</div>
+        </div>
+
+        <div class="panel" id="revealPanel" hidden>
+          <div class="panel-title">Offspring Profile</div>
+          <div class="reveal">
+            <div class="badge" id="badge">LAB CERTIFIED</div>
+            <h2 class="reveal-title" id="revealTitle">—</h2>
+            <p class="reveal-line" id="revealLine">—</p>
+            <p class="reveal-calm" id="revealCalm">—</p>
+
+            <div class="controls">
+              <button class="btn" id="nextBtn" type="button">Cycle outcome</button>
+              <button class="btn btn-primary" id="shareBtn" type="button">Download share card</button>
+            </div>
+
+            <div class="small">Tip: share the card. Easter eggs come later.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">Calm tech. No pressure. No doom.</span>
+    </footer>
+
+    <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
