@@ -14,6 +14,7 @@ This monorepo contains:
 
 ## Experiment Template (defaults)
 Each experiment should:
+- Reveal a collectible **Card** on completion (series + id/number + name + image + short + description)
 - Tie to trending news/ideas in AI + new inventions (X / YouTube)
 - Include an esoteric/philosophical layer (quotes/ideas; e.g., Terence McKenna and others)
 - Include email capture

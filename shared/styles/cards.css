@@ -1,0 +1,52 @@
+@import url('./tokens.css');
+
+.sg-card {
+  border-radius: 18px;
+  border: 1px solid var(--sg-border);
+  background: rgba(255,255,255,0.06);
+  box-shadow: var(--sg-shadow);
+  padding: 16px;
+}
+
+.sg-card__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sg-muted);
+}
+
+.sg-card__id {
+  font-family: var(--sg-mono);
+  color: rgba(231,238,248,0.75);
+}
+
+.sg-card__name {
+  margin: 10px 0 6px;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+
+.sg-card__short {
+  margin: 0 0 10px;
+  color: rgba(231,238,248,0.9);
+}
+
+.sg-card__desc {
+  margin: 0;
+  color: var(--sg-muted);
+  line-height: 1.45;
+}
+
+.sg-card__img {
+  margin-top: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: radial-gradient(circle at 30% 30%, rgba(125,211,252,0.18), transparent 55%),
+              radial-gradient(circle at 60% 60%, rgba(253,230,138,0.12), transparent 55%),
+              rgba(255,255,255,0.04);
+  aspect-ratio: 16/10;
+}
