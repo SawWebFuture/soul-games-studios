@@ -2,6 +2,7 @@ import { SERIES, cards } from './cards.js';
 
 const orbit = document.getElementById('orbit');
 const sun = document.getElementById('sun');
+const glitchHotspot = document.getElementById('glitchHotspot');
 const revealPanel = document.getElementById('revealPanel');
 const captureBox = document.getElementById('captureBox');
 const seriesEl = document.getElementById('seriesEl');
@@ -39,6 +40,8 @@ let total = 0; // radians accumulated
 let sunTaps = 0;
 let sunTapTimer = null;
 let secretUnlocked = false;
+let riddleAttempts = 0;
+const MAX_RIDDLE_ATTEMPTS = 3;
 
 function setProgress(pct) {
   orbit.style.setProperty('--p', `${pct}%`);
@@ -254,6 +257,17 @@ emailForm.addEventListener('submit', (e) => {
   emailInput.value = '';
 });
 
+function openRiddleDialog() {
+  if (riddleAttempts >= MAX_RIDDLE_ATTEMPTS) {
+    riddleFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+    return;
+  }
+  if (typeof easterDialog.showModal === 'function') {
+    easterDialog.showModal();
+    riddleInput.focus();
+  }
+}
+
 function handleSunTap() {
   sunTaps += 1;
   if (sunTapTimer) clearTimeout(sunTapTimer);
@@ -263,15 +277,13 @@ function handleSunTap() {
 
   if (sunTaps >= 5) {
     sunTaps = 0;
-    if (typeof easterDialog.showModal === 'function') {
-      easterDialog.showModal();
-      riddleInput.focus();
-    }
+    openRiddleDialog();
   }
 }
 
 sun.addEventListener('click', handleSunTap);
 sun.addEventListener('touchstart', handleSunTap, { passive: true });
+glitchHotspot.addEventListener('click', openRiddleDialog);
 
 function normalizeAnswer(s) {
   return String(s || '').toLowerCase().trim();
@@ -279,6 +291,11 @@ function normalizeAnswer(s) {
 
 riddleForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  if (riddleAttempts >= MAX_RIDDLE_ATTEMPTS) {
+    riddleFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+    return;
+  }
+
   const answer = normalizeAnswer(riddleInput.value);
   const accepted = new Set(['care', 'love', 'dignity', 'humanity', 'meaning']);
 
@@ -293,5 +310,11 @@ riddleForm.addEventListener('submit', (e) => {
     return;
   }
 
-  riddleFeedback.textContent = 'Not quite. Think beyond currency.';
+  riddleAttempts += 1;
+  const left = Math.max(0, MAX_RIDDLE_ATTEMPTS - riddleAttempts);
+  if (left === 0) {
+    riddleFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+  } else {
+    riddleFeedback.textContent = `Not quite. Think beyond currency. Attempts left: ${left}`;
+  }
 });

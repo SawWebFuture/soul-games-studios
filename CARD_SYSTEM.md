@@ -24,7 +24,8 @@ All Soul Games experiments can reveal **cards** that:
 - Primary interaction should be simple (one strong action).
 - Reveal value first, then offer a **soft** email invite.
 - Email capture must be optional, calm, and non-coercive.
-- Include at least one hidden easter egg path (e.g., tap pattern + riddle unlock).
+- Include at least one hidden easter egg path in plain sight (e.g., subtle glitch/hotspot + riddle unlock).
+- Cap riddle attempts per session (default: 3) to keep it game-like and avoid brute-force.
 
 ## Share card output
 - Export PNG at **1080×1350** (portrait) for social.

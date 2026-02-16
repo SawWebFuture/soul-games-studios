@@ -18,7 +18,8 @@ Each experiment should:
 - Tie to trending news/ideas in AI + new inventions (X / YouTube)
 - Include an esoteric/philosophical layer (quotes/ideas; e.g., Terence McKenna and others)
 - Include **soft email capture** after reveal (invitation, never forced)
-- Include easter egg(s) (count varies) that unlock via password/riddle/deep question
+- Include easter egg(s) (count varies) hidden in plain sight (e.g., subtle glitch/hotspot) that unlock via password/riddle/deep question
+- Cap riddle attempts per session (default: 3)
 - Have social sharing hooks (LinkedIn/X/Instagram-friendly)
 
 ## Repo Layout
