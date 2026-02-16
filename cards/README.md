@@ -20,6 +20,24 @@ This pipeline separates **frame/layout** from **image generation**.
 2) Compose with frame + card text into final card (`final/<series>/<card-id>.png`)
 3) Write provenance metadata (`provenance/<series>/<card-id>.json`)
 
+## Compose command (implemented)
+Install deps once:
+
+```bash
+npm install
+```
+
+Compose a card:
+
+```bash
+npm run card:compose -- \
+  --series DYSON_SWARM \
+  --card DYSON_SWARM-001 \
+  --meta experiments/dyson-swarm/cards.js \
+  --image cards/generated/dyson_swarm/DYSON_SWARM-001.png \
+  --out cards/final/dyson_swarm/DYSON_SWARM-001.png
+```
+
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.
 - Keep provenance for each card (model version, prompt, seed, date).
