@@ -26,6 +26,8 @@ All Soul Games experiments can reveal **cards** that:
 - Email capture must be optional, calm, and non-coercive.
 - Include at least one hidden easter egg path in plain sight (e.g., subtle glitch/hotspot + riddle unlock).
 - Cap riddle attempts per session (default: 3) to keep it game-like and avoid brute-force.
+- Include a subscriber-only easter path when possible (e.g., 5-click trigger + special riddle after signup).
+- Card rarity tiers should be supported (Common / Uncommon / Rare / Legendary or series-appropriate equivalent).
 
 ## Share card output
 - Export PNG at **1080×1350** (portrait) for social.

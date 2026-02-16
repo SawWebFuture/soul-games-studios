@@ -221,6 +221,17 @@
     }
 
     /* ---- UPLOAD VIEW ---- */
+    .upload-view { position: relative; }
+
+    #spark-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
     .upload-view .status-message {
       font-size: clamp(1rem, 2.5vw, 1.25rem);
       font-weight: 400;
@@ -228,6 +239,7 @@
       min-height: 2rem;
       margin-bottom: 1.5rem;
       transition: opacity 0.3s ease;
+      z-index: 2;
     }
 
     .progress-wrap {
@@ -281,6 +293,47 @@
       text-align: center;
       margin-bottom: 2rem;
       max-width: 320px;
+    }
+
+    .prize-card-meta {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1rem;
+    }
+
+    .soft-email {
+      width: min(420px, 92vw);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      padding: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .soft-email-title { font-weight: 600; margin-bottom: 0.25rem; }
+    .soft-email-copy { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.6rem; }
+    .soft-email-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .soft-email-form input {
+      flex: 1;
+      min-width: 210px;
+      min-height: 42px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      padding: 0.6rem 0.75rem;
+      font-family: inherit;
+    }
+    .soft-email-form button {
+      min-height: 42px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,212,255,0.35);
+      background: rgba(0,212,255,0.14);
+      color: var(--text);
+      padding: 0.6rem 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
     }
 
     .results-buttons {
@@ -486,6 +539,7 @@
 
   <!-- 2. UPLOAD VIEW -->
   <section class="view upload-view" id="upload-view" aria-label="Upload in progress" aria-live="polite">
+    <canvas id="spark-canvas" aria-hidden="true"></canvas>
     <p class="status-message" id="status-message">Extracting memories...</p>
     <div class="progress-wrap">
       <div class="progress-fill" id="progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -498,6 +552,18 @@
     <div class="prize-emoji" id="prize-emoji" aria-hidden="true"></div>
     <h2 class="prize-name" id="prize-name"></h2>
     <p class="prize-tagline" id="prize-tagline"></p>
+    <p class="prize-card-meta" id="prize-card-meta">CARD —</p>
+
+    <div class="soft-email" id="soft-email-box">
+      <div class="soft-email-title">Get future card drops</div>
+      <div class="soft-email-copy">Soft signal only. No spam. Unsubscribe anytime.</div>
+      <form id="email-form" class="soft-email-form" novalidate>
+        <input id="email-input" type="email" placeholder="you@email.com" aria-label="Email" required>
+        <button type="submit">Join</button>
+      </form>
+      <small id="email-note">(ConvertKit hookup pending)</small>
+    </div>
+
     <div class="results-buttons">
       <button type="button" class="btn-secondary" id="btn-share" aria-label="Share your result">Share Result</button>
       <button type="button" class="btn-secondary" id="btn-again" aria-label="Upload again">Upload Again</button>
@@ -539,6 +605,19 @@
     </div>
   </div>
 
+  <div class="easter-modal" id="subscriber-easter-modal" aria-hidden="true">
+    <div class="easter-panel" role="dialog" aria-modal="true" aria-labelledby="subscriber-easter-title">
+      <h3 id="subscriber-easter-title">Subscriber Signal</h3>
+      <p>Riddle: When intelligence scales infinitely, what should remain deeply human?</p>
+      <input id="subscriber-easter-input" type="text" placeholder="one word" />
+      <div class="easter-actions">
+        <button type="button" id="subscriber-easter-close">Close</button>
+        <button type="button" id="subscriber-easter-submit">Unlock</button>
+      </div>
+      <small id="subscriber-easter-feedback">Unlock path: subscribers only.</small>
+    </div>
+  </div>
+
   <script>
     // --- Analytics helper (safe if PostHog hasn't loaded yet) ---
     function capture(event, props) {
@@ -558,6 +637,12 @@
     var prizeEmoji = document.getElementById('prize-emoji');
     var prizeName = document.getElementById('prize-name');
     var prizeTagline = document.getElementById('prize-tagline');
+    var prizeCardMeta = document.getElementById('prize-card-meta');
+
+    var emailForm = document.getElementById('email-form');
+    var emailInput = document.getElementById('email-input');
+    var emailNote = document.getElementById('email-note');
+    var isSubscriber = false;
 
     var glitchNode = document.getElementById('glitch-node');
     var easterModal = document.getElementById('easter-modal');
@@ -567,6 +652,16 @@
     var easterFeedback = document.getElementById('easter-feedback');
     var easterAttempts = 0;
     var MAX_EASTER_ATTEMPTS = 3;
+
+    var subscriberEasterModal = document.getElementById('subscriber-easter-modal');
+    var subscriberEasterInput = document.getElementById('subscriber-easter-input');
+    var subscriberEasterSubmit = document.getElementById('subscriber-easter-submit');
+    var subscriberEasterClose = document.getElementById('subscriber-easter-close');
+    var subscriberEasterFeedback = document.getElementById('subscriber-easter-feedback');
+    var subscriberEasterAttempts = 0;
+    var MAX_SUB_EASTER_ATTEMPTS = 3;
+    var sunClicks = 0;
+    var sunClickTimer = null;
 
     // --- Config ---
     var DURATION_MS = 4000;
@@ -599,6 +694,10 @@
     };
 
     var currentPrize = null;
+    var sparkCanvas = document.getElementById('spark-canvas');
+    var sparkCtx = sparkCanvas && sparkCanvas.getContext ? sparkCanvas.getContext('2d') : null;
+    var sparkRAF = null;
+    var sparks = [];
 
     // Weighted random selection
     function selectPrize() {
@@ -611,6 +710,10 @@
       var pool = prizes[tier];
       var prize = pool[Math.floor(Math.random() * pool.length)];
       prize.rarity = tier;
+      var idx = pool.indexOf(prize) + 1;
+      var prefix = tier === 'common' ? 'C' : tier === 'uncommon' ? 'U' : tier === 'rare' ? 'R' : 'L';
+      prize.cardId = 'UPLOAD-' + prefix + String(idx).padStart(3, '0');
+      prize.series = 'UPLOAD_CONSCIOUSNESS';
       return prize;
     }
 
@@ -635,6 +738,7 @@
       prizeName.textContent = prize.name;
       prizeName.className = 'prize-name ' + prize.rarity;
       prizeTagline.textContent = prize.tagline;
+      prizeCardMeta.textContent = prize.series + ' • ' + prize.cardId + ' • ' + prize.rarity.toUpperCase();
       updateMetaTags(prize);
     }
 
@@ -656,6 +760,77 @@
       activeView.classList.add('active');
     }
 
+    function resizeSparkCanvas() {
+      if (!sparkCanvas || !sparkCtx) return;
+      var dpr = window.devicePixelRatio || 1;
+      var rect = uploadView.getBoundingClientRect();
+      sparkCanvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      sparkCanvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      sparkCanvas.style.width = rect.width + 'px';
+      sparkCanvas.style.height = rect.height + 'px';
+      sparkCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function spawnSparks(n) {
+      if (!sparkCanvas) return;
+      var rect = uploadView.getBoundingClientRect();
+      for (var i = 0; i < n; i++) {
+        sparks.push({
+          x: Math.random() * rect.width,
+          y: rect.height + Math.random() * 40,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: -(0.8 + Math.random() * 1.6),
+          life: 50 + Math.random() * 60,
+          size: 1 + Math.random() * 2.4,
+          hue: Math.random() > 0.5 ? 195 : 46
+        });
+      }
+    }
+
+    function drawSparks() {
+      if (!sparkCtx || !sparkCanvas) return;
+      var rect = uploadView.getBoundingClientRect();
+      sparkCtx.clearRect(0, 0, rect.width, rect.height);
+      for (var i = sparks.length - 1; i >= 0; i--) {
+        var p = sparks[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 1;
+        if (p.life <= 0 || p.y < -20) {
+          sparks.splice(i, 1);
+          continue;
+        }
+        sparkCtx.fillStyle = 'hsla(' + p.hue + ', 95%, 72%, ' + (Math.max(0, p.life / 110)) + ')';
+        sparkCtx.beginPath();
+        sparkCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        sparkCtx.fill();
+      }
+    }
+
+    function startSparkLoop() {
+      if (!sparkCtx) return;
+      resizeSparkCanvas();
+      sparks = [];
+      function tick() {
+        spawnSparks(3);
+        drawSparks();
+        sparkRAF = requestAnimationFrame(tick);
+      }
+      sparkRAF = requestAnimationFrame(tick);
+    }
+
+    function stopSparkLoop() {
+      if (sparkRAF) cancelAnimationFrame(sparkRAF);
+      sparkRAF = null;
+      if (sparkCtx && sparkCanvas) {
+        var rect = uploadView.getBoundingClientRect();
+        sparkCtx.clearRect(0, 0, rect.width, rect.height);
+      }
+      sparks = [];
+    }
+
+    window.addEventListener('resize', resizeSparkCanvas);
+
     // --- Upload animation ---
     function startUpload() {
       // Reset state
@@ -666,6 +841,7 @@
 
       // Switch to upload view
       setView(uploadView);
+      startSparkLoop();
 
       var startTime = null;
       var messageIndex = 0;
@@ -694,6 +870,7 @@
           clearInterval(messageInterval);
           messageInterval = null;
           animationFrame = null;
+          stopSparkLoop();
           currentPrize = selectPrize();
           capture('upload_completed', { prize_name: currentPrize.name, prize_rarity: currentPrize.rarity });
           showPrize(currentPrize);
@@ -738,6 +915,25 @@
     function closeEasterModal() {
       easterModal.classList.remove('active');
       easterModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function openSubscriberEasterModal() {
+      if (!isSubscriber) {
+        subscriberEasterFeedback.textContent = 'Join the email signal first to unlock this path.';
+        return;
+      }
+      if (subscriberEasterAttempts >= MAX_SUB_EASTER_ATTEMPTS) {
+        subscriberEasterFeedback.textContent = 'Subscriber signal locked for this session.';
+        return;
+      }
+      subscriberEasterModal.classList.add('active');
+      subscriberEasterModal.setAttribute('aria-hidden', 'false');
+      subscriberEasterInput.focus();
+    }
+
+    function closeSubscriberEasterModal() {
+      subscriberEasterModal.classList.remove('active');
+      subscriberEasterModal.setAttribute('aria-hidden', 'true');
     }
 
     function getPrizeShareUrl() {
@@ -848,6 +1044,9 @@
       if (e.key === 'Escape' && easterModal.classList.contains('active')) {
         closeEasterModal();
       }
+      if (e.key === 'Escape' && subscriberEasterModal.classList.contains('active')) {
+        closeSubscriberEasterModal();
+      }
     });
 
     // --- Easter glitch listeners ---
@@ -878,6 +1077,54 @@
       if (e.target === easterModal) closeEasterModal();
     });
 
+    subscriberEasterClose.addEventListener('click', closeSubscriberEasterModal);
+
+    subscriberEasterSubmit.addEventListener('click', function () {
+      if (subscriberEasterAttempts >= MAX_SUB_EASTER_ATTEMPTS) {
+        subscriberEasterFeedback.textContent = 'Subscriber signal locked for this session.';
+        return;
+      }
+      var answer = String(subscriberEasterInput.value || '').toLowerCase().trim();
+      var accepted = { care: true, love: true, dignity: true, meaning: true, humanity: true };
+      if (accepted[answer]) {
+        subscriberEasterFeedback.textContent = 'Unlocked: subscriber-only disconnected card path.';
+        closeSubscriberEasterModal();
+        return;
+      }
+      subscriberEasterAttempts += 1;
+      var leftSub = Math.max(0, MAX_SUB_EASTER_ATTEMPTS - subscriberEasterAttempts);
+      subscriberEasterFeedback.textContent = leftSub === 0 ? 'Subscriber signal locked for this session.' : ('Not quite. Attempts left: ' + leftSub);
+    });
+
+    subscriberEasterModal.addEventListener('click', function (e) {
+      if (e.target === subscriberEasterModal) closeSubscriberEasterModal();
+    });
+
+    // soft email signup (ConvertKit placeholder)
+    emailForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = String(emailInput.value || '').trim();
+      if (!email || email.indexOf('@') === -1) {
+        emailNote.textContent = 'Please enter a valid email.';
+        return;
+      }
+      isSubscriber = true;
+      emailNote.textContent = 'You are in. Subscriber easter egg path unlocked.';
+      capture('email_signup_soft', { source: 'upload-consciousness' });
+      emailInput.value = '';
+    });
+
+    prizeEmoji.addEventListener('click', function () {
+      if (!isSubscriber) return;
+      sunClicks += 1;
+      if (sunClickTimer) clearTimeout(sunClickTimer);
+      sunClickTimer = setTimeout(function () { sunClicks = 0; }, 1800);
+      if (sunClicks >= 5) {
+        sunClicks = 0;
+        openSubscriberEasterModal();
+      }
+    });
+
     // --- Event listeners ---
     btnUpload.addEventListener('click', function () {
       if (btnUpload.disabled) return;
@@ -892,6 +1139,7 @@
     document.getElementById('btn-again').addEventListener('click', function () {
       capture('upload_again_clicked');
       btnUpload.disabled = false;
+      stopSparkLoop();
       setView(landingView);
     });
   </script>
