@@ -47,4 +47,12 @@ npm run card:batch -- \
   --out-dir cards/final/dyson_swarm
 ```
 
+One-command demo (placeholder art + batch compose):
+
+```bash
+npm run card:demo -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js
+```
+
 See `cards/README.md` for full details.

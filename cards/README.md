@@ -53,6 +53,14 @@ Expected image naming in `--image-dir`:
 - `DYSON_SWARM-002.png`
 - ...
 
+One-command demo run (creates placeholders + composes full series):
+
+```bash
+npm run card:demo -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js
+```
+
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.
 - Keep provenance for each card (model version, prompt, seed, date).
