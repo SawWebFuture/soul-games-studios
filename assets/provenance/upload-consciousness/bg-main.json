@@ -1,0 +1,18 @@
+{
+  "game": "upload-consciousness",
+  "assetId": "bg-main",
+  "generatedAt": "2026-02-16T13:09:50.375Z",
+  "generator": "stable-diffusion",
+  "model": "<checkpoint-name>",
+  "modelVersion": "<version>",
+  "license": "Check model card / commercial terms",
+  "prompt": "<full prompt>",
+  "negativePrompt": "<negative prompt>",
+  "seed": 123456789,
+  "steps": 36,
+  "cfg": 6,
+  "sampler": "DPM++ 2M Karras",
+  "width": 1920,
+  "height": 1080,
+  "notes": "Background asset. No artist-name style references."
+}
