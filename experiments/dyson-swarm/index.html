@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dyson Swarm</title>
-  <meta name="description" content="Swipe a full circle around the Sun. Unveil FCC-approved Dyson Swarm completion. Reveal a collectible First Contact card." />
+  <meta name="description" content="Swipe a full circle around the Sun. Unveil FCC-approved Dyson Swarm completion. Reveal a collectible civilization card." />
   <meta property="og:title" content="Dyson Swarm" />
   <meta property="og:description" content="Swipe a full circle. Reveal your civilization card." />
   <link rel="stylesheet" href="../../shared/styles/base.css" />
@@ -64,12 +64,35 @@
             <button class="btn" id="nextBtn" type="button">New civilization</button>
             <button class="btn btn-primary" id="shareBtn" type="button">Download card</button>
           </div>
-          <div class="small">The card is the artifact. Easter eggs later.</div>
+          <div class="small">The card is the artifact. (Tap sun 5x for a hidden challenge.)</div>
+
+          <div class="capture card-soft" id="captureBox" hidden>
+            <div class="capture__title">Get future card drops</div>
+            <div class="capture__copy">Soft signal only. No spam. Unsubscribe anytime.</div>
+            <form id="emailForm" class="capture__form" novalidate>
+              <input id="emailInput" type="email" placeholder="you@email.com" aria-label="Email" required />
+              <button type="submit">Join</button>
+            </form>
+            <div class="capture__note" id="captureNote">(Connect this form to ConvertKit when ready.)</div>
+          </div>
 
           <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
         </div>
       </div>
     </section>
+
+    <dialog id="easterDialog" class="easter">
+      <form method="dialog" class="easter__panel" id="riddleForm">
+        <h3>Signal Detected</h3>
+        <p>Riddle: When money becomes mass and energy, what remains priceless?</p>
+        <input id="riddleInput" type="text" placeholder="your answer" autocomplete="off" />
+        <div class="easter__actions">
+          <button value="cancel">Close</button>
+          <button id="riddleSubmit" value="default">Unlock</button>
+        </div>
+        <small id="riddleFeedback">Tip: one word is enough.</small>
+      </form>
+    </dialog>
 
     <footer class="footer">
       <span class="muted">Calm tech. No pressure. No doom.</span>

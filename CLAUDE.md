@@ -17,7 +17,7 @@ Each experiment should:
 - Reveal a collectible **Card** on completion (series + id/number + name + image + short + description)
 - Tie to trending news/ideas in AI + new inventions (X / YouTube)
 - Include an esoteric/philosophical layer (quotes/ideas; e.g., Terence McKenna and others)
-- Include email capture
+- Include **soft email capture** after reveal (invitation, never forced)
 - Include easter egg(s) (count varies) that unlock via password/riddle/deep question
 - Have social sharing hooks (LinkedIn/X/Instagram-friendly)
 

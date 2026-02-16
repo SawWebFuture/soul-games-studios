@@ -1,7 +1,9 @@
 import { SERIES, cards } from './cards.js';
 
 const orbit = document.getElementById('orbit');
+const sun = document.getElementById('sun');
 const revealPanel = document.getElementById('revealPanel');
+const captureBox = document.getElementById('captureBox');
 const seriesEl = document.getElementById('seriesEl');
 const idEl = document.getElementById('idEl');
 const nameEl = document.getElementById('nameEl');
@@ -11,19 +13,38 @@ const nextBtn = document.getElementById('nextBtn');
 const shareBtn = document.getElementById('shareBtn');
 const canvas = document.getElementById('shareCanvas');
 
+const emailForm = document.getElementById('emailForm');
+const emailInput = document.getElementById('emailInput');
+const captureNote = document.getElementById('captureNote');
+
+const easterDialog = document.getElementById('easterDialog');
+const riddleForm = document.getElementById('riddleForm');
+const riddleInput = document.getElementById('riddleInput');
+const riddleFeedback = document.getElementById('riddleFeedback');
+
 seriesEl.textContent = SERIES;
+
+const disconnectedCard = {
+  id: 'DYSON_SWARM-X01',
+  number: 'X01',
+  name: 'DISCONNECTED',
+  short: 'The signal dropped between power and meaning.',
+  description: 'An off-ledger card. It appears when you remember that care, dignity, and love are not commodities — even in a Type II world.'
+};
 
 let current = 0;
 let tracking = false;
 let lastAngle = null;
 let total = 0; // radians accumulated
+let sunTaps = 0;
+let sunTapTimer = null;
+let secretUnlocked = false;
 
 function setProgress(pct) {
   orbit.style.setProperty('--p', `${pct}%`);
 }
 
 function normalizeAngle(a) {
-  // map to [0, 2pi)
   const twoPi = Math.PI * 2;
   return (a % twoPi + twoPi) % twoPi;
 }
@@ -47,14 +68,16 @@ function move(e) {
   if (!tracking) return;
   e.preventDefault();
   const ang = angleFromEvent(e);
-  if (lastAngle == null) { lastAngle = ang; return; }
+  if (lastAngle == null) {
+    lastAngle = ang;
+    return;
+  }
 
-  // smallest signed delta in (-pi, pi]
   let d = ang - lastAngle;
   if (d > Math.PI) d -= Math.PI * 2;
   if (d <= -Math.PI) d += Math.PI * 2;
 
-  total += Math.abs(d); // allow either direction; keep it simple
+  total += Math.abs(d);
   lastAngle = ang;
 
   const pct = Math.min(100, (total / (Math.PI * 2)) * 100);
@@ -69,36 +92,45 @@ function move(e) {
 function end(e) {
   if (!tracking) return;
   e.preventDefault();
-  // If they let go early, reset for calm simplicity
   tracking = false;
   lastAngle = null;
   total = 0;
   setProgress(0);
 }
 
-function renderCard(i) {
-  current = (i + cards.length) % cards.length;
-  const c = cards[current];
+function renderCardByData(c) {
   idEl.textContent = c.id;
   nameEl.textContent = c.name;
   shortEl.textContent = c.short;
   descEl.textContent = c.description;
 }
 
+function renderCard(i) {
+  current = (i + cards.length) % cards.length;
+  renderCardByData(cards[current]);
+}
+
 function unveilRandom() {
   revealPanel.hidden = false;
   renderCard(Math.floor(Math.random() * cards.length));
+  captureBox.hidden = false;
   revealPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-nextBtn.addEventListener('click', () => renderCard(current + 1));
+nextBtn.addEventListener('click', () => {
+  if (secretUnlocked) {
+    secretUnlocked = false;
+  }
+  renderCard(current + 1);
+});
 
-// Pointer events
 orbit.addEventListener('pointerdown', start);
 orbit.addEventListener('pointermove', move);
 orbit.addEventListener('pointerup', end);
 orbit.addEventListener('pointercancel', end);
-orbit.addEventListener('pointerleave', (e) => { if (tracking) end(e); });
+orbit.addEventListener('pointerleave', (e) => {
+  if (tracking) end(e);
+});
 
 function roundRect(ctx, x, y, w, h, r) {
   const rr = Math.min(r, w / 2, h / 2);
@@ -112,7 +144,7 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-  const words = text.split(' ');
+  const words = String(text).split(' ');
   let line = '';
   let yy = y;
   for (let i = 0; i < words.length; i++) {
@@ -146,16 +178,14 @@ function drawCardPNG(card) {
   const y = 160;
   const w = W - pad * 2;
   const h = H - y - 220;
-  const r = 32;
 
   ctx.fillStyle = 'rgba(255,255,255,0.06)';
   ctx.strokeStyle = 'rgba(255,255,255,0.14)';
   ctx.lineWidth = 3;
-  roundRect(ctx, x, y, w, h, r);
+  roundRect(ctx, x, y, w, h, 32);
   ctx.fill();
   ctx.stroke();
 
-  // header
   ctx.fillStyle = 'rgba(231,238,248,0.92)';
   ctx.font = '700 52px ui-sans-serif, system-ui, -apple-system';
   ctx.fillText('DYSON SWARM', x + 46, y + 92);
@@ -164,17 +194,14 @@ function drawCardPNG(card) {
   ctx.font = '500 28px ui-sans-serif, system-ui, -apple-system';
   ctx.fillText('FCC APPROVED • DEC 2026 • TYPE II', x + 46, y + 132);
 
-  // series + id
   ctx.fillStyle = 'rgba(167,179,197,0.9)';
   ctx.font = '600 28px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas';
   ctx.fillText(`${SERIES}  ${card.id}`, x + 46, y + 190);
 
-  // name
   ctx.fillStyle = 'rgba(253,230,138,0.95)';
   ctx.font = '700 64px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas';
   wrapText(ctx, card.name, x + 46, y + 280, w - 92, 72);
 
-  // short + desc
   ctx.fillStyle = 'rgba(231,238,248,0.92)';
   ctx.font = '600 36px ui-sans-serif, system-ui, -apple-system';
   wrapText(ctx, card.short, x + 46, y + 390, w - 92, 48);
@@ -183,7 +210,6 @@ function drawCardPNG(card) {
   ctx.font = '500 30px ui-sans-serif, system-ui, -apple-system';
   wrapText(ctx, card.description, x + 46, y + 470, w - 92, 44);
 
-  // image placeholder block
   const imgY = y + h - 360;
   ctx.fillStyle = 'rgba(255,255,255,0.05)';
   ctx.strokeStyle = 'rgba(255,255,255,0.12)';
@@ -193,9 +219,8 @@ function drawCardPNG(card) {
 
   ctx.fillStyle = 'rgba(231,238,248,0.55)';
   ctx.font = '600 22px ui-sans-serif, system-ui, -apple-system';
-  ctx.fillText('IMAGE PLACEHOLDER', x + 66, imgY + 40);
+  ctx.fillText(secretUnlocked ? 'DISCONNECTED SIGNAL' : 'IMAGE PLACEHOLDER', x + 66, imgY + 40);
 
-  // footer
   ctx.fillStyle = 'rgba(167,179,197,0.9)';
   ctx.font = '600 28px ui-sans-serif, system-ui, -apple-system';
   ctx.fillText('soulgamesstudios.com', pad, H - 90);
@@ -206,7 +231,7 @@ function drawCardPNG(card) {
 }
 
 shareBtn.addEventListener('click', () => {
-  const c = cards[current] ?? cards[0];
+  const c = secretUnlocked ? disconnectedCard : cards[current] ?? cards[0];
   drawCardPNG(c);
   const url = canvas.toDataURL('image/png');
   const a = document.createElement('a');
@@ -215,4 +240,58 @@ shareBtn.addEventListener('click', () => {
   document.body.appendChild(a);
   a.click();
   a.remove();
+});
+
+emailForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = String(emailInput.value || '').trim();
+  if (!email || !email.includes('@')) {
+    captureNote.textContent = 'Please enter a valid email.';
+    return;
+  }
+  // Placeholder soft capture behavior; replace with ConvertKit embed/API later.
+  captureNote.textContent = 'Nice. You are on the card drop signal.';
+  emailInput.value = '';
+});
+
+function handleSunTap() {
+  sunTaps += 1;
+  if (sunTapTimer) clearTimeout(sunTapTimer);
+  sunTapTimer = setTimeout(() => {
+    sunTaps = 0;
+  }, 1800);
+
+  if (sunTaps >= 5) {
+    sunTaps = 0;
+    if (typeof easterDialog.showModal === 'function') {
+      easterDialog.showModal();
+      riddleInput.focus();
+    }
+  }
+}
+
+sun.addEventListener('click', handleSunTap);
+sun.addEventListener('touchstart', handleSunTap, { passive: true });
+
+function normalizeAnswer(s) {
+  return String(s || '').toLowerCase().trim();
+}
+
+riddleForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const answer = normalizeAnswer(riddleInput.value);
+  const accepted = new Set(['care', 'love', 'dignity', 'humanity', 'meaning']);
+
+  if (accepted.has(answer)) {
+    secretUnlocked = true;
+    revealPanel.hidden = false;
+    renderCardByData(disconnectedCard);
+    captureBox.hidden = false;
+    riddleFeedback.textContent = 'Unlocked: DISCONNECTED card.';
+    easterDialog.close();
+    revealPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+
+  riddleFeedback.textContent = 'Not quite. Think beyond currency.';
 });
