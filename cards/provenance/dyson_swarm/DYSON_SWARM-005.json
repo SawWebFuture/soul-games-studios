@@ -1,0 +1,18 @@
+{
+  "series": "DYSON_SWARM",
+  "cardId": "DYSON_SWARM-005",
+  "generatedAt": "2026-02-16T03:53:15.558Z",
+  "generator": "stable-diffusion",
+  "model": "<checkpoint-name>",
+  "modelVersion": "<version>",
+  "license": "Check model card / commercial terms",
+  "prompt": "<full prompt>",
+  "negativePrompt": "<negative prompt>",
+  "seed": 123456789,
+  "steps": 36,
+  "cfg": 6,
+  "sampler": "DPM++ 2M Karras",
+  "width": 1536,
+  "height": 960,
+  "notes": "No artist-name style references."
+}

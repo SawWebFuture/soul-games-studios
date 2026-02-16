@@ -6,7 +6,8 @@
   "scripts": {
     "card:compose": "node cards/scripts/compose_card.js",
     "card:batch": "node cards/scripts/compose_batch.js",
-    "card:demo": "node cards/scripts/demo_cards.js"
+    "card:demo": "node cards/scripts/demo_cards.js",
+    "card:provenance:init": "node cards/scripts/provenance_init.js"
   },
   "dependencies": {
     "sharp": "^0.34.3"

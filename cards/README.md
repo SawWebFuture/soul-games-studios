@@ -61,6 +61,17 @@ npm run card:demo -- \
   --meta experiments/dyson-swarm/cards.js
 ```
 
+Initialize provenance JSON stubs for all cards in a series:
+
+```bash
+npm run card:provenance:init -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js \
+  --license "Check model card / commercial terms"
+```
+
+Use `--overwrite` to regenerate existing stubs.
+
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.
 - Keep provenance for each card (model version, prompt, seed, date).

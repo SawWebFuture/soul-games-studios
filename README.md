@@ -55,4 +55,13 @@ npm run card:demo -- \
   --meta experiments/dyson-swarm/cards.js
 ```
 
+Initialize provenance stubs:
+
+```bash
+npm run card:provenance:init -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js \
+  --license "Check model card / commercial terms"
+```
+
 See `cards/README.md` for full details.
