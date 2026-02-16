@@ -72,4 +72,10 @@ npm run card:check -- \
   --meta experiments/dyson-swarm/cards.js
 ```
 
+One-command full run (demo + provenance + check):
+
+```bash
+npm run card:all
+```
+
 See `cards/README.md` for full details.

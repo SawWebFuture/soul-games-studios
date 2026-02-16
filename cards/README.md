@@ -80,6 +80,12 @@ npm run card:check -- \
   --meta experiments/dyson-swarm/cards.js
 ```
 
+One-command full run for DYSON_SWARM:
+
+```bash
+npm run card:all
+```
+
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.
 - Keep provenance for each card (model version, prompt, seed, date).

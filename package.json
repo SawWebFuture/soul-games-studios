@@ -8,7 +8,8 @@
     "card:batch": "node cards/scripts/compose_batch.js",
     "card:demo": "node cards/scripts/demo_cards.js",
     "card:provenance:init": "node cards/scripts/provenance_init.js",
-    "card:check": "node cards/scripts/card_check.js"
+    "card:check": "node cards/scripts/card_check.js",
+    "card:all": "npm run card:demo -- --series DYSON_SWARM --meta experiments/dyson-swarm/cards.js && npm run card:check -- --series DYSON_SWARM --meta experiments/dyson-swarm/cards.js"
   },
   "dependencies": {
     "sharp": "^0.34.3"
