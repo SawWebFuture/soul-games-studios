@@ -22,7 +22,12 @@ All Soul Games experiments can reveal **cards** that:
 
 ## Share card output
 - Export PNG at **1080×1350** (portrait) for social.
+
+**Rule:** The **card share image is the primary social artifact** for all experiments.
 - The share card should include:
+  - card image area
+  - subtle background
+  - clean typography
   - series + id/number
   - name
   - tagline
