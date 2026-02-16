@@ -42,3 +42,6 @@ All Soul Games experiments can reveal **cards** that:
 ## Future: rarity + commerce (later)
 - Optional rarity tiers (Common/Rare/Mythic) — only if it stays calm.
 - Merch mapping: card id → SKU.
+
+## Production Pipeline (added)
+See `cards/README.md` for frame+image split workflow, prompt packs, and provenance schema.
