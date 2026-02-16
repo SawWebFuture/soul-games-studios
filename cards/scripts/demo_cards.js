@@ -117,7 +117,17 @@ async function main() {
   );
 
   if (res.status !== 0) process.exit(res.status || 1);
+
+  const prov = spawnSync(
+    process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    ['run', 'card:provenance:init', '--', '--series', series, '--meta', meta, '--license', 'Check model card / commercial terms'],
+    { stdio: 'inherit' }
+  );
+
+  if (prov.status !== 0) process.exit(prov.status || 1);
+
   console.log(`\n✅ Demo complete. Finals in: ${outDir}`);
+  console.log(`✅ Provenance in: cards/provenance/${series.toLowerCase()}`);
 }
 
 main().catch((e) => {

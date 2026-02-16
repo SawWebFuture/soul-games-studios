@@ -47,7 +47,7 @@ npm run card:batch -- \
   --out-dir cards/final/dyson_swarm
 ```
 
-One-command demo (placeholder art + batch compose):
+One-command demo (placeholder art + batch compose + provenance):
 
 ```bash
 npm run card:demo -- \

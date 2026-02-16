@@ -53,7 +53,7 @@ Expected image naming in `--image-dir`:
 - `DYSON_SWARM-002.png`
 - ...
 
-One-command demo run (creates placeholders + composes full series):
+One-command demo run (creates placeholders + composes full series + provenance):
 
 ```bash
 npm run card:demo -- \
