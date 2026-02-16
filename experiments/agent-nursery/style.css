@@ -1,5 +1,14 @@
 /* Local overrides for the lab vibe. Shared base is in /shared/styles */
 
+body {
+  background-image:
+    linear-gradient(rgba(11,15,20,0.58), rgba(11,15,20,0.72)),
+    url('../../assets/final/agent-nursery/bg-main.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .lab-header { margin-bottom: 18px; }
 .brand { display: flex; align-items: center; gap: 14px; }
 .sigil {
