@@ -152,6 +152,74 @@
       color: rgba(255, 255, 255, 0.5);
     }
 
+    .glitch-node {
+      position: fixed;
+      right: 10px;
+      bottom: 12px;
+      width: 14px;
+      height: 14px;
+      border: 0;
+      border-radius: 2px;
+      background: linear-gradient(90deg, rgba(125,211,252,0.35), rgba(253,230,138,0.35));
+      opacity: 0.12;
+      filter: blur(0.2px);
+      cursor: pointer;
+      z-index: 60;
+    }
+    .glitch-node:hover { opacity: 0.35; }
+
+    .easter-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 70;
+      padding: 1rem;
+    }
+
+    .easter-modal.active { display: flex; }
+
+    .easter-panel {
+      width: min(520px, 92vw);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      background: #0e141e;
+      color: var(--text);
+      padding: 1rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .easter-panel p { color: var(--text-muted); }
+    .easter-panel input {
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      padding: 0.7rem 0.8rem;
+      font-family: inherit;
+    }
+
+    .easter-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .easter-actions button {
+      min-height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 0.5rem 0.8rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
     /* ---- UPLOAD VIEW ---- */
     .upload-view .status-message {
       font-size: clamp(1rem, 2.5vw, 1.25rem);
@@ -456,6 +524,21 @@
     </div>
   </div>
 
+  <button class="glitch-node" id="glitch-node" aria-label="Hidden glitch"></button>
+
+  <div class="easter-modal" id="easter-modal" aria-hidden="true">
+    <div class="easter-panel" role="dialog" aria-modal="true" aria-labelledby="easter-title">
+      <h3 id="easter-title">Signal Drift</h3>
+      <p>Riddle: What makes consciousness valuable even when it can be copied?</p>
+      <input id="easter-input" type="text" placeholder="one word" />
+      <div class="easter-actions">
+        <button type="button" id="easter-close">Close</button>
+        <button type="button" id="easter-submit">Unlock</button>
+      </div>
+      <small id="easter-feedback">Tip: think beyond utility.</small>
+    </div>
+  </div>
+
   <script>
     // --- Analytics helper (safe if PostHog hasn't loaded yet) ---
     function capture(event, props) {
@@ -475,6 +558,15 @@
     var prizeEmoji = document.getElementById('prize-emoji');
     var prizeName = document.getElementById('prize-name');
     var prizeTagline = document.getElementById('prize-tagline');
+
+    var glitchNode = document.getElementById('glitch-node');
+    var easterModal = document.getElementById('easter-modal');
+    var easterInput = document.getElementById('easter-input');
+    var easterSubmit = document.getElementById('easter-submit');
+    var easterClose = document.getElementById('easter-close');
+    var easterFeedback = document.getElementById('easter-feedback');
+    var easterAttempts = 0;
+    var MAX_EASTER_ATTEMPTS = 3;
 
     // --- Config ---
     var DURATION_MS = 4000;
@@ -633,6 +725,21 @@
       shareModal.setAttribute('aria-hidden', 'true');
     }
 
+    function openEasterModal() {
+      if (easterAttempts >= MAX_EASTER_ATTEMPTS) {
+        easterFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+        return;
+      }
+      easterModal.classList.add('active');
+      easterModal.setAttribute('aria-hidden', 'false');
+      easterInput.focus();
+    }
+
+    function closeEasterModal() {
+      easterModal.classList.remove('active');
+      easterModal.setAttribute('aria-hidden', 'true');
+    }
+
     function getPrizeShareUrl() {
       if (!currentPrize) return SHARE_URL;
       var slug = currentPrize.name.toLowerCase().replace(/\s+/g, '-');
@@ -738,6 +845,37 @@
       if (e.key === 'Escape' && shareModal.classList.contains('active')) {
         closeShareModal();
       }
+      if (e.key === 'Escape' && easterModal.classList.contains('active')) {
+        closeEasterModal();
+      }
+    });
+
+    // --- Easter glitch listeners ---
+    glitchNode.addEventListener('click', function () {
+      openEasterModal();
+    });
+
+    easterClose.addEventListener('click', closeEasterModal);
+
+    easterSubmit.addEventListener('click', function () {
+      if (easterAttempts >= MAX_EASTER_ATTEMPTS) {
+        easterFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+        return;
+      }
+      var answer = String(easterInput.value || '').toLowerCase().trim();
+      var accepted = { care: true, love: true, dignity: true, meaning: true, humanity: true };
+      if (accepted[answer]) {
+        easterFeedback.textContent = 'Unlocked: disconnected signal acknowledged.';
+        closeEasterModal();
+        return;
+      }
+      easterAttempts += 1;
+      var left = Math.max(0, MAX_EASTER_ATTEMPTS - easterAttempts);
+      easterFeedback.textContent = left === 0 ? 'Signal locked. Max attempts reached for this session.' : ('Not quite. Attempts left: ' + left);
+    });
+
+    easterModal.addEventListener('click', function (e) {
+      if (e.target === easterModal) closeEasterModal();
     });
 
     // --- Event listeners ---
