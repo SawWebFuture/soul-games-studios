@@ -9,3 +9,4 @@
 - [ ] TikTok caption + on-screen text drafted
 - [ ] URL verified live
 - [ ] First comment/reply prompts ready
+- [ ] Background asset generated/optimized (`asset:all`)

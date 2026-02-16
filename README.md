@@ -79,3 +79,30 @@ npm run card:all
 ```
 
 See `cards/README.md` for full details.
+
+## Asset pipeline quick commands (backgrounds)
+Create demo background for a game:
+
+```bash
+npm run asset:demo -- --game dyson-swarm
+```
+
+Initialize provenance for that background:
+
+```bash
+npm run asset:provenance:init -- --game dyson-swarm --license "Check model card / commercial terms"
+```
+
+Check completeness:
+
+```bash
+npm run asset:check -- --game dyson-swarm
+```
+
+Run all three in sequence:
+
+```bash
+npm run asset:all -- --game dyson-swarm
+```
+
+See `assets/README.md` for full details.
