@@ -1,8 +1,8 @@
 import { SERIES, cards } from './cards.js';
+import { setupEasterNodes } from '../../shared/utils/easter.js';
 
 const orbit = document.getElementById('orbit');
 const sun = document.getElementById('sun');
-const glitchHotspot = document.getElementById('glitchHotspot');
 const revealPanel = document.getElementById('revealPanel');
 const captureBox = document.getElementById('captureBox');
 const seriesEl = document.getElementById('seriesEl');
@@ -283,7 +283,7 @@ function handleSunTap() {
 
 sun.addEventListener('click', handleSunTap);
 sun.addEventListener('touchstart', handleSunTap, { passive: true });
-glitchHotspot.addEventListener('click', openRiddleDialog);
+setupEasterNodes({ selector: '.glitch-node', onTrigger: openRiddleDialog });
 
 function normalizeAnswer(s) {
   return String(s || '').toLowerCase().trim();

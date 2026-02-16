@@ -20,6 +20,7 @@ Each experiment should:
 - Include **soft email capture** after reveal (invitation, never forced)
 - Include easter egg(s) (count varies) hidden in plain sight (e.g., subtle glitch/hotspot) that unlock via password/riddle/deep question
 - Cap riddle attempts per session (default: 3)
+- Use animated scene assets (sun/panels/satellites/glitch nodes) where they improve vibe without cluttering UX
 - Have social sharing hooks (LinkedIn/X/Instagram-friendly)
 
 ## Repo Layout

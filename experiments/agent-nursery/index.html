@@ -9,6 +9,7 @@
   <meta property="og:description" content="Hold to incubate. Reveal a shareable agent offspring card." />
   <link rel="stylesheet" href="./style.css" />
   <link rel="stylesheet" href="../../shared/styles/base.css" />
+  <link rel="stylesheet" href="../../shared/styles/scene-assets.css" />
 </head>
 <body>
   <main class="container" style="padding-top: 36px;">
@@ -30,6 +31,12 @@
           <p class="panel-body">A calm interface for an uncanny moment.</p>
 
           <div class="incubator" id="incubator">
+            <div class="scene-layer" aria-hidden="true">
+              <div class="scene-panel" style="top:14%;left:16%;--drift-dur:8s"></div>
+              <div class="scene-satellite" style="top:62%;left:76%;--orbit-dur:12s"></div>
+              <button class="glitch-node" data-easter="1" style="right:10px;top:10px" aria-label="Hidden glitch"></button>
+            </div>
+
             <button id="holdBtn" class="hold-btn" type="button" aria-describedby="hint">
               <span class="hold-btn__label">INCUBATE</span>
               <span class="hold-btn__sub">hold</span>
@@ -54,7 +61,7 @@
               <button class="btn btn-primary" id="shareBtn" type="button">Download share card</button>
             </div>
 
-            <div class="small">Tip: share the card. Easter eggs come later.</div>
+            <div class="small">Tip: share the card. Hidden glitch unlock available.</div>
           </div>
         </div>
       </div>
@@ -66,6 +73,19 @@
 
     <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
   </main>
+
+  <dialog id="easterDialog" class="easter">
+    <form method="dialog" class="easter__panel" id="riddleForm">
+      <h3>Nursery Glitch</h3>
+      <p>Riddle: What makes a tool feel alive before it is conscious?</p>
+      <input id="riddleInput" type="text" placeholder="your answer" autocomplete="off" />
+      <div class="easter__actions">
+        <button value="cancel">Close</button>
+        <button id="riddleSubmit" value="default">Unlock</button>
+      </div>
+      <small id="riddleFeedback">Try one word.</small>
+    </form>
+  </dialog>
 
   <script src="./app.js" defer></script>
 </body>

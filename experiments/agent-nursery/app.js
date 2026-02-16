@@ -1,6 +1,11 @@
 const HOLD_SECONDS = 8;
 
 const holdBtn = document.getElementById('holdBtn');
+const easterNodes = Array.from(document.querySelectorAll('.glitch-node'));
+const easterDialog = document.getElementById('easterDialog');
+const riddleForm = document.getElementById('riddleForm');
+const riddleInput = document.getElementById('riddleInput');
+const riddleFeedback = document.getElementById('riddleFeedback');
 const secondsEl = document.getElementById('seconds');
 const revealPanel = document.getElementById('revealPanel');
 const revealTitle = document.getElementById('revealTitle');
@@ -44,6 +49,8 @@ let current = 0;
 let holding = false;
 let startTs = 0;
 let raf = 0;
+let riddleAttempts = 0;
+const MAX_RIDDLE_ATTEMPTS = 3;
 
 function setProgress(pct) {
   holdBtn.style.setProperty('--p', `${pct}%`);
@@ -105,6 +112,46 @@ holdBtn.addEventListener('pointerleave', (e) => {
 });
 
 nextBtn.addEventListener('click', () => reveal(current + 1));
+
+function openRiddleDialog() {
+  if (riddleAttempts >= MAX_RIDDLE_ATTEMPTS) {
+    riddleFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+    return;
+  }
+  if (typeof easterDialog.showModal === 'function') {
+    easterDialog.showModal();
+    riddleInput.focus();
+  }
+}
+
+easterNodes.forEach((node) => {
+  node.addEventListener('click', (e) => {
+    e.preventDefault();
+    openRiddleDialog();
+  });
+});
+
+riddleForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (riddleAttempts >= MAX_RIDDLE_ATTEMPTS) {
+    riddleFeedback.textContent = 'Signal locked. Max attempts reached for this session.';
+    return;
+  }
+
+  const answer = String(riddleInput.value || '').toLowerCase().trim();
+  const accepted = new Set(['care', 'curiosity', 'attention', 'meaning']);
+  if (accepted.has(answer)) {
+    riddleFeedback.textContent = 'Unlocked: hidden signal acknowledged.';
+    easterDialog.close();
+    return;
+  }
+
+  riddleAttempts += 1;
+  const left = Math.max(0, MAX_RIDDLE_ATTEMPTS - riddleAttempts);
+  riddleFeedback.textContent = left === 0
+    ? 'Signal locked. Max attempts reached for this session.'
+    : `Not quite. Attempts left: ${left}`;
+});
 
 function drawShareCard(outcome) {
   const ctx = canvas.getContext('2d');

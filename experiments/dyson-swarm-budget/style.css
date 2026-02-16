@@ -34,7 +34,7 @@ body {
 .panel-title { font-size: 13px; letter-spacing: 0.12em; color: var(--sg-muted); text-transform: uppercase; }
 .panel-body { margin: 10px 0 16px; color: var(--sg-muted); }
 
-.allocator { display: grid; gap: 10px; justify-items: start; }
+.allocator { display: grid; gap: 10px; justify-items: start; position: relative; overflow: visible; }
 
 .hold-btn {
   position: relative;
@@ -107,6 +107,34 @@ body {
 }
 .btn:hover { border-color: rgba(253,230,138,0.35); }
 .btn-primary { background: rgba(253,230,138,0.12); border-color: rgba(253,230,138,0.30); }
+
+.easter {
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  background: #0e141e;
+  color: var(--sg-text);
+  width: min(520px, 92vw);
+  padding: 0;
+}
+.easter::backdrop { background: rgba(0,0,0,0.55); }
+.easter__panel { padding: 16px; display: grid; gap: 10px; }
+.easter__panel h3 { margin: 0; }
+.easter__panel p { margin: 0; color: var(--sg-muted); }
+.easter__panel input {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 10px;
+  color: var(--sg-text);
+  padding: 10px 12px;
+}
+.easter__actions { display: flex; justify-content: flex-end; gap: 8px; }
+.easter__actions button {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: var(--sg-text);
+}
 
 .small { font-size: 12px; color: var(--sg-muted); }
 .footer { margin-top: 18px; color: var(--sg-muted); font-size: 12px; }

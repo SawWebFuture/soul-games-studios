@@ -9,6 +9,7 @@
   <meta property="og:description" content="Swipe a full circle. Reveal your civilization card." />
   <link rel="stylesheet" href="../../shared/styles/base.css" />
   <link rel="stylesheet" href="../../shared/styles/cards.css" />
+  <link rel="stylesheet" href="../../shared/styles/scene-assets.css" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -32,9 +33,18 @@
 
           <div class="orbit-wrap">
             <div class="orbit" id="orbit" aria-label="Swipe ring">
+              <div class="scene-layer" aria-hidden="true">
+                <div class="scene-panel" style="top:16%;left:12%;--drift-dur:8s"></div>
+                <div class="scene-panel" style="top:62%;left:78%;--drift-dur:10s"></div>
+                <div class="scene-satellite" style="top:18%;left:74%;--orbit-dur:13s"></div>
+              </div>
+
               <div class="sun" id="sun" aria-hidden="true"></div>
               <div class="orbit-progress" id="orbitProgress" aria-hidden="true"></div>
               <div class="orbit-hint" id="orbitHint">Swipe around the Sun</div>
+
+              <button class="glitch-node" data-easter="1" style="right:14px;top:14px" aria-label="Hidden glitch"></button>
+              <button class="glitch-node" data-easter="1" style="left:16px;bottom:20px" aria-label="Hidden glitch"></button>
             </div>
             <div class="hint">Complete 360° to unveil. Clean, calm, and slightly ridiculous.</div>
           </div>
@@ -80,8 +90,6 @@
         </div>
       </div>
     </section>
-
-    <button id="glitchHotspot" class="glitch-hotspot" type="button" aria-label="Hidden glitch" title=""></button>
 
     <dialog id="easterDialog" class="easter">
       <form method="dialog" class="easter__panel" id="riddleForm">
