@@ -14,6 +14,8 @@ This monorepo contains:
 
 ## Experiment Template (defaults)
 Each experiment should:
+- Be mobile-first in interaction/layout (phone users are the core audience)
+- Follow the funnel: social click -> quick play -> optional email capture -> share collectible card
 - Reveal a collectible **Card** on completion (series + id/number + name + image + short + description)
 - Tie to trending news/ideas in AI + new inventions (X / YouTube)
 - Include an esoteric/philosophical layer (quotes/ideas; e.g., Terence McKenna and others)

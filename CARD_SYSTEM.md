@@ -22,12 +22,14 @@ All Soul Games experiments can reveal **cards** that:
 
 ## Cross-game UX rules (required)
 - Primary interaction should be simple (one strong action).
+- Mobile-first is mandatory (tap targets, compact layout, readable text on phones).
 - Reveal value first, then offer a **soft** email invite.
 - Email capture must be optional, calm, and non-coercive.
 - Include at least one hidden easter egg path in plain sight (e.g., subtle glitch/hotspot + riddle unlock).
 - Cap riddle attempts per session (default: 3) to keep it game-like and avoid brute-force.
-- Include a subscriber-only easter path when possible (e.g., 5-click trigger + special riddle after signup).
+- Include a subscriber-only easter path when possible (e.g., 5-click trigger + special riddle after signup), and award a subscriber-only card on solve.
 - Card rarity tiers should be supported (Common / Uncommon / Rare / Legendary or series-appropriate equivalent).
+- Shareable card artifact is the primary social output for each experiment.
 
 ## Share card output
 - Export PNG at **1080×1350** (portrait) for social.

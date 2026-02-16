@@ -336,6 +336,30 @@
       font-family: inherit;
     }
 
+    .subscriber-card {
+      width: min(420px, 92vw);
+      border: 1px solid rgba(251, 191, 36, 0.45);
+      border-radius: 12px;
+      background: rgba(251, 191, 36, 0.08);
+      padding: 0.9rem;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    .subscriber-card.hidden { display: none; }
+    .subscriber-card-title { font-weight: 700; margin-bottom: 0.25rem; }
+    .subscriber-card-meta { font-size: 0.82rem; color: rgba(255,255,255,0.78); margin-bottom: 0.35rem; }
+    .subscriber-card-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 0.7rem; }
+    .subscriber-card button {
+      min-height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(251,191,36,0.45);
+      background: rgba(251,191,36,0.15);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
     .results-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -564,6 +588,13 @@
       <small id="email-note">(ConvertKit hookup pending)</small>
     </div>
 
+    <div class="subscriber-card hidden" id="subscriber-card" aria-live="polite">
+      <div class="subscriber-card-title">🔓 Subscriber Card Unlocked</div>
+      <div class="subscriber-card-meta" id="subscriber-card-meta">UPLOAD_SECRET • UPLOAD-X001 • LEGENDARY</div>
+      <div class="subscriber-card-desc" id="subscriber-card-desc">Only unlocked by email subscribers who find the hidden signal.</div>
+      <button type="button" id="subscriber-card-share">Copy subscriber card text</button>
+    </div>
+
     <div class="results-buttons">
       <button type="button" class="btn-secondary" id="btn-share" aria-label="Share your result">Share Result</button>
       <button type="button" class="btn-secondary" id="btn-again" aria-label="Upload again">Upload Again</button>
@@ -642,7 +673,12 @@
     var emailForm = document.getElementById('email-form');
     var emailInput = document.getElementById('email-input');
     var emailNote = document.getElementById('email-note');
+    var subscriberCardEl = document.getElementById('subscriber-card');
+    var subscriberCardMeta = document.getElementById('subscriber-card-meta');
+    var subscriberCardDesc = document.getElementById('subscriber-card-desc');
+    var subscriberCardShare = document.getElementById('subscriber-card-share');
     var isSubscriber = false;
+    var subscriberCardUnlocked = false;
 
     var glitchNode = document.getElementById('glitch-node');
     var easterModal = document.getElementById('easter-modal');
@@ -694,6 +730,14 @@
     };
 
     var currentPrize = null;
+    var subscriberSecretCard = {
+      series: 'UPLOAD_SECRET',
+      cardId: 'UPLOAD-X001',
+      rarity: 'legendary',
+      name: 'Paradox Keeper',
+      description: 'You remembered that scale without compassion is just noise.'
+    };
+
     var sparkCanvas = document.getElementById('spark-canvas');
     var sparkCtx = sparkCanvas && sparkCanvas.getContext ? sparkCanvas.getContext('2d') : null;
     var sparkRAF = null;
@@ -732,6 +776,16 @@
     }
 
     // Show prize in results view
+    function updateSubscriberCardUI() {
+      if (!subscriberCardUnlocked) {
+        subscriberCardEl.classList.add('hidden');
+        return;
+      }
+      subscriberCardMeta.textContent = subscriberSecretCard.series + ' • ' + subscriberSecretCard.cardId + ' • ' + subscriberSecretCard.rarity.toUpperCase();
+      subscriberCardDesc.textContent = subscriberSecretCard.description;
+      subscriberCardEl.classList.remove('hidden');
+    }
+
     function showPrize(prize) {
       prizeEmoji.textContent = prize.emoji;
       prizeEmoji.setAttribute('aria-label', prize.name);
@@ -739,6 +793,7 @@
       prizeName.className = 'prize-name ' + prize.rarity;
       prizeTagline.textContent = prize.tagline;
       prizeCardMeta.textContent = prize.series + ' • ' + prize.cardId + ' • ' + prize.rarity.toUpperCase();
+      updateSubscriberCardUI();
       updateMetaTags(prize);
     }
 
@@ -945,13 +1000,21 @@
     function getTwitterText() {
       var name = currentPrize ? currentPrize.name : 'Digital Being';
       var emoji = currentPrize ? currentPrize.emoji : '';
-      return 'I uploaded my consciousness and became a ' + name + ' ' + emoji + " \uD83E\uDD16\n\nWhat will you become? " + getPrizeShareUrl();
+      var base = 'I uploaded my consciousness and became a ' + name + ' ' + emoji + " \uD83E\uDD16";
+      if (subscriberCardUnlocked) {
+        base += '\nUnlocked subscriber card: ' + subscriberSecretCard.name + ' [' + subscriberSecretCard.cardId + ']';
+      }
+      return base + "\n\nWhat will you become? " + getPrizeShareUrl();
     }
 
     function getLinkedInText() {
       var name = currentPrize ? currentPrize.name : 'Digital Being';
       var emoji = currentPrize ? currentPrize.emoji : '';
-      return "I just tried 'Upload Your Consciousness' and became a " + name + ' ' + emoji + "\n\nInteresting experiment by Soul Games Studios. What would you become?\n\n" + getPrizeShareUrl();
+      var base = "I just tried 'Upload Your Consciousness' and became a " + name + ' ' + emoji;
+      if (subscriberCardUnlocked) {
+        base += '\nUnlocked subscriber card: ' + subscriberSecretCard.name + ' (' + subscriberSecretCard.cardId + ')';
+      }
+      return base + "\n\nInteresting experiment by Soul Games Studios. What would you become?\n\n" + getPrizeShareUrl();
     }
 
     // Twitter/X share
@@ -1087,6 +1150,8 @@
       var answer = String(subscriberEasterInput.value || '').toLowerCase().trim();
       var accepted = { care: true, love: true, dignity: true, meaning: true, humanity: true };
       if (accepted[answer]) {
+        subscriberCardUnlocked = true;
+        updateSubscriberCardUI();
         subscriberEasterFeedback.textContent = 'Unlocked: subscriber-only disconnected card path.';
         closeSubscriberEasterModal();
         return;
@@ -1122,6 +1187,22 @@
       if (sunClicks >= 5) {
         sunClicks = 0;
         openSubscriberEasterModal();
+      }
+    });
+
+    subscriberCardShare.addEventListener('click', function () {
+      if (!subscriberCardUnlocked) return;
+      var text = 'I unlocked subscriber card: ' + subscriberSecretCard.name + ' — ' + subscriberSecretCard.series + ' / ' + subscriberSecretCard.cardId + ' (' + subscriberSecretCard.rarity.toUpperCase() + ').';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          emailNote.textContent = 'Subscriber card text copied. Share it with friends.';
+        }).catch(function () {
+          fallbackCopyText(text);
+          emailNote.textContent = 'Subscriber card text copied.';
+        });
+      } else {
+        fallbackCopyText(text);
+        emailNote.textContent = 'Subscriber card text copied.';
       }
     });
 
