@@ -72,6 +72,14 @@ npm run card:provenance:init -- \
 
 Use `--overwrite` to regenerate existing stubs.
 
+Check pipeline completeness (generated + final + provenance):
+
+```bash
+npm run card:check -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js
+```
+
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.
 - Keep provenance for each card (model version, prompt, seed, date).

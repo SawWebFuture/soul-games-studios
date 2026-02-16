@@ -64,4 +64,12 @@ npm run card:provenance:init -- \
   --license "Check model card / commercial terms"
 ```
 
+Check pipeline completeness:
+
+```bash
+npm run card:check -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js
+```
+
 See `cards/README.md` for full details.
