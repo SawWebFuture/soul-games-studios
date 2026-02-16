@@ -27,7 +27,7 @@ Install deps once:
 npm install
 ```
 
-Compose a card:
+Compose a single card:
 
 ```bash
 npm run card:compose -- \
@@ -37,6 +37,21 @@ npm run card:compose -- \
   --image cards/generated/dyson_swarm/DYSON_SWARM-001.png \
   --out cards/final/dyson_swarm/DYSON_SWARM-001.png
 ```
+
+Compose all cards in a series (batch):
+
+```bash
+npm run card:batch -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js \
+  --image-dir cards/generated/dyson_swarm \
+  --out-dir cards/final/dyson_swarm
+```
+
+Expected image naming in `--image-dir`:
+- `DYSON_SWARM-001.png`
+- `DYSON_SWARM-002.png`
+- ...
 
 ## Legal/ownership guardrails
 - Use checkpoints/LoRAs with explicit commercial terms.

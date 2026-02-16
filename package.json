@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "description": "Soul Games Studios monorepo",
   "scripts": {
-    "card:compose": "node cards/scripts/compose_card.js"
+    "card:compose": "node cards/scripts/compose_card.js",
+    "card:batch": "node cards/scripts/compose_batch.js"
   },
   "dependencies": {
     "sharp": "^0.34.3"

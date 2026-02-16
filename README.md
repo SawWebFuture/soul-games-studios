@@ -18,3 +18,33 @@ npx serve .
 
 ## Guardrails
 No dark patterns. No pressure loops. Calm tech only.
+
+## Card pipeline quick commands
+From repo root:
+
+```bash
+npm install
+```
+
+Compose a single card:
+
+```bash
+npm run card:compose -- \
+  --series DYSON_SWARM \
+  --card DYSON_SWARM-001 \
+  --meta experiments/dyson-swarm/cards.js \
+  --image cards/generated/dyson_swarm/DYSON_SWARM-001.png \
+  --out cards/final/dyson_swarm/DYSON_SWARM-001.png
+```
+
+Compose all cards in DYSON_SWARM:
+
+```bash
+npm run card:batch -- \
+  --series DYSON_SWARM \
+  --meta experiments/dyson-swarm/cards.js \
+  --image-dir cards/generated/dyson_swarm \
+  --out-dir cards/final/dyson_swarm
+```
+
+See `cards/README.md` for full details.
