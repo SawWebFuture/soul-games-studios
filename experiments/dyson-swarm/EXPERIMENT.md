@@ -1,24 +1,29 @@
-# Dyson Swarm — Experiment Context (V2)
+# Dyson Swarm — Experiment Context (Alive V1)
 
 ## Intent
-A playful + uncanny "graduation" moment: after completing one action, you *unveil* a Dyson Swarm milestone and "reach" a **Type II (Kardashev) civilization** moment.
+Playful + uncanny, sleek sci-fi lab vibe.
+The "game" is the completion: you finish the swarm and unveil a collectible civilization card.
 
-The reveal is a **First Contact Card**: which alien civilization you meet first.
+## News tie-in
+Fictional / hypothetical framing based on the idea of FCC approval for a massive orbital constellation.
 
 ## One action
-Hold-to-unveil (~8 seconds) → progress ring → reveal First Contact Card.
+Circle swipe around the Sun (trace a full orbit) → progress ring fills → unveil.
 
-## Card collection
-All reveals are collectible cards in the `FIRST_CONTACT` series.
-Cards include:
+## Reveal
+1) Status strip:
+- FCC STATUS: APPROVED
+- DATE: DEC 2026 (funny)
+- KARDASHEV: TYPE II (ACHIEVED)
+2) Collectible card:
+- series: DYSON_SWARM
 - id/number
 - name
-- image (v1 placeholder)
+- image area (placeholder v1)
 - short + description
 
-## Examples (starter civilizations)
-- PLATIANS — life organized around ideals/forms.
-- HUMEIES — cause/effect, habits of mind, skeptical empiricism.
+## Social
+The downloadable PNG is the **card** (primary share artifact).
 
-## Notes
-Keep interaction minimal. Depth lives in card text + optional easter eggs.
+## Easter eggs (later)
+Deeper riddles/passwords unlock extended lore, thinker quotes, and rare cards.

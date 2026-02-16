@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dyson Swarm</title>
+  <meta name="description" content="Swipe a full circle around the Sun. Unveil FCC-approved Dyson Swarm completion. Reveal a collectible First Contact card." />
+  <meta property="og:title" content="Dyson Swarm" />
+  <meta property="og:description" content="Swipe a full circle. Reveal your civilization card." />
+  <link rel="stylesheet" href="../../shared/styles/base.css" />
+  <link rel="stylesheet" href="../../shared/styles/cards.css" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="container" style="padding-top: 36px;">
+    <header class="lab-header">
+      <div class="brand">
+        <div class="sigil" aria-hidden="true"></div>
+        <div>
+          <div class="kicker">SOUL GAMES STUDIOS</div>
+          <h1 class="title">Dyson Swarm</h1>
+        </div>
+      </div>
+      <p class="subtitle">Trace the orbit. Finish the swarm. Meet whoever meets you first.</p>
+    </header>
+
+    <section class="card lab" aria-label="Dyson Lab">
+      <div class="lab-grid">
+        <div class="panel">
+          <div class="panel-title">Orbital Assembly</div>
+          <p class="panel-body">One action: swipe a full circle around the Sun.</p>
+
+          <div class="orbit-wrap">
+            <div class="orbit" id="orbit" aria-label="Swipe ring">
+              <div class="sun" id="sun" aria-hidden="true"></div>
+              <div class="orbit-progress" id="orbitProgress" aria-hidden="true"></div>
+              <div class="orbit-hint" id="orbitHint">Swipe around the Sun</div>
+            </div>
+            <div class="hint">Complete 360° to unveil. Clean, calm, and slightly ridiculous.</div>
+          </div>
+        </div>
+
+        <div class="panel" id="revealPanel" hidden>
+          <div class="panel-title">Unveiled</div>
+
+          <div class="status">
+            <div class="status__row"><span class="status__k">FCC STATUS</span><span class="status__v">APPROVED</span></div>
+            <div class="status__row"><span class="status__k">DATE</span><span class="status__v">DEC 2026</span></div>
+            <div class="status__row"><span class="status__k">KARDASHEV</span><span class="status__v">TYPE II (ACHIEVED)</span></div>
+          </div>
+
+          <div class="sg-card" id="cardEl">
+            <div class="sg-card__meta">
+              <div id="seriesEl">DYSON_SWARM</div>
+              <div class="sg-card__id" id="idEl">DYSON_SWARM-000</div>
+            </div>
+            <div class="sg-card__name" id="nameEl">—</div>
+            <div class="sg-card__short" id="shortEl">—</div>
+            <div class="sg-card__desc" id="descEl">—</div>
+            <div class="sg-card__img" id="imgEl" aria-hidden="true"></div>
+          </div>
+
+          <div class="controls">
+            <button class="btn" id="nextBtn" type="button">New civilization</button>
+            <button class="btn btn-primary" id="shareBtn" type="button">Download card</button>
+          </div>
+          <div class="small">The card is the artifact. Easter eggs later.</div>
+
+          <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">Calm tech. No pressure. No doom.</span>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </main>
+</body>
+</html>
