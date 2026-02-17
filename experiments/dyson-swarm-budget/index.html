@@ -13,6 +13,21 @@
 </head>
 <body>
   <main class="container" style="padding-top: 36px;">
+    <section class="view landing-view active" id="landingView" aria-label="Landing">
+      <header class="lab-header start-wrap">
+        <div class="brand">
+          <div class="sigil" aria-hidden="true"></div>
+          <div>
+            <div class="kicker">SOUL GAMES STUDIOS</div>
+            <h1 class="title">Dyson Swarm Budget</h1>
+          </div>
+        </div>
+        <p class="subtitle">A calm interface for an absurd future: currency becomes mass & energy.</p>
+        <button class="btn btn-primary start-btn" id="startBtn" type="button">Start allocation</button>
+      </header>
+    </section>
+
+    <section class="view play-view" id="playView" aria-label="Allocation flow">
     <header class="lab-header">
       <div class="brand">
         <div class="sigil" aria-hidden="true"></div>
@@ -59,12 +74,14 @@
             <div class="controls">
               <button class="btn" id="nextBtn" type="button">Cycle outcome</button>
               <button class="btn btn-primary" id="shareBtn" type="button">Download share card</button>
+              <button class="btn" id="restartBtn" type="button">Start over</button>
             </div>
 
             <div class="small">Tip: share the card. Hidden glitch unlock available.</div>
           </div>
         </div>
       </div>
+    </section>
     </section>
 
     <footer class="footer">

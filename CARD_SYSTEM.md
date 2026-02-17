@@ -23,6 +23,7 @@ All Soul Games experiments can reveal **cards** that:
 ## Cross-game UX rules (required)
 - Primary interaction should be simple (one strong action).
 - Mobile-first is mandatory (tap targets, compact layout, readable text on phones).
+- Use single-page view/state transitions (landing -> play -> reveal), not multi-page navigation.
 - Reveal value first, then offer a **soft** email invite.
 - Email capture must be optional, calm, and non-coercive.
 - Include at least one hidden easter egg path in plain sight (e.g., subtle glitch/hotspot + riddle unlock).

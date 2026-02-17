@@ -16,6 +16,7 @@ This monorepo contains:
 Each experiment should:
 - Be mobile-first in interaction/layout (phone users are the core audience)
 - Follow the funnel: social click -> quick play -> optional email capture -> share collectible card
+- Use single-page state transitions (Upload Consciousness pattern): landing action -> interaction state -> reveal/card state (no route/page navigation)
 - Reveal a collectible **Card** on completion (series + id/number + name + image + short + description)
 - Tie to trending news/ideas in AI + new inventions (X / YouTube)
 - Include an esoteric/philosophical layer (quotes/ideas; e.g., Terence McKenna and others)

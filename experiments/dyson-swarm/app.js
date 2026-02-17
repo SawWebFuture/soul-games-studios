@@ -1,6 +1,11 @@
 import { SERIES, cards } from './cards.js';
 import { setupEasterNodes } from '../../shared/utils/easter.js';
 
+const landingView = document.getElementById('landingView');
+const playView = document.getElementById('playView');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+
 const orbit = document.getElementById('orbit');
 const sun = document.getElementById('sun');
 const revealPanel = document.getElementById('revealPanel');
@@ -42,6 +47,25 @@ let sunTapTimer = null;
 let secretUnlocked = false;
 let riddleAttempts = 0;
 const MAX_RIDDLE_ATTEMPTS = 3;
+
+function setView(which) {
+  landingView.classList.remove('active');
+  playView.classList.remove('active');
+  which.classList.add('active');
+}
+
+startBtn.addEventListener('click', () => {
+  setView(playView);
+});
+
+restartBtn.addEventListener('click', () => {
+  tracking = false;
+  lastAngle = null;
+  total = 0;
+  setProgress(0);
+  revealPanel.hidden = true;
+  setView(landingView);
+});
 
 function setProgress(pct) {
   orbit.style.setProperty('--p', `${pct}%`);

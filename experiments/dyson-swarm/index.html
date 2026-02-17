@@ -14,6 +14,21 @@
 </head>
 <body>
   <main class="container" style="padding-top: 36px;">
+    <section class="view landing-view active" id="landingView" aria-label="Landing">
+      <header class="lab-header start-wrap">
+        <div class="brand">
+          <div class="sigil" aria-hidden="true"></div>
+          <div>
+            <div class="kicker">SOUL GAMES STUDIOS</div>
+            <h1 class="title">Dyson Swarm</h1>
+          </div>
+        </div>
+        <p class="subtitle">Trace the orbit. Finish the swarm. Meet whoever meets you first.</p>
+        <button class="btn btn-primary start-btn" id="startBtn" type="button">Enter orbit</button>
+      </header>
+    </section>
+
+    <section class="view play-view" id="playView" aria-label="Dyson flow">
     <header class="lab-header">
       <div class="brand">
         <div class="sigil" aria-hidden="true"></div>
@@ -73,6 +88,7 @@
           <div class="controls">
             <button class="btn" id="nextBtn" type="button">New civilization</button>
             <button class="btn btn-primary" id="shareBtn" type="button">Download card</button>
+            <button class="btn" id="restartBtn" type="button">Start over</button>
           </div>
           <div class="small">The card is the artifact. (Look for a tiny glitch in plain sight.)</div>
 
@@ -89,6 +105,7 @@
           <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
         </div>
       </div>
+    </section>
     </section>
 
     <dialog id="easterDialog" class="easter">

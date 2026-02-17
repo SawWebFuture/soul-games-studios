@@ -1,5 +1,10 @@
 const HOLD_SECONDS = 8;
 
+const landingView = document.getElementById('landingView');
+const playView = document.getElementById('playView');
+const startBtn = document.getElementById('startBtn');
+const restartBtn = document.getElementById('restartBtn');
+
 const holdBtn = document.getElementById('holdBtn');
 const easterNodes = Array.from(document.querySelectorAll('.glitch-node'));
 const easterDialog = document.getElementById('easterDialog');
@@ -51,6 +56,22 @@ let startTs = 0;
 let raf = 0;
 let riddleAttempts = 0;
 const MAX_RIDDLE_ATTEMPTS = 3;
+
+function setView(which) {
+  landingView.classList.remove('active');
+  playView.classList.remove('active');
+  which.classList.add('active');
+}
+
+startBtn.addEventListener('click', () => {
+  setView(playView);
+});
+
+restartBtn.addEventListener('click', () => {
+  reset();
+  revealPanel.hidden = true;
+  setView(landingView);
+});
 
 function setProgress(pct) {
   holdBtn.style.setProperty('--p', `${pct}%`);

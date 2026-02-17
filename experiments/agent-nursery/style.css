@@ -27,6 +27,12 @@ body {
 .title { margin: 2px 0 0; font-size: 34px; line-height: 1.1; }
 .subtitle { margin: 10px 0 0; color: var(--sg-muted); }
 
+.view { display: none; }
+.view.active { display: block; }
+
+.start-wrap { display: grid; gap: 14px; }
+.start-btn { width: fit-content; }
+
 .lab { padding: 0; overflow: hidden; }
 .lab-grid { display: grid; grid-template-columns: 1fr; }
 @media (min-width: 880px) { .lab-grid { grid-template-columns: 1fr 1fr; } }
