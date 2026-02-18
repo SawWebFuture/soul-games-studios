@@ -1,12 +1,12 @@
 # Dyson Swarm — Background Prompt Pack
 
 ## Core prompt
-"Dyson Swarm game background, sleek sci-fi orbital control lab, luminous sun halo motif, subtle orbital rings, dark elegant palette, calm atmospheric glow, cinematic depth, clean center space for UI card overlays, no text, no logos"
+"Dyson Swarm game background, calm cinematic orbital control environment around a sun-like star, elegant dark sci-fi palette (deep navy, graphite, soft amber, cyan accents), subtle concentric orbital rings and sparse satellite silhouettes, atmospheric volumetric haze, reflective glass-metal surfaces, restrained contrast, premium minimal composition, clear center-left negative space for UI panels and card overlays, no characters, no text, no logos"
 
 ## Variants
-1) "orbital ring array over a dark horizon, warm solar accents, cool cyan interface glow"
-2) "space-based compute shell atmosphere, minimal geometry, reflective glass-like surfaces"
-3) "sun-centric radial composition, restrained contrast, UI-friendly negative space"
+1) "sun halo centered slightly left, thin orbital tracks with tiny collector satellites, gentle amber bloom with cool cyan interface reflections, contemplative and clean"
+2) "orbital assembly bay window looking onto a partial dyson swarm arc, distant starfield, layered depth with soft fog, minimal geometric detail"
+3) "top-down radial orbital schematic aesthetic blended with realistic space atmosphere, subtle energy glows, balanced quiet composition"
 
 ## Negative prompt
-"text, watermark, crowded details, extreme contrast, noisy grain, busy foreground"
+"text, letters, numbers, watermark, logo, busy foreground objects, high-noise grain, harsh bloom, extreme neon, chaotic composition, cartoon style, characters, spacecraft close-up"

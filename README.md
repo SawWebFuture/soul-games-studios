@@ -81,7 +81,13 @@ npm run card:all
 See `cards/README.md` for full details.
 
 ## Asset pipeline quick commands (backgrounds)
-Create demo background for a game:
+Create real AI background for a game (requires `OPENAI_API_KEY`):
+
+```bash
+npm run asset:generate -- --game dyson-swarm
+```
+
+Create placeholder background (no API key):
 
 ```bash
 npm run asset:demo -- --game dyson-swarm
@@ -99,10 +105,16 @@ Check completeness:
 npm run asset:check -- --game dyson-swarm
 ```
 
-Run all three in sequence:
+Run full pipeline (generate + provenance + check):
 
 ```bash
 npm run asset:all -- --game dyson-swarm
+```
+
+Use placeholder in full pipeline:
+
+```bash
+npm run asset:all -- --game dyson-swarm --demo
 ```
 
 See `assets/README.md` for full details.

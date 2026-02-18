@@ -16,7 +16,8 @@ function run(args) {
   if (r.status !== 0) process.exit(r.status || 1);
 }
 
-run(['run', 'asset:demo', '--', '--game', game]);
+const useDemo = process.argv.includes('--demo');
+run(['run', useDemo ? 'asset:demo' : 'asset:generate', '--', '--game', game]);
 run(['run', 'asset:provenance:init', '--', '--game', game, '--license', 'Check model card / commercial terms']);
 run(['run', 'asset:check', '--', '--game', game]);
 

@@ -17,10 +17,21 @@ Pipeline for non-card visual assets (backgrounds, scene art, atmospherics).
 
 ## Commands
 ```bash
+# Placeholder background (no API key required)
 npm run asset:demo -- --game dyson-swarm
+
+# Real AI generation (requires OPENAI_API_KEY)
+npm run asset:generate -- --game dyson-swarm
+
+# Provenance + checks
 npm run asset:provenance:init -- --game dyson-swarm
 npm run asset:check -- --game dyson-swarm
+
+# Full run: generate + provenance + check
 npm run asset:all -- --game dyson-swarm
+
+# Full run with placeholder instead of AI generation
+npm run asset:all -- --game dyson-swarm --demo
 ```
 
 ## Guardrails
