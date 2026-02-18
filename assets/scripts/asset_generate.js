@@ -65,6 +65,8 @@ async function generateOpenAI({ prompt, size }) {
 (async () => {
   const game = arg('game', 'dyson-swarm');
   const size = arg('size', '1536x1024'); // valid gpt-image-1 size
+  const cutoutCenter = process.argv.includes('--cutout-center');
+  const cutoutRadius = Number(arg('cutout-radius', '170'));
 
   const promptPath = `assets/prompts/backgrounds/${game}.md`;
   if (!fs.existsSync(promptPath)) {
@@ -80,6 +82,7 @@ async function generateOpenAI({ prompt, size }) {
   const finalPrompt = [
     core,
     '16:9 cinematic game background, subtle depth, UI-friendly negative space.',
+    cutoutCenter ? 'Keep the center visually calm with no dominant central sun/star disk.' : null,
     neg ? `Avoid: ${neg}` : null
   ].filter(Boolean).join(' ');
 
@@ -89,22 +92,35 @@ async function generateOpenAI({ prompt, size }) {
   fs.mkdirSync(finDir, { recursive: true });
 
   const outPng = path.join(genDir, 'bg-main.png');
+  const outFinalPng = path.join(finDir, 'bg-main.png');
   const outWebp = path.join(finDir, 'bg-main.webp');
 
   console.log(`🎨 Generating background for ${game}...`);
   const imageBuffer = await generateOpenAI({ prompt: finalPrompt, size });
 
   // Normalize to 1920x1080 so all games are consistent.
-  await sharp(imageBuffer)
+  let pipeline = sharp(imageBuffer)
     .resize(1920, 1080, {
       fit: 'cover',
       position: 'center'
-    })
-    .png()
-    .toFile(outPng);
+    });
 
+  if (cutoutCenter) {
+    const r = Number.isFinite(cutoutRadius) && cutoutRadius > 10 ? cutoutRadius : 170;
+    const mask = Buffer.from(`
+<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="1920" height="1080" fill="black" />
+  <circle cx="960" cy="540" r="${r}" fill="white" />
+</svg>`);
+
+    pipeline = pipeline.composite([{ input: mask, blend: 'dest-out' }]);
+  }
+
+  await pipeline.png().toFile(outPng);
+  await sharp(outPng).png().toFile(outFinalPng);
   await sharp(outPng).webp({ quality: 88 }).toFile(outWebp);
 
   console.log(`✅ Generated: ${outPng}`);
+  console.log(`✅ Final PNG: ${outFinalPng}${cutoutCenter ? ' (transparent center cutout)' : ''}`);
   console.log(`✅ Final:     ${outWebp}`);
 })();

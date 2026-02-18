@@ -1,7 +1,7 @@
 body {
   background-image:
     linear-gradient(rgba(11,15,20,0.58), rgba(11,15,20,0.72)),
-    url('../../assets/final/dyson-swarm/bg-main.webp');
+    url('../../assets/final/dyson-swarm/bg-main.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
