@@ -1,0 +1,125 @@
+{
+  "name": "Mental Health x Tech Daily News Flow",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [200, 200],
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyDay",
+              "hour": 7,
+              "minute": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "name": "Fetch RSS Sources",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [420, 200],
+      "parameters": {
+        "url": "={{$json.rssUrl || 'https://news.google.com/rss/search?q=mental+health+technology'}}"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Normalize + Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 200],
+      "parameters": {
+        "jsCode": "const items = $input.all();\nreturn items.map(i => {\n  const t = (i.json.title || '').toLowerCase();\n  const d = (i.json.contentSnippet || '').toLowerCase();\n  const text = `${t} ${d}`;\n  let relevance = 0;\n  if (text.includes('mental health')) relevance += 2;\n  if (text.includes('ai') || text.includes('artificial intelligence') || text.includes('llm')) relevance += 2;\n  if (text.includes('study') || text.includes('trial') || text.includes('journal')) relevance += 1;\n  const hypeRisk = /(breakthrough|miracle|guaranteed|cure)/i.test(text) ? 2 : 0;\n  i.json.score = { relevance, hypeRisk, total: relevance - hypeRisk };\n  i.json.status = 'scored';\n  return i;\n});"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Filter Good Items",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [860, 200],
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$json.score.total}}",
+              "operation": "largerEqual",
+              "value2": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "5",
+      "name": "Draft Content (OpenAI)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [1080, 140],
+      "parameters": {
+        "resource": "chat",
+        "operation": "create",
+        "model": "gpt-4.1-mini",
+        "messages": [
+          {
+            "role": "system",
+            "content": "Write in Scott's calm, practical founder voice. Focus on mental-health operators. Include new tech relevance. Avoid hype and medical advice."
+          },
+          {
+            "role": "user",
+            "content": "Create: 1 LinkedIn draft (150-220 words), 1 X draft (short), 1 newsletter blurb (100 words). Input title: {{$json.title}}. Summary: {{$json.contentSnippet}}. Source: {{$json.link}}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "6",
+      "name": "Prepare Notion Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 140],
+      "parameters": {
+        "jsCode": "const out = $input.first().json;\nconst ai = out.choices?.[0]?.message?.content || '';\nreturn [{ json: {\n  title: out.title || 'Untitled',\n  source_url: out.link || '',\n  status: 'needs_review',\n  score_total: out.score?.total ?? 0,\n  content_bundle: ai\n}}];"
+      }
+    },
+    {
+      "id": "7",
+      "name": "Save Draft to Notion",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [1520, 140],
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "={{$env.NOTION_DATABASE_ID}}",
+        "propertiesUi": {
+          "propertyValues": [
+            { "key": "Name|title", "title": "={{$json.title}}" },
+            { "key": "Status|select", "selectValue": "={{$json.status}}" },
+            { "key": "Source URL|url", "urlValue": "={{$json.source_url}}" },
+            { "key": "Score|number", "numberValue": "={{$json.score_total}}" },
+            { "key": "Draft|rich_text", "richTextValue": "={{$json.content_bundle}}" }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily Trigger": { "main": [[{ "node": "Fetch RSS Sources", "type": "main", "index": 0 }]] },
+    "Fetch RSS Sources": { "main": [[{ "node": "Normalize + Score", "type": "main", "index": 0 }]] },
+    "Normalize + Score": { "main": [[{ "node": "Filter Good Items", "type": "main", "index": 0 }]] },
+    "Filter Good Items": { "main": [[{ "node": "Draft Content (OpenAI)", "type": "main", "index": 0 }], []] },
+    "Draft Content (OpenAI)": { "main": [[{ "node": "Prepare Notion Payload", "type": "main", "index": 0 }]] },
+    "Prepare Notion Payload": { "main": [[{ "node": "Save Draft to Notion", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": {},
+  "pinData": {}
+}
