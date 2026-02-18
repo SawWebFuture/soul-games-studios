@@ -1,13 +1,20 @@
-import { SERIES, cards } from './cards.js';
-import { setupEasterNodes } from '../../shared/utils/easter.js';
+/* Inlined for file:// compatibility (no ES modules) */
+const SERIES = 'DYSON_SWARM';
+const cards = [
+  { id: 'DYSON_SWARM-001', number: '001', name: 'PLATIANS', short: 'They organize life around ideals.', description: 'A civilization of luminous abstractions. They treat reality as a draft of a better form — and measure progress by coherence, not speed.' },
+  { id: 'DYSON_SWARM-002', number: '002', name: 'HUMEIES', short: 'They live by cause and effect.', description: 'A civilization of careful inference. They distrust certainty, prefer experiments, and believe every mind is trained by habit — including yours.' },
+  { id: 'DYSON_SWARM-003', number: '003', name: 'KANTARIANS', short: 'They run on duty, not desire.', description: 'A civilization that trusts rules more than moods. Their freedom is choosing the law they can live with — even when nobody is watching.' },
+  { id: 'DYSON_SWARM-004', number: '004', name: 'STOICONS', short: 'They scale by calm agency.', description: 'A civilization of inner citadels. They can\'t control the cosmos, but they can control their response — and they consider that the real power.' },
+  { id: 'DYSON_SWARM-005', number: '005', name: 'TAO\'RIN', short: 'They win by not forcing.', description: 'A civilization fluent in paradox. They align with the current, conserve energy, and treat over-optimization as a form of blindness.' },
+  { id: 'DYSON_SWARM-006', number: '006', name: 'NIETZSCHEANS', short: 'They create values on purpose.', description: 'A civilization that doesn\'t inherit meaning — it forges it. They respect strength, but worship becoming, not domination.' }
+];
 
-const landingView = document.getElementById('landingView');
-const playView = document.getElementById('playView');
-const startBtn = document.getElementById('startBtn');
 const restartBtn = document.getElementById('restartBtn');
 
 const orbit = document.getElementById('orbit');
+const orbitPrompt = document.getElementById('orbitPrompt');
 const sun = document.getElementById('sun');
+const explosion = document.getElementById('explosion');
 const revealPanel = document.getElementById('revealPanel');
 const captureBox = document.getElementById('captureBox');
 const seriesEl = document.getElementById('seriesEl');
@@ -38,91 +45,63 @@ const disconnectedCard = {
   description: 'An off-ledger card. It appears when you remember that care, dignity, and love are not commodities — even in a Type II world.'
 };
 
+const HOLD_SECONDS = 3;
+
 let current = 0;
-let tracking = false;
-let lastAngle = null;
-let total = 0; // radians accumulated
+let holding = false;
+let startTs = 0;
+let raf = 0;
 let sunTaps = 0;
 let sunTapTimer = null;
 let secretUnlocked = false;
 let riddleAttempts = 0;
 const MAX_RIDDLE_ATTEMPTS = 3;
 
-function setView(which) {
-  landingView.classList.remove('active');
-  playView.classList.remove('active');
-  which.classList.add('active');
-}
-
-startBtn.addEventListener('click', () => {
-  setView(playView);
-});
-
 restartBtn.addEventListener('click', () => {
-  tracking = false;
-  lastAngle = null;
-  total = 0;
-  setProgress(0);
+  reset();
   revealPanel.hidden = true;
-  setView(landingView);
+  orbit.hidden = false;
+  orbitPrompt.hidden = false;
+  explosion.classList.remove('burst');
 });
 
 function setProgress(pct) {
   orbit.style.setProperty('--p', `${pct}%`);
 }
 
-function normalizeAngle(a) {
-  const twoPi = Math.PI * 2;
-  return (a % twoPi + twoPi) % twoPi;
+function reset() {
+  holding = false;
+  startTs = 0;
+  cancelAnimationFrame(raf);
+  setProgress(0);
 }
 
-function angleFromEvent(e) {
-  const rect = orbit.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2;
-  const x = e.clientX - cx;
-  const y = e.clientY - cy;
-  return normalizeAngle(Math.atan2(y, x));
-}
-
-function start(e) {
-  e.preventDefault();
-  tracking = true;
-  lastAngle = angleFromEvent(e);
-}
-
-function move(e) {
-  if (!tracking) return;
-  e.preventDefault();
-  const ang = angleFromEvent(e);
-  if (lastAngle == null) {
-    lastAngle = ang;
+function tick(ts) {
+  if (!holding) return;
+  if (!startTs) startTs = ts;
+  const elapsed = (ts - startTs) / 1000;
+  const pct = Math.max(0, Math.min(100, (elapsed / HOLD_SECONDS) * 100));
+  setProgress(pct);
+  if (elapsed >= HOLD_SECONDS) {
+    holding = false;
+    unveilRandom();
     return;
   }
-
-  let d = ang - lastAngle;
-  if (d > Math.PI) d -= Math.PI * 2;
-  if (d <= -Math.PI) d += Math.PI * 2;
-
-  total += Math.abs(d);
-  lastAngle = ang;
-
-  const pct = Math.min(100, (total / (Math.PI * 2)) * 100);
-  setProgress(pct);
-
-  if (total >= Math.PI * 2) {
-    tracking = false;
-    unveilRandom();
-  }
+  raf = requestAnimationFrame(tick);
 }
 
-function end(e) {
-  if (!tracking) return;
+function startHold(e) {
   e.preventDefault();
-  tracking = false;
-  lastAngle = null;
-  total = 0;
-  setProgress(0);
+  if (holding) return;
+  reset();
+  holding = true;
+  raf = requestAnimationFrame(tick);
+}
+
+function endHold(e) {
+  e.preventDefault();
+  if (!holding) return;
+  reset();
 }
 
 function renderCardByData(c) {
@@ -138,10 +117,18 @@ function renderCard(i) {
 }
 
 function unveilRandom() {
-  revealPanel.hidden = false;
-  renderCard(Math.floor(Math.random() * cards.length));
+  const cardIndex = Math.floor(Math.random() * cards.length);
+  renderCard(cardIndex);
   captureBox.hidden = false;
-  revealPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  orbit.hidden = true;
+  orbitPrompt.hidden = true;
+  explosion.classList.add('burst');
+  explosion.addEventListener('animationend', function onEnd() {
+    explosion.removeEventListener('animationend', onEnd);
+    explosion.classList.remove('burst');
+    revealPanel.hidden = false;
+  }, { once: true });
 }
 
 nextBtn.addEventListener('click', () => {
@@ -151,12 +138,19 @@ nextBtn.addEventListener('click', () => {
   renderCard(current + 1);
 });
 
-orbit.addEventListener('pointerdown', start);
-orbit.addEventListener('pointermove', move);
-orbit.addEventListener('pointerup', end);
-orbit.addEventListener('pointercancel', end);
-orbit.addEventListener('pointerleave', (e) => {
-  if (tracking) end(e);
+['pointerdown', 'mousedown', 'touchstart'].forEach((ev) => {
+  orbit.addEventListener(ev, startHold, { passive: false });
+});
+['pointerup', 'pointercancel', 'mouseup', 'touchend', 'touchcancel'].forEach((ev) => {
+  orbit.addEventListener(ev, endHold, { passive: false });
+});
+orbit.addEventListener('pointerleave', (e) => { if (holding) endHold(e); }, { passive: false });
+orbit.addEventListener('mouseleave', (e) => { if (holding) endHold(e); });
+orbit.addEventListener('keydown', (e) => {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); startHold(e); }
+});
+orbit.addEventListener('keyup', (e) => {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); endHold(e); }
 });
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -305,9 +299,10 @@ function handleSunTap() {
   }
 }
 
-sun.addEventListener('click', handleSunTap);
-sun.addEventListener('touchstart', handleSunTap, { passive: true });
-setupEasterNodes({ selector: '.glitch-node', onTrigger: openRiddleDialog });
+orbit.addEventListener('click', handleSunTap);
+document.querySelectorAll('.glitch-node').forEach((node) => {
+  node.addEventListener('click', (e) => { e.preventDefault(); openRiddleDialog(); });
+});
 
 function normalizeAnswer(s) {
   return String(s || '').toLowerCase().trim();
@@ -325,6 +320,8 @@ riddleForm.addEventListener('submit', (e) => {
 
   if (accepted.has(answer)) {
     secretUnlocked = true;
+    orbit.hidden = true;
+    orbitPrompt.hidden = true;
     revealPanel.hidden = false;
     renderCardByData(disconnectedCard);
     captureBox.hidden = false;

@@ -8,7 +8,7 @@ The "game" is the completion: you finish the swarm and unveil a collectible civi
 Fictional / hypothetical framing based on the idea of FCC approval for a massive orbital constellation.
 
 ## One action
-Circle swipe around the Sun (trace a full orbit) → progress ring fills → unveil.
+Sun in center. Click and hold → progress ring fills → unveil (approved section).
 
 ## Reveal
 1) Status strip:

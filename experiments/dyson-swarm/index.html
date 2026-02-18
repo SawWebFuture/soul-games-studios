@@ -4,68 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dyson Swarm</title>
-  <meta name="description" content="Swipe a full circle around the Sun. Unveil FCC-approved Dyson Swarm completion. Reveal a collectible civilization card." />
+  <meta name="description" content="Click and hold the Sun to complete the orbit. Unveil FCC-approved Dyson Swarm completion. Reveal a collectible civilization card." />
   <meta property="og:title" content="Dyson Swarm" />
-  <meta property="og:description" content="Swipe a full circle. Reveal your civilization card." />
+  <meta property="og:description" content="Click and hold. Reveal your civilization card." />
   <link rel="stylesheet" href="../../shared/styles/base.css" />
   <link rel="stylesheet" href="../../shared/styles/cards.css" />
-  <link rel="stylesheet" href="../../shared/styles/scene-assets.css" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <main class="container" style="padding-top: 36px;">
-    <section class="view landing-view active" id="landingView" aria-label="Landing">
-      <header class="lab-header start-wrap">
-        <div class="brand">
-          <div class="sigil" aria-hidden="true"></div>
-          <div>
-            <div class="kicker">SOUL GAMES STUDIOS</div>
-            <h1 class="title">Dyson Swarm</h1>
-          </div>
-        </div>
-        <p class="subtitle">Trace the orbit. Finish the swarm. Meet whoever meets you first.</p>
-        <button class="btn btn-primary start-btn" id="startBtn" type="button">Enter orbit</button>
-      </header>
-    </section>
-
-    <section class="view play-view" id="playView" aria-label="Dyson flow">
-    <header class="lab-header">
-      <div class="brand">
-        <div class="sigil" aria-hidden="true"></div>
-        <div>
-          <div class="kicker">SOUL GAMES STUDIOS</div>
-          <h1 class="title">Dyson Swarm</h1>
-        </div>
+  <main class="dyson-main">
+    <section class="view play-view active" id="playView" aria-label="Dyson flow">
+      <p class="orbit-prompt" id="orbitPrompt">Help SpaceX build a Dyson Swarm</p>
+      <div class="orbit" id="orbit" role="button" tabindex="0" aria-label="Hold to complete orbit">
+        <div class="sun" id="sun" aria-hidden="true"></div>
+        <div class="orbit-progress" id="orbitProgress" aria-hidden="true"></div>
       </div>
-      <p class="subtitle">Trace the orbit. Finish the swarm. Meet whoever meets you first.</p>
-    </header>
 
-    <section class="card lab" aria-label="Dyson Lab">
-      <div class="lab-grid">
-        <div class="panel">
-          <div class="panel-title">Orbital Assembly</div>
-          <p class="panel-body">One action: swipe a full circle around the Sun.</p>
-
-          <div class="orbit-wrap">
-            <div class="orbit" id="orbit" aria-label="Swipe ring">
-              <div class="scene-layer" aria-hidden="true">
-                <div class="scene-panel" style="top:16%;left:12%;--drift-dur:8s"></div>
-                <div class="scene-panel" style="top:62%;left:78%;--drift-dur:10s"></div>
-                <div class="scene-satellite" style="top:18%;left:74%;--orbit-dur:13s"></div>
-              </div>
-
-              <div class="sun" id="sun" aria-hidden="true"></div>
-              <div class="orbit-progress" id="orbitProgress" aria-hidden="true"></div>
-              <div class="orbit-hint" id="orbitHint">Swipe around the Sun</div>
-
-              <button class="glitch-node" data-easter="1" style="right:14px;top:14px" aria-label="Hidden glitch"></button>
-              <button class="glitch-node" data-easter="1" style="left:16px;bottom:20px" aria-label="Hidden glitch"></button>
-            </div>
-            <div class="hint">Complete 360° to unveil. Clean, calm, and slightly ridiculous.</div>
-          </div>
-        </div>
-
-        <div class="panel" id="revealPanel" hidden>
+      <div class="explosion" id="explosion" aria-hidden="true"></div>
+      <div class="reveal-panel" id="revealPanel" hidden>
           <div class="panel-title">Unveiled</div>
 
           <div class="status">
@@ -103,9 +59,7 @@
           </div>
 
           <canvas id="shareCanvas" width="1080" height="1350" hidden></canvas>
-        </div>
       </div>
-    </section>
     </section>
 
     <dialog id="easterDialog" class="easter">
@@ -121,11 +75,7 @@
       </form>
     </dialog>
 
-    <footer class="footer">
-      <span class="muted">Calm tech. No pressure. No doom.</span>
-    </footer>
-
-    <script type="module" src="./app.js"></script>
+    <script src="./app.js" defer></script>
   </main>
 </body>
 </html>

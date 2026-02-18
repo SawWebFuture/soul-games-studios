@@ -2,7 +2,11 @@
 
 This experiment will reveal a **First Contact** collectible card.
 
-Run locally:
+**Interaction:** Click and hold the sun for 3 seconds. The progress ring fills; on completion, the approved section is revealed.
+
+Run locally (required — ES modules don't work with `file://`):
 ```bash
-python3 -m http.server 8000
+npm run serve
+# or: python3 -m http.server 3333
 ```
+Then open http://localhost:3333/experiments/dyson-swarm/

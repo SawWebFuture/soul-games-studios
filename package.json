@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Soul Games Studios monorepo",
   "scripts": {
+    "serve": "npx serve -s . -p 3333",
     "card:compose": "node cards/scripts/compose_card.js",
     "card:batch": "node cards/scripts/compose_batch.js",
     "card:demo": "node cards/scripts/demo_cards.js",
