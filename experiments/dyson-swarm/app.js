@@ -11,6 +11,7 @@ const cards = [
 
 const restartBtn = document.getElementById('restartBtn');
 
+const satellites = document.getElementById('satellites');
 const orbit = document.getElementById('orbit');
 const orbitPrompt = document.getElementById('orbitPrompt');
 const sun = document.getElementById('sun');
@@ -62,6 +63,7 @@ restartBtn.addEventListener('click', () => {
   revealPanel.hidden = true;
   orbit.hidden = false;
   orbitPrompt.hidden = false;
+  satellites.hidden = false;
   explosion.classList.remove('burst');
 });
 
@@ -123,6 +125,7 @@ function unveilRandom() {
 
   orbit.hidden = true;
   orbitPrompt.hidden = true;
+  satellites.hidden = true;
   explosion.classList.add('burst');
   explosion.addEventListener('animationend', function onEnd() {
     explosion.removeEventListener('animationend', onEnd);
@@ -322,6 +325,7 @@ riddleForm.addEventListener('submit', (e) => {
     secretUnlocked = true;
     orbit.hidden = true;
     orbitPrompt.hidden = true;
+    satellites.hidden = true;
     revealPanel.hidden = false;
     renderCardByData(disconnectedCard);
     captureBox.hidden = false;
