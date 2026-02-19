@@ -36,7 +36,13 @@ const riddleForm = document.getElementById('riddleForm');
 const riddleInput = document.getElementById('riddleInput');
 const riddleFeedback = document.getElementById('riddleFeedback');
 
+const GAME_CONFIG = {
+  holdSeconds: 3,
+  orbitPrompt: 'Help SpaceX build a Dyson Swarm'
+};
+
 seriesEl.textContent = SERIES;
+if (orbitPrompt) orbitPrompt.textContent = GAME_CONFIG.orbitPrompt;
 
 const disconnectedCard = {
   id: 'DYSON_SWARM-X01',
@@ -45,8 +51,6 @@ const disconnectedCard = {
   short: 'The signal dropped between power and meaning.',
   description: 'An off-ledger card. It appears when you remember that care, dignity, and love are not commodities — even in a Type II world.'
 };
-
-const HOLD_SECONDS = 3;
 
 let current = 0;
 let holding = false;
@@ -82,9 +86,9 @@ function tick(ts) {
   if (!holding) return;
   if (!startTs) startTs = ts;
   const elapsed = (ts - startTs) / 1000;
-  const pct = Math.max(0, Math.min(100, (elapsed / HOLD_SECONDS) * 100));
+  const pct = Math.max(0, Math.min(100, (elapsed / GAME_CONFIG.holdSeconds) * 100));
   setProgress(pct);
-  if (elapsed >= HOLD_SECONDS) {
+  if (elapsed >= GAME_CONFIG.holdSeconds) {
     holding = false;
     unveilRandom();
     return;
@@ -141,14 +145,10 @@ nextBtn.addEventListener('click', () => {
   renderCard(current + 1);
 });
 
-['pointerdown', 'mousedown', 'touchstart'].forEach((ev) => {
-  orbit.addEventListener(ev, startHold, { passive: false });
-});
-['pointerup', 'pointercancel', 'mouseup', 'touchend', 'touchcancel'].forEach((ev) => {
-  orbit.addEventListener(ev, endHold, { passive: false });
-});
+orbit.addEventListener('pointerdown', startHold, { passive: false });
+orbit.addEventListener('pointerup', endHold, { passive: false });
+orbit.addEventListener('pointercancel', endHold, { passive: false });
 orbit.addEventListener('pointerleave', (e) => { if (holding) endHold(e); }, { passive: false });
-orbit.addEventListener('mouseleave', (e) => { if (holding) endHold(e); });
 orbit.addEventListener('keydown', (e) => {
   if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); startHold(e); }
 });
@@ -303,9 +303,6 @@ function handleSunTap() {
 }
 
 orbit.addEventListener('click', handleSunTap);
-document.querySelectorAll('.glitch-node').forEach((node) => {
-  node.addEventListener('click', (e) => { e.preventDefault(); openRiddleDialog(); });
-});
 
 function normalizeAnswer(s) {
   return String(s || '').toLowerCase().trim();
