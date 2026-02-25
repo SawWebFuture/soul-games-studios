@@ -1,0 +1,25 @@
+---
+description: "Environment and API configuration guidance for Next.js and backend integration"
+alwaysApply: true
+---
+
+# Environment Configuration
+
+## API Configuration
+- API settings are defined in `.env.local` (or `.env` for production)
+- Key variables:
+  - `NEXT_PUBLIC_USE_MOCK_API` - Toggle between mock and real APIs
+  - `NEXT_PUBLIC_API_BASE_URL` - Backend API base URL
+- For .NET backend: Check `appsettings.json` or `appsettings.Development.json` for API URLs
+- Never hardcode API URLs in components - always use environment variables
+
+## When adding API calls
+- Check `.env.local` for existing API configuration
+- Use `process.env.NEXT_PUBLIC_API_BASE_URL` in code
+- Reference the backend's `appsettings.json` to find the correct endpoint URLs
+- Always handle both mock and real API modes based on `NEXT_PUBLIC_USE_MOCK_API`
+
+## Environment Files
+- `.env.local` - Local development (gitignored)
+- `.env` - Production defaults (can be committed if no secrets)
+- Never commit `.env.local` with real API keys or secrets

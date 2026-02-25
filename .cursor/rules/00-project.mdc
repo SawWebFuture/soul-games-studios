@@ -1,0 +1,22 @@
+---
+description: "Project-wide rules for Soul Games Studios landing page (Yarn, brand assets, repo expectations)."
+alwaysApply: true
+---
+
+# Soul Games Studios — Project Rules
+
+## Package manager
+- Use **Yarn** only.
+- Never suggest npm/pnpm commands.
+- Use: `yarn dev`, `yarn build`, `yarn lint`, `yarn add <pkg>`, `yarn remove <pkg>`.
+
+## Repo context
+- Next.js App Router project (`app/`).
+- Brand assets live in `public/brand/`.
+  - Reference via URL paths like `/brand/logo.png` and `/brand/banner.png` (never filesystem paths).
+
+## Output expectations
+- Prefer minimal, clean changes.
+- Code must compile and run.
+- When adding UI features: include loading/success/error states.
+- Avoid over-abstraction early; extract components only when duplication appears.

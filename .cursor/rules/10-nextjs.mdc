@@ -1,0 +1,27 @@
+---
+description: "Next.js App Router conventions for pages, routes, components, and images."
+globs:
+  - "app/**"
+  - "components/**"
+alwaysApply: false
+---
+
+# Next.js App Router Rules
+
+## Conventions
+- Use App Router (`app/` directory).
+- Prefer Server Components by default.
+- Use Client Components only when needed (forms, state, effects, browser APIs).
+  - If client needed, add `"use client"` and keep client surface area small.
+
+## File patterns
+- Page: `app/page.tsx`
+- Layout: `app/layout.tsx`
+- API routes: `app/api/**/route.ts`
+
+## Images
+- Use `next/image` for logo/banner where appropriate.
+- Use meaningful `alt` text.
+- Brand asset examples:
+  - `/brand/logo.png`
+  - `/brand/banner.png`

@@ -1,0 +1,15 @@
+---
+description: "Reusable templates for sections (hero, feature grid, CTA). Mention with @90-templates."
+alwaysApply: false
+---
+
+# Templates (manual)
+
+When asked to generate landing page UI, use:
+- Hero: H1 + short subhead + waitlist form + trust line
+- Feature grid: 3–6 cards with short headings and 1–2 lines each
+- CTA: repeated waitlist block near footer
+
+Keep copy aligned with:
+- “Your AI board of agents — built for future founders”
+- Calm, confident, builder tone (no hype)

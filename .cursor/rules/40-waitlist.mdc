@@ -1,0 +1,28 @@
+---
+description: "Waitlist form + API route conventions: validation, response shape, bot protection, privacy."
+globs:
+  - "app/api/waitlist/route.ts"
+  - "app/**/*.tsx"
+  - "components/**/*.tsx"
+alwaysApply: false
+---
+
+# Waitlist Rules
+
+## UX
+Waitlist form must include:
+- email validation
+- loading state
+- success state
+- error state
+
+## API
+- Route: `app/api/waitlist/route.ts`
+- Validate email server-side.
+- Return JSON with consistent shape:
+  - `{ ok: true }`
+  - `{ ok: false, error: "..." }`
+
+## Privacy & safety
+- Do not log full emails in production.
+- Add basic bot protection where reasonable (honeypot or lightweight rate limit).

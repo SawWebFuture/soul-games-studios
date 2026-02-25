@@ -1,0 +1,34 @@
+---
+description: "SEO requirements for Soul Games Studios landing page: metadata, robots, sitemap, structured data."
+globs:
+  - "app/layout.tsx"
+  - "app/robots.ts"
+  - "app/sitemap.ts"
+  - "app/**/page.tsx"
+alwaysApply: false
+---
+
+# SEO Rules (Landing Page)
+
+## Metadata
+- Use Next.js Metadata API in `app/layout.tsx`.
+- Set:
+  - title (template + default)
+  - description
+  - openGraph
+  - twitter card
+  - icons
+- Add canonical URL once domain is known.
+
+## Crawlability
+- Implement:
+  - `app/robots.ts`
+  - `app/sitemap.ts`
+
+## Content SEO
+- Exactly one H1 on the landing page.
+- Use descriptive headings (H2/H3) for sections.
+- Include descriptive copy (not just CTA text).
+
+## Structured data
+- Add JSON-LD (Organization + Website). Keep it minimal and accurate.
