@@ -1,94 +1,315 @@
+import Image from "next/image";
+import { Header } from "@/components/header";
+import { WaitlistForm } from "@/components/waitlist-form";
+import { FeatureTabs } from "@/components/feature-tabs";
+import { Footer } from "@/components/footer";
+import { ScrollAnimate } from "@/components/scroll-animate";
+import { HeroCarousel } from "@/components/hero-carousel";
+import { AboutSection } from "@/components/about-section";
+
 export default function Home() {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Soul Games Studios",
-    url: "https://soulgamesstudios.com",
-    description:
-      "AI-first creator studio building calm, intentional products and philosophical web experiences.",
-    email: "reggiewilliamsfounder@gmail.com",
-  };
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Soul Games Studios",
+      description:
+        "Soul Games Studios builds calm, AI-powered tools and games that help future founders grow sustainably.",
+      url: "https://soulgamesstudios.com",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Soul Games Studios",
+      url: "https://soulgamesstudios.com",
+      description:
+        "AI board of agents and strategic tools for founders building sustainable companies.",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is an AI board of agents?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "An AI board of agents is a strategic advisory system that acts like a board of directors. It provides thoughtful guidance on key decisions, long-term planning, and sustainable growth strategies—helping founders make better choices without the hustle culture pressure.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Who is this for?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Our tools are designed for future founders—both aspiring entrepreneurs and early-stage founders who want to build sustainable companies. If you're tired of hustle culture and want strategic, calm support for long-term growth, this is for you.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How is this different from other AI tools?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Unlike productivity-focused AI tools that optimize for speed and output, our AI board of agents emphasizes strategic thinking, sustainable growth, and thoughtful decision-making. We're building for the long term, not quick wins.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What does 'calm' mean in your brand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Calm means thoughtful, strategic support without the pressure of hustle culture. We believe in sustainable progress over frantic activity, helping founders build companies that last rather than burn out.",
+          },
+        },
+      ],
+    },
+  ];
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#fbfcfa_0%,#f5f7f4_100%)] text-[#16233e]">
+    <div className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <Header />
 
-      <div className="pointer-events-none fixed -left-[8vmax] -top-[12vmax] -z-10 h-[42vmax] w-[42vmax] animate-aurora-a rounded-full bg-[radial-gradient(circle,#9adf63,transparent_58%)] opacity-35 blur-[60px]" />
-      <div className="pointer-events-none fixed -bottom-[12vmax] -right-[14vmax] -z-10 h-[42vmax] w-[42vmax] animate-aurora-b rounded-full bg-[radial-gradient(circle,#4f7fa1,transparent_58%)] opacity-35 blur-[60px]" />
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
-      <header className="mx-auto mt-4 flex w-[min(1060px,92vw)] items-center justify-between gap-5">
-        <a href="#top" className="flex items-center gap-2.5 font-bold text-[#16233e]">
-          <img
-            src="/logo.jpg"
-            alt="Soul Games Studios logo"
-            className="h-10 w-10 rounded-[10px] border border-[#4a658838] object-cover"
-          />
-          <span>Soul Games Studios</span>
-        </a>
-        <nav className="hidden gap-4 md:flex">
-          <a href="#about" className="font-semibold text-[#4f6482] hover:text-[#2b3d63]">About</a>
-          <a href="#experiments" className="font-semibold text-[#4f6482] hover:text-[#2b3d63]">Experiments</a>
-          <a href="#contact" className="font-semibold text-[#4f6482] hover:text-[#2b3d63]">Contact</a>
-        </nav>
-      </header>
+      {/* About Section */}
+      <AboutSection />
 
-      <main id="top" className="mx-auto my-5 grid w-[min(1060px,92vw)] gap-4 pb-16">
-        <section className="reveal card-glass hero-glow relative overflow-hidden rounded-[20px] border border-[#4a658838] p-7 shadow-[0_14px_36px_rgba(41,61,99,0.08)]">
-          <p className="mb-2.5 text-xs uppercase tracking-[.12em] text-[#4f6482]">AI-first creator studio</p>
-          <h1 className="mb-3 text-[clamp(2rem,5vw,3.4rem)] leading-[1.05] font-semibold">Calm software for a loud internet.</h1>
-          <p className="max-w-[60ch] text-[#2a3e5c]">
-            We build intentional AI products and philosophical web experiences designed to feel simple,
-            delightful, and deeply human.
-          </p>
-          <div className="mt-5 flex flex-wrap gap-2.5">
-            <a href="#experiments" className="btn-primary">Explore experiments</a>
-            <a href="mailto:reggiewilliamsfounder@gmail.com" className="btn-ghost">Work with us</a>
+      {/* Statistics Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            <div className="text-center">
+              <div className="mb-2 text-4xl font-bold text-gray-900">5+</div>
+              <div className="h-px bg-gray-300" />
+              <div className="mt-2 text-sm text-gray-600">
+                Years building strategic tools
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="mb-2 text-4xl font-bold text-gray-900">500+</div>
+              <div className="h-px bg-gray-300" />
+              <div className="mt-2 text-sm text-gray-600">
+                Founders on waitlist
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="mb-2 text-4xl font-bold text-gray-900">12+</div>
+              <div className="h-px bg-gray-300" />
+              <div className="mt-2 text-sm text-gray-600">
+                AI agents in development
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="mb-2 text-4xl font-bold text-gray-900">98%</div>
+              <div className="h-px bg-gray-300" />
+              <div className="mt-2 text-sm text-gray-600">
+                Founder satisfaction
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section with Tabs */}
+      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
+        <div className="text-center">
+          <h2 className="mb-6 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
+            Innovative AI meets strategic thinking
+            <br />
+            for sustainable founder success
+          </h2>
+          <FeatureTabs />
+        </div>
+      </section>
+
+      {/* Vision/Approach Section */}
+      <ScrollAnimate>
+        <section className="bg-gray-50 py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
+              From vision to reality — we craft your strategic path with
+              <br />
+              unrivaled attention to sustainable growth
+            </h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  title: "Strategic Planning",
+                  description:
+                    "Long-term thinking and decision frameworks that align with your values.",
+                },
+                {
+                  title: "Sustainable Growth",
+                  description:
+                    "Build systems that scale without the burnout. Focus on what matters.",
+                },
+                {
+                  title: "Calm Guidance",
+                  description:
+                    "Thoughtful support without hustle culture pressure. Build companies that last.",
+                },
+                {
+                  title: "AI Advisory",
+                  description:
+                    "Your board of agents provides strategic insights when you need them most.",
+                },
+              ].map((feature, index) => (
+                <div
+                  key={index}
+                  className="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  <div className="mb-4 h-12 w-12 rounded-lg bg-gray-100" />
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{feature.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
+      </ScrollAnimate>
 
-        <section className="grid gap-4 md:grid-cols-2">
-          <article className="reveal card-glass rounded-[20px] border border-[#4a658838] p-7 shadow-[0_14px_36px_rgba(41,61,99,0.08)]">
-            <h2 id="about" className="mb-2.5 text-2xl font-semibold">What we believe</h2>
-            <ul className="list-disc space-y-1 pl-5 text-[#273a58]">
-              <li>Technology should reduce noise, not add to it.</li>
-              <li>AI can be soulful, useful, and playful at the same time.</li>
-              <li>Small experiments can become meaningful products.</li>
-            </ul>
-          </article>
-          <article className="reveal delay-1 card-glass rounded-[20px] border border-[#4a658838] p-7 shadow-[0_14px_36px_rgba(41,61,99,0.08)]">
-            <h2 className="mb-2.5 text-2xl font-semibold">What we build</h2>
-            <p className="text-[#2a3e5c]">Single-purpose tools, identity artifacts, and creative AI utilities.</p>
-            <p className="text-[#2a3e5c]">Built quickly. Shipped thoughtfully. Improved in public.</p>
-          </article>
-        </section>
-
-        <section id="experiments" className="reveal card-glass rounded-[20px] border border-[#4a658838] p-7 shadow-[0_14px_36px_rgba(41,61,99,0.08)]">
-          <h2 className="mb-3 text-2xl font-semibold">Current experiments</h2>
-          <div className="grid gap-3 md:grid-cols-2">
-            <article className="rounded-2xl border border-[#4a658838] bg-white/70 p-4">
-              <h3 className="mb-2 text-lg font-semibold">Bot Photo Booth</h3>
-              <p className="text-[#2a3e5c]">A nostalgic 4-panel photo strip generator for AI agents and bot identities.</p>
-            </article>
-            <article className="rounded-2xl border border-[#4a658838] bg-white/70 p-4">
-              <h3 className="mb-2 text-lg font-semibold">AI Board of Agents</h3>
-              <p className="text-[#2a3e5c]">A calm command center for creating, organizing, and collaborating with AI agents.</p>
-            </article>
+      {/* Testimonial Section */}
+      <ScrollAnimate>
+        <section className="mx-auto max-w-7xl px-6 py-24">
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-12">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div>
+                <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wide text-gray-500">
+                  Founder Review
+                </span>
+                <blockquote className="mb-6 text-lg leading-8 text-gray-700">
+                  &quot;Soul Games Studios&apos; AI board helped me think through
+                  my first major pivot with clarity I didn&apos;t have before. The
+                  strategic guidance felt like having experienced advisors, but
+                  without the pressure to move fast. It&apos;s exactly what I
+                  needed as a first-time founder.&quot;
+                </blockquote>
+                <div className="flex items-center gap-4">
+                  <div className="h-12 w-12 rounded-full bg-gray-300" />
+                  <div>
+                    <div className="font-semibold text-gray-900">Sarah M.</div>
+                    <div className="text-sm text-gray-600">
+                      Founder & CEO, TechCo
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="h-32 w-32 rounded-full bg-gray-200 opacity-50" />
+              </div>
+            </div>
           </div>
         </section>
+      </ScrollAnimate>
 
-        <section id="contact" className="reveal card-glass rounded-[20px] border border-[#4a658838] p-7 shadow-[0_14px_36px_rgba(41,61,99,0.08)]">
-          <h2 className="mb-2.5 text-2xl font-semibold">Build with us</h2>
-          <p className="mb-4 text-[#2a3e5c]">
-            If you’re building at the edge of AI, culture, and product design, we’d love to connect.
-          </p>
-          <a href="mailto:reggiewilliamsfounder@gmail.com?subject=Soul%20Games%20Studios" className="btn-primary">
-            Contact Soul Games Studios
-          </a>
+      {/* Projects/Showcase Section */}
+      <ScrollAnimate>
+        <section className="bg-gray-50 py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="mb-8 flex items-center justify-between">
+              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
+                Showcasing excellence
+                <br />
+                our strategic AI solutions
+              </h2>
+              <button className="hidden rounded-full bg-red-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-red-700 md:block">
+                View All Solutions
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div className="rounded-lg bg-white p-6 shadow-sm">
+                <div className="mb-4 grid grid-cols-2 gap-4">
+                  <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+                    <Image
+                      src="/brand/LinkedIn_Banner_003.png"
+                      alt="Strategic Planning Tool"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
+                    <Image
+                      src="/brand/SoulGamesStudios_Square_Logo.jpg"
+                      alt="Decision Framework"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-gray-900">
+                  Strategic Planning Suite
+                </h3>
+                <p className="mb-4 text-sm text-gray-600">2024</p>
+                <div className="flex flex-wrap gap-2">
+                  {["Strategic", "AI-Powered", "Long-term", "Sustainable"].map(
+                    (tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
+                      >
+                        {tag}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-lg bg-white p-6 shadow-sm">
+                <div className="mb-4 relative aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
+                  <Image
+                    src="/brand/LinkedIn_Banner_003.png"
+                    alt="Growth Framework"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="mb-2 text-xl font-semibold text-gray-900">
+                  Growth Framework AI
+                </h3>
+                <p className="mb-4 text-sm text-gray-600">2023</p>
+                <div className="flex flex-wrap gap-2">
+                  {["Growth", "Sustainable", "Strategic", "Founder-Focused"].map(
+                    (tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
+                      >
+                        {tag}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
-      </main>
+      </ScrollAnimate>
+
+      {/* Newsletter/Waitlist Section */}
+      <section id="waitlist" className="mx-auto max-w-7xl px-6 py-24">
+        <div className="rounded-2xl bg-gradient-to-br from-teal-50 to-blue-50 px-8 py-16 md:px-16">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="mb-4 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
+              Stay up to date
+            </h2>
+            <p className="mb-8 text-lg text-gray-600">
+              Join our waitlist and be among the first to experience our AI
+              board of agents and strategic tools for future founders.
+            </p>
+            <WaitlistForm />
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 }

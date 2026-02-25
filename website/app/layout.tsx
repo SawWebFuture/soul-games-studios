@@ -13,27 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://soulgamesstudios.com"),
   title: {
     default: "Soul Games Studios",
     template: "%s · Soul Games Studios",
   },
   description:
-    "Soul Games Studios builds calm, intentional AI-first products and philosophical web experiences.",
+    "Strategic AI board of agents for founders building sustainable companies. Get calm, thoughtful guidance on key decisions, long-term planning, and sustainable growth—without hustle culture pressure.",
   openGraph: {
-    title: "Soul Games Studios | AI-First Creator Studio",
+    title: "Soul Games Studios — Strategic AI for Founders",
     description:
-      "Calm software for a loud internet. AI-first products and philosophical web experiences.",
-    url: "https://soulgamesstudios.com",
-    siteName: "Soul Games Studios",
-    images: ["/og-image.svg"],
-    type: "website",
+      "Your AI board of agents provides calm, strategic guidance for building sustainable companies. For founders who build for the long term.",
+    images: ["/brand/LinkedIn_Banner_003.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Soul Games Studios | AI-First Creator Studio",
-    description: "Calm software for a loud internet.",
-    images: ["/og-image.svg"],
+    images: ["/brand/LinkedIn_Banner_003.png"],
   },
   icons: {
     icon: "/favicon.ico",
