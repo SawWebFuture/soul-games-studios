@@ -1,21 +1,28 @@
-# Soul Games Studios Website (Base)
+# Soul Games Studios Website (Starting Point)
 
-Simple single-page starter for the Soul Games Studios public website.
+This `/website` folder is now the **primary starting point** for the Soul Games Studios site.
 
-## Files
-- `index.html` — single-page site structure + copy
-- `styles.css` — calm, mobile-first visual style
+It uses Next.js + Tailwind-style utility classes (via global CSS) and includes:
 
-## SEO included
-- Basic on-page SEO tags (title, description, canonical, robots)
-- Open Graph + Twitter card tags
-- Structured data (Organization JSON-LD)
-- `robots.txt`
-- `sitemap.xml`
-- `og-image.svg`
+- Modern animated landing page
+- Brand-colored UI
+- SEO metadata + OG image
+- Logo assets in `public/`
 
-## Next steps
-- Confirm production domain (replace `https://soulgamesstudios.com` if needed)
-- Add real links for live experiments
-- Add newsletter/email capture block
-- Port into Next.js if dynamic pages are needed
+## Run locally
+
+```bash
+cd website
+npm install
+npm run dev
+```
+
+Then open `http://localhost:3000`.
+
+## Structure
+
+- `app/page.tsx` — landing page content + sections
+- `app/layout.tsx` — SEO metadata and root layout
+- `app/globals.css` — animations and style utilities
+- `public/logo.jpg` — brand logo
+- `public/og-image.svg` — social preview image

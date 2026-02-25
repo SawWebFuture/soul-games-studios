@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Soul Games Studios">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fefdf9"/>
+      <stop offset="100%" stop-color="#f6f5f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="24" fill="#fff" stroke="#e7e5dd"/>
+  <text x="120" y="220" font-family="Inter, Arial, sans-serif" font-size="30" fill="#666" letter-spacing="2">SOUL GAMES STUDIOS</text>
+  <text x="120" y="320" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700" fill="#151515">Calm software</text>
+  <text x="120" y="395" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700" fill="#151515">for a loud internet.</text>
+</svg>
