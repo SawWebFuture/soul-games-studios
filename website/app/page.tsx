@@ -14,7 +14,7 @@ export default function Home() {
       "@type": "Organization",
       name: "Soul Games Studios",
       description:
-        "Soul Games Studios builds calm, AI-powered tools and games that help future founders grow sustainably.",
+        "Soul Games Studios builds calm, intentional AI-first products and philosophical web experiences.",
       url: "https://soulgamesstudios.com",
     },
     {
@@ -23,7 +23,7 @@ export default function Home() {
       name: "Soul Games Studios",
       url: "https://soulgamesstudios.com",
       description:
-        "AI board of agents and strategic tools for founders building sustainable companies.",
+        "A studio creating AI-first tools, identity artifacts, and philosophical digital experiences.",
     },
     {
       "@context": "https://schema.org",
@@ -31,34 +31,26 @@ export default function Home() {
       mainEntity: [
         {
           "@type": "Question",
-          name: "What is an AI board of agents?",
+          name: "What does Soul Games Studios build?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "An AI board of agents is a strategic advisory system that acts like a board of directors. It provides thoughtful guidance on key decisions, long-term planning, and sustainable growth strategies—helping founders make better choices without the hustle culture pressure.",
+            text: "We build calm AI-first products, playful web experiments, and identity tools for creators and AI-native teams.",
           },
         },
         {
           "@type": "Question",
-          name: "Who is this for?",
+          name: "What does calm-first mean?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Our tools are designed for future founders—both aspiring entrepreneurs and early-stage founders who want to build sustainable companies. If you're tired of hustle culture and want strategic, calm support for long-term growth, this is for you.",
+            text: "Calm-first means reducing cognitive noise, simplifying decisions, and designing software that feels clear, grounded, and useful.",
           },
         },
         {
           "@type": "Question",
-          name: "How is this different from other AI tools?",
+          name: "Are you a product studio or agency?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Unlike productivity-focused AI tools that optimize for speed and output, our AI board of agents emphasizes strategic thinking, sustainable growth, and thoughtful decision-making. We're building for the long term, not quick wins.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What does 'calm' mean in your brand?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Calm means thoughtful, strategic support without the pressure of hustle culture. We believe in sustainable progress over frantic activity, helping founders build companies that last rather than burn out.",
+            text: "Primarily a product studio. We occasionally collaborate on aligned experimental builds.",
           },
         },
       ],
@@ -73,100 +65,69 @@ export default function Home() {
       />
       <Header />
 
-      {/* Hero Carousel */}
       <HeroCarousel />
-
-      {/* About Section */}
       <AboutSection />
 
-      {/* Statistics Section */}
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="text-center">
-              <div className="mb-2 text-4xl font-bold text-gray-900">5+</div>
-              <div className="h-px bg-gray-300" />
-              <div className="mt-2 text-sm text-gray-600">
-                Years building strategic tools
+            {[
+              ["AI-first", "Built around practical AI workflows"],
+              ["Calm-first", "Designed to reduce noise and overwhelm"],
+              ["Small-batch", "Focused experiments shipped quickly"],
+              ["Human-centered", "Technology in service of people"],
+            ].map(([title, desc]) => (
+              <div key={title} className="text-center">
+                <div className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">{title}</div>
+                <div className="h-px bg-gray-300" />
+                <div className="mt-2 text-sm text-gray-600">{desc}</div>
               </div>
-            </div>
-            <div className="text-center">
-              <div className="mb-2 text-4xl font-bold text-gray-900">500+</div>
-              <div className="h-px bg-gray-300" />
-              <div className="mt-2 text-sm text-gray-600">
-                Founders on waitlist
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="mb-2 text-4xl font-bold text-gray-900">12+</div>
-              <div className="h-px bg-gray-300" />
-              <div className="mt-2 text-sm text-gray-600">
-                AI agents in development
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="mb-2 text-4xl font-bold text-gray-900">98%</div>
-              <div className="h-px bg-gray-300" />
-              <div className="mt-2 text-sm text-gray-600">
-                Founder satisfaction
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section with Tabs */}
       <section id="features" className="mx-auto max-w-7xl px-6 py-24">
         <div className="text-center">
           <h2 className="mb-6 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
-            Innovative AI meets strategic thinking
-            <br />
-            for sustainable founder success
+            What we’re building now
           </h2>
           <FeatureTabs />
         </div>
       </section>
 
-      {/* Vision/Approach Section */}
       <ScrollAnimate>
-        <section className="bg-gray-50 py-24">
+        <section id="experiments" className="bg-gray-50 py-24">
           <div className="mx-auto max-w-7xl px-6">
             <h2 className="mb-12 text-center text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
-              From vision to reality — we craft your strategic path with
-              <br />
-              unrivaled attention to sustainable growth
+              Studio experiments in motion
             </h2>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {[
                 {
-                  title: "Strategic Planning",
+                  title: "Bot Photo Booth",
                   description:
-                    "Long-term thinking and decision frameworks that align with your values.",
+                    "A nostalgic 4-panel strip generator for AI agents and bot identities.",
                 },
                 {
-                  title: "Sustainable Growth",
+                  title: "AI Board of Agents",
                   description:
-                    "Build systems that scale without the burnout. Focus on what matters.",
+                    "A calm command center for planning, reflection, and strategic decision support.",
                 },
                 {
-                  title: "Calm Guidance",
+                  title: "Identity Artifacts",
                   description:
-                    "Thoughtful support without hustle culture pressure. Build companies that last.",
+                    "Shareable visuals and lightweight tools for digital-first creators.",
                 },
                 {
-                  title: "AI Advisory",
+                  title: "Creator Systems",
                   description:
-                    "Your board of agents provides strategic insights when you need them most.",
+                    "Automation and AI workflows that help small teams ship with less chaos.",
                 },
               ].map((feature, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
-                >
+                <div key={index} className="rounded-lg bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                   <div className="mb-4 h-12 w-12 rounded-lg bg-gray-100" />
-                  <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                    {feature.title}
-                  </h3>
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900">{feature.title}</h3>
                   <p className="text-sm text-gray-600">{feature.description}</p>
                 </div>
               ))}
@@ -175,134 +136,42 @@ export default function Home() {
         </section>
       </ScrollAnimate>
 
-      {/* Testimonial Section */}
       <ScrollAnimate>
         <section className="mx-auto max-w-7xl px-6 py-24">
           <div className="rounded-2xl border border-gray-200 bg-gray-50 p-8 md:p-12">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div>
                 <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wide text-gray-500">
-                  Founder Review
+                  Studio philosophy
                 </span>
                 <blockquote className="mb-6 text-lg leading-8 text-gray-700">
-                  &quot;Soul Games Studios&apos; AI board helped me think through
-                  my first major pivot with clarity I didn&apos;t have before. The
-                  strategic guidance felt like having experienced advisors, but
-                  without the pressure to move fast. It&apos;s exactly what I
-                  needed as a first-time founder.&quot;
+                  &quot;We believe the next wave of software should feel less like noise and more like signal —
+                  clear, thoughtful tools that help people build meaningful things.&quot;
                 </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-gray-300" />
-                  <div>
-                    <div className="font-semibold text-gray-900">Sarah M.</div>
-                    <div className="text-sm text-gray-600">
-                      Founder & CEO, TechCo
-                    </div>
-                  </div>
-                </div>
+                <div className="font-semibold text-gray-900">Soul Games Studios</div>
+                <div className="text-sm text-gray-600">Calm, intentional, AI-first</div>
               </div>
-              <div className="flex items-center justify-center">
-                <div className="h-32 w-32 rounded-full bg-gray-200 opacity-50" />
+              <div className="relative min-h-[180px] overflow-hidden rounded-xl bg-white">
+                <Image
+                  src="/brand/LinkedIn_Banner_003.png"
+                  alt="Soul Games Studios visual"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
           </div>
         </section>
       </ScrollAnimate>
 
-      {/* Projects/Showcase Section */}
-      <ScrollAnimate>
-        <section className="bg-gray-50 py-24">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="mb-8 flex items-center justify-between">
-              <h2 className="text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
-                Showcasing excellence
-                <br />
-                our strategic AI solutions
-              </h2>
-              <button className="hidden rounded-full bg-red-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-red-700 md:block">
-                View All Solutions
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div className="rounded-lg bg-white p-6 shadow-sm">
-                <div className="mb-4 grid grid-cols-2 gap-4">
-                  <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
-                    <Image
-                      src="/brand/LinkedIn_Banner_003.png"
-                      alt="Strategic Planning Tool"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
-                    <Image
-                      src="/brand/SoulGamesStudios_Square_Logo.jpg"
-                      alt="Decision Framework"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                  Strategic Planning Suite
-                </h3>
-                <p className="mb-4 text-sm text-gray-600">2024</p>
-                <div className="flex flex-wrap gap-2">
-                  {["Strategic", "AI-Powered", "Long-term", "Sustainable"].map(
-                    (tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
-                      >
-                        {tag}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-
-              <div className="rounded-lg bg-white p-6 shadow-sm">
-                <div className="mb-4 relative aspect-[16/9] overflow-hidden rounded-lg bg-gray-100">
-                  <Image
-                    src="/brand/LinkedIn_Banner_003.png"
-                    alt="Growth Framework"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="mb-2 text-xl font-semibold text-gray-900">
-                  Growth Framework AI
-                </h3>
-                <p className="mb-4 text-sm text-gray-600">2023</p>
-                <div className="flex flex-wrap gap-2">
-                  {["Growth", "Sustainable", "Strategic", "Founder-Focused"].map(
-                    (tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700"
-                      >
-                        {tag}
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </ScrollAnimate>
-
-      {/* Newsletter/Waitlist Section */}
       <section id="waitlist" className="mx-auto max-w-7xl px-6 py-24">
         <div className="rounded-2xl bg-gradient-to-br from-teal-50 to-blue-50 px-8 py-16 md:px-16">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="mb-4 text-3xl font-semibold tracking-tight text-gray-900 md:text-4xl">
-              Stay up to date
+              Follow our studio drops
             </h2>
             <p className="mb-8 text-lg text-gray-600">
-              Join our waitlist and be among the first to experience our AI
-              board of agents and strategic tools for future founders.
+              Get first access to new experiments, product launches, and behind-the-scenes build notes.
             </p>
             <WaitlistForm />
           </div>

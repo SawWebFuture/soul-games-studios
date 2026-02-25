@@ -18,16 +18,16 @@ export const metadata: Metadata = {
     template: "%s · Soul Games Studios",
   },
   description:
-    "Strategic AI board of agents for founders building sustainable companies. Get calm, thoughtful guidance on key decisions, long-term planning, and sustainable growth—without hustle culture pressure.",
+    "Soul Games Studios builds calm, intentional AI-first products and philosophical web experiences.",
   openGraph: {
-    title: "Soul Games Studios — Strategic AI for Founders",
+    title: "Soul Games Studios | Calm AI-First Products",
     description:
-      "Your AI board of agents provides calm, strategic guidance for building sustainable companies. For founders who build for the long term.",
-    images: ["/brand/LinkedIn_Banner_003.png"],
+      "Calm software for a loud internet. Thoughtful AI experiments, identity tools, and creator products.",
+    images: ["/og-image.svg"],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/brand/LinkedIn_Banner_003.png"],
+    images: ["/og-image.svg"],
   },
   icons: {
     icon: "/favicon.ico",

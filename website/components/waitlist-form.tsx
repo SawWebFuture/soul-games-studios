@@ -9,9 +9,7 @@ export function WaitlistForm() {
   const [state, setState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const validateEmail = (email: string): boolean => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const validateEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,9 +26,7 @@ export function WaitlistForm() {
     try {
       const response = await fetch("/api/waitlist", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
@@ -43,7 +39,7 @@ export function WaitlistForm() {
         setState("error");
         setErrorMessage(data.error || "Something went wrong. Please try again.");
       }
-    } catch (error) {
+    } catch {
       setState("error");
       setErrorMessage("Network error. Please try again.");
     }
@@ -52,9 +48,7 @@ export function WaitlistForm() {
   if (state === "success") {
     return (
       <div className="rounded-lg border border-green-200 bg-green-50 p-6 text-center">
-        <p className="text-lg font-medium text-green-800">
-          Thank you! We&apos;ll be in touch soon.
-        </p>
+        <p className="text-lg font-medium text-green-800">Thanks — you’re on the list for studio drops.</p>
       </div>
     );
   }
@@ -62,9 +56,7 @@ export function WaitlistForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md">
       <div className="flex flex-col gap-3 sm:flex-row">
-        <label htmlFor="email" className="sr-only">
-          Email address
-        </label>
+        <label htmlFor="email" className="sr-only">Email address</label>
         <input
           id="email"
           type="email"
@@ -73,20 +65,18 @@ export function WaitlistForm() {
           placeholder="Enter your email"
           required
           disabled={state === "loading"}
-          className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-base focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-gray-100"
         />
         <button
           type="submit"
           disabled={state === "loading"}
-          className="rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-400"
         >
-          {state === "loading" ? "Joining..." : "Join Waitlist"}
+          {state === "loading" ? "Joining..." : "Get updates"}
         </button>
       </div>
       {state === "error" && errorMessage && (
-        <p className="mt-2 text-sm text-red-600" role="alert">
-          {errorMessage}
-        </p>
+        <p className="mt-2 text-sm text-red-600" role="alert">{errorMessage}</p>
       )}
     </form>
   );
