@@ -1,0 +1,278 @@
+workflows:
+  - id: daily_mental_health_ai_digest
+    name: "Daily Mental Health + AI Breakthroughs Digest"
+    schedule:
+      type: cron
+      expression: "0 7 * * *"
+      timezone: "America/New_York"
+
+    steps:
+      - id: fetch_sources
+        type: fetch
+        params:
+          sources:
+            # --- PSYCHOLOGY / MENTAL HEALTH ---
+            - id: psypost
+              type: rss
+              url: "https://www.psypost.org/feed"
+              tags: ["psychology", "mental-health", "research"]
+
+            - id: sciencedaily_psychology
+              type: rss
+              url: "https://www.sciencedaily.com/rss/mind_brain/psychology.xml"
+              tags: ["psychology", "mental-health", "research"]
+
+            - id: neuroscience_news
+              type: rss
+              url: "https://neurosciencenews.com/feed/"
+              tags: ["neuroscience", "mental-health", "brain"]
+
+            - id: apa_psycport
+              type: html
+              url: "https://www.apa.org/news/psycport"
+              selector: "article, .news-item"
+              tags: ["psychology", "apa", "news"]
+
+            - id: aps_news
+              type: html
+              url: "https://www.psychologicalscience.org/news/releases"
+              selector: "article, .post"
+              tags: ["psychology", "aps", "research"]
+
+            - id: psyarxiv
+              type: rss
+              url: "https://psyarxiv.com/feed.xml"
+              tags: ["psychology", "preprint", "research"]
+
+            # --- AI / ML BREAKTHROUGHS ---
+            - id: openai_blog
+              type: rss
+              url: "https://openai.com/blog/rss"
+              tags: ["ai", "openai"]
+
+            - id: deepmind_blog
+              type: rss
+              url: "https://deepmind.google/discover/rss/"
+              tags: ["ai", "deepmind"]
+
+            - id: meta_ai
+              type: rss
+              url: "https://ai.meta.com/blog/rss/"
+              tags: ["ai", "meta"]
+
+            - id: huggingface_blog
+              type: rss
+              url: "https://huggingface.co/blog/feed.xml"
+              tags: ["ai", "huggingface"]
+
+            - id: mit_tech_review_ai
+              type: rss
+              url: "https://www.technologyreview.com/feed/tag/artificial-intelligence/"
+              tags: ["ai", "news"]
+
+            - id: ars_technica_ai
+              type: rss
+              url: "https://feeds.arstechnica.com/arstechnica/technology-lab"
+              tags: ["ai", "news"]
+
+      - id: normalize
+        type: transform
+        params:
+          operations:
+            - op: clean_html
+            - op: strip_tracking_params_from_urls
+            - op: normalize_whitespace
+            - op: ensure_fields
+              fields: ["title", "url", "summary", "published_at", "source_id", "content"]
+
+      - id: filter_recent
+        type: filter
+        params:
+          where:
+            field: "published_at"
+            op: "gte"
+            value: "now-48h"
+
+      - id: dedupe
+        type: deduplicate
+        params:
+          keys: ["url"]
+          fuzzy:
+            field: "title"
+            similarity_threshold: 0.85
+
+      - id: classify_topic
+        type: llm
+        params:
+          model: "gpt-5.1-mini"
+          input_template: |
+            Classify this article into one or more of:
+            - mental_health
+            - psychology
+            - neuroscience
+            - ai_research
+            - ai_product
+            - other
+
+            Return JSON with:
+            { "primary_topic": "...", "secondary_topics": ["...", "..."] }
+
+            TITLE: {{title}}
+            SOURCE: {{source_id}}
+            SUMMARY: {{summary}}
+            CONTENT: {{content | truncate(2000)}}
+          output_mapping:
+            primary_topic: "primary_topic"
+            secondary_topics: "secondary_topics"
+
+      - id: rank_items
+        type: rank
+        params:
+          score_formula: |
+            score = freshness_score(published_at) * 0.4
+                  + source_authority_score(source_id) * 0.4
+                  + length_score(summary) * 0.2
+          limit: 20
+
+      - id: summarize_articles
+        type: llm
+        params:
+          model: "gpt-5.1-mini"
+          batch: true
+          input_template: |
+            You are writing a sharp, founder-friendly daily digest.
+            Summarize this article in 2–3 sentences, focusing on:
+            - the concrete finding or breakthrough
+            - why it matters for real people or practitioners
+            - any limitations or caveats
+
+            Return JSON:
+            { "short_headline": "...", "summary": "...", "one_sentence_takeaway": "...", "tags": ["...", "..."] }
+
+            TITLE: {{title}}
+            SOURCE: {{source_id}}
+            URL: {{url}}
+            PUBLISHED_AT: {{published_at}}
+            CONTENT: {{content | truncate(3500)}}
+          output_mapping:
+            short_headline: "digest_headline"
+            summary: "digest_summary"
+            one_sentence_takeaway: "digest_takeaway"
+            tags: "digest_tags"
+
+      - id: generate_perspective
+        type: llm
+        params:
+          model: "gpt-5.1"
+          group_by: "primary_topic"
+          input_template: |
+            You are Scott, an AI-first founder who cares deeply about mental health, behavior change, and practical impact.
+            You run a daily digest that connects psychology + mental health research with AI breakthroughs.
+
+            Today’s bucket: {{primary_topic}}
+
+            ARTICLES:
+            {{#each items}}
+            - TITLE: {{digest_headline}}
+              TAKEAWAY: {{digest_takeaway}}
+              SOURCE: {{source_id}}
+              URL: {{url}}
+            {{/each}}
+
+            Write a short commentary (120–200 words) that:
+            - finds the thread between these stories
+            - explains why this matters for practitioners, builders, and curious humans
+            - offers 1–2 “do this today” style suggestions
+            - stays grounded, not hypey
+
+            Output plain Markdown, no JSON.
+          output_field: "topic_commentary"
+
+      - id: build_newsletter
+        type: template
+        params:
+          format: markdown
+          template: |
+            # Daily Brain & Machine Digest 🧠🤖
+            _A daily bridge between mental health, psychology, and AI breakthroughs._
+
+            Date: {{ now | date("MMMM D, YYYY") }}
+
+            ---
+
+            ## 🧠 Mental Health & Psychology
+
+            {{#each items where primary_topic in ["mental_health", "psychology", "neuroscience"]}}
+            ### {{digest_headline}}
+            Source: {{source_id}}
+            Link: {{url}}
+
+            {{digest_summary}}
+
+            _Takeaway:_ {{digest_takeaway}}
+
+            ---
+            {{/each}}
+
+            {{ topic_commentary["mental_health"] ?? topic_commentary["psychology"] ?? "" }}
+
+            ---
+
+            ## 🤖 AI & Machine Intelligence
+
+            {{#each items where primary_topic in ["ai_research", "ai_product"]}}
+            ### {{digest_headline}}
+            Source: {{source_id}}
+            Link: {{url}}
+
+            {{digest_summary}}
+
+            _Takeaway:_ {{digest_takeaway}}
+
+            ---
+            {{/each}}
+
+            {{ topic_commentary["ai_research"] ?? topic_commentary["ai_product"] ?? "" }}
+
+            ---
+
+            ## 🧩 Putting It Together
+
+            {{#llm "gpt-5.1"}}
+            You are Scott, writing a closing section for your daily digest tying together mental health and AI.
+
+            Today’s psychology/mental-health highlights:
+            {{#each items where primary_topic in ["mental_health", "psychology", "neuroscience"]}}
+            - {{digest_headline}} → {{digest_takeaway}}
+            {{/each}}
+
+            Today’s AI highlights:
+            {{#each items where primary_topic in ["ai_research", "ai_product"]}}
+            - {{digest_headline}} → {{digest_takeaway}}
+            {{/each}}
+
+            Write a 150–220 word closing that:
+            - draws 1–2 big threads between the mind and the machine stories
+            - offers a reflective, hopeful tone
+            - ends with one concrete micro-action readers can take today.
+            {{/llm}}
+
+            ---
+            _Generated by OpenClaw + a slightly obsessed AI-first founder._
+
+      - id: publish_output
+        type: output
+        params:
+          channels:
+            - type: file
+              path: "out/daily_mental_health_ai_digest_{{ now | date('YYYY-MM-DD') }}.md"
+
+            - type: webhook
+              url: "{{ env.NEWSLETTER_WEBHOOK_URL }}"
+              method: POST
+              body_field: "content"
+              body_template_field: "newsletter_markdown"
+
+notes:
+  - "Exact step and parameter names may differ by OpenClaw build."
+  - "Canonical sequence: fetch → clean → filter → dedupe → classify → summarize → commentary → newsletter → publish."
