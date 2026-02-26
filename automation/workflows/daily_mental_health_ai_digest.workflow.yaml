@@ -39,15 +39,15 @@ workflows:
               selector: "article, .post"
               tags: ["psychology", "aps", "research"]
 
-            - id: psyarxiv
+            - id: nature_psychology
               type: rss
-              url: "https://psyarxiv.com/feed.xml"
-              tags: ["psychology", "preprint", "research"]
+              url: "https://www.nature.com/subjects/psychology.rss"
+              tags: ["psychology", "research", "journal"]
 
             # --- AI / ML BREAKTHROUGHS ---
             - id: openai_blog
               type: rss
-              url: "https://openai.com/blog/rss"
+              url: "https://openai.com/news/rss.xml"
               tags: ["ai", "openai"]
 
             - id: deepmind_blog
@@ -57,8 +57,8 @@ workflows:
 
             - id: meta_ai
               type: rss
-              url: "https://ai.meta.com/blog/rss/"
-              tags: ["ai", "meta"]
+              url: "https://about.fb.com/news/feed/"
+              tags: ["ai", "meta", "industry"]
 
             - id: huggingface_blog
               type: rss
@@ -67,7 +67,7 @@ workflows:
 
             - id: mit_tech_review_ai
               type: rss
-              url: "https://www.technologyreview.com/feed/tag/artificial-intelligence/"
+              url: "https://www.technologyreview.com/topic/artificial-intelligence/feed/"
               tags: ["ai", "news"]
 
             - id: ars_technica_ai
