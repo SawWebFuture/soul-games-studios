@@ -19,7 +19,8 @@
 ## Required env vars (suggested)
 - `OPENAI_API_KEY`
 - `NOTION_TOKEN`
-- `NOTION_DATABASE_ID` (or page-based queue)
+- `NOTION_DIGEST_DATABASE_ID` (Digest Entries DB for date-stamped archives)
+- `NEWSLETTER_WEBHOOK_URL`
 
 ## Recommended run mode
 - Cron: daily at 7:00 AM local

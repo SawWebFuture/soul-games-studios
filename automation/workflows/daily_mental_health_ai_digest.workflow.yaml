@@ -268,6 +268,14 @@ workflows:
             - type: file
               path: "out/daily_mental_health_ai_digest_{{ now | date('YYYY-MM-DD') }}.md"
 
+            - type: notion_database
+              database_id: "{{ env.NOTION_DIGEST_DATABASE_ID }}"
+              title: "Daily Brain & Machine Digest — {{ now | date('YYYY-MM-DD') }}"
+              date_field: "Digest Date"
+              date_value: "{{ now | date('YYYY-MM-DD') }}"
+              content_field: "Content"
+              content_template_field: "newsletter_markdown"
+
             - type: webhook
               url: "{{ env.NEWSLETTER_WEBHOOK_URL }}"
               method: POST
