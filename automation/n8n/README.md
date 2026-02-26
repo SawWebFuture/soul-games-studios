@@ -8,7 +8,8 @@
 5. Optional: publishes approved posts to social channels.
 
 ## Files
-- `mental-health-news-flow.json` — n8n workflow template
+- `mental-health-news-flow.json` — original n8n workflow template
+- `daily-mental-health-ai-digest-v2.json` — expanded digest workflow (7:00 AM ET, multi-source, LLM summarization + markdown output)
 
 ## Required credentials (configure in n8n)
 - OpenAI API key (content generation)

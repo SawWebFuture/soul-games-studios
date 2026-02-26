@@ -1,0 +1,233 @@
+{
+  "name": "Daily Mental Health + AI Breakthroughs Digest v2",
+  "active": false,
+  "settings": {
+    "timezone": "America/New_York"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        },
+        "timezone": "America/New_York"
+      },
+      "id": "schedule_trigger",
+      "name": "Daily 7:00 AM ET",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "manual_trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{json:{sources:[\n  {id:'psypost',type:'rss',url:'https://www.psypost.org/feed',tags:['psychology','mental-health','research']},\n  {id:'sciencedaily_psychology',type:'rss',url:'https://www.sciencedaily.com/rss/mind_brain/psychology.xml',tags:['psychology','mental-health','research']},\n  {id:'neuroscience_news',type:'rss',url:'https://neurosciencenews.com/feed/',tags:['neuroscience','mental-health','brain']},\n  {id:'psyarxiv',type:'rss',url:'https://psyarxiv.com/feed.xml',tags:['psychology','preprint','research']},\n  {id:'openai_blog',type:'rss',url:'https://openai.com/blog/rss',tags:['ai','openai']},\n  {id:'deepmind_blog',type:'rss',url:'https://deepmind.google/discover/rss/',tags:['ai','deepmind']},\n  {id:'meta_ai',type:'rss',url:'https://ai.meta.com/blog/rss/',tags:['ai','meta']},\n  {id:'huggingface_blog',type:'rss',url:'https://huggingface.co/blog/feed.xml',tags:['ai','huggingface']},\n  {id:'mit_tech_review_ai',type:'rss',url:'https://www.technologyreview.com/feed/tag/artificial-intelligence/',tags:['ai','news']},\n  {id:'ars_technica_ai',type:'rss',url:'https://feeds.arstechnica.com/arstechnica/technology-lab',tags:['ai','news']}\n]}}];"
+      },
+      "id": "set_sources",
+      "name": "Set Sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "sources",
+        "options": {}
+      },
+      "id": "split_sources",
+      "name": "Split Sources",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3.1,
+      "position": [
+        440,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {}
+      },
+      "id": "fetch_rss",
+      "name": "Fetch RSS XML",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        660,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const src = $item(0).$node['Split Sources'].json;\nconst xml = $json.data || $json.body || '';\nconst now = Date.now();\n\nfunction strip(s=''){return String(s).replace(/<[^>]+>/g,' ').replace(/\\s+/g,' ').trim();}\nfunction text(tag, block){const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`,'i')); return m?strip(m[1]):'';}\n\nconst itemBlocks = String(xml).match(/<item[\\s\\S]*?<\\/item>/gi) || [];\nconst out = [];\nfor (const b of itemBlocks){\n  const title = text('title', b);\n  const url = text('link', b);\n  const summary = text('description', b) || text('content:encoded', b);\n  const published_at = text('pubDate', b) || new Date(now).toISOString();\n  const publishedMs = Date.parse(published_at) || now;\n  if (publishedMs < (now - 48*60*60*1000)) continue;\n  out.push({json:{title,url,summary,published_at,source_id:src.id,tags:src.tags||[],content:summary}});\n}\nreturn out;"
+      },
+      "id": "normalize_filter",
+      "name": "Normalize + Filter 48h",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const seen = new Set();\nconst items = $input.all();\nconst out = [];\nfor (const i of items){\n  const u = (i.json.url||'').replace(/([?&](utm_[^=]+|fbclid|gclid)=[^&]+)/g,'').replace(/[?&]$/,'');\n  if (!u || seen.has(u)) continue;\n  seen.add(u);\n  out.push({json:{...i.json,url:u}});\n}\nreturn out.slice(0, 40);"
+      },
+      "id": "dedupe",
+      "name": "Deduplicate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/responses",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ `Bearer ${$env.OPENAI_API_KEY}` }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { model: 'gpt-5.1-mini', input: [ { role: 'user', content: [ { type: 'text', text: `You are writing a sharp, founder-friendly daily digest. Summarize this article in 2–3 sentences, focusing on:\n- The core claim, finding, or breakthrough.\n- How strong the evidence is (sample size, study type, major limitations).\n- Why it matters for real people, practitioners, or builders.\n\nAvoid hype. If the study is small, early, or correlational, say that clearly.\n\nReturn JSON:\n{\n  \"short_headline\": \"...\",\n  \"summary\": \"...\",\n  \"one_sentence_takeaway\": \"...\",\n  \"tags\": [\"...\", \"...\"]\n}\n\nTITLE: ${$json.title}\nSOURCE: ${$json.source_id}\nSUMMARY: ${$json.summary}\nCONTENT: ${(($json.content||'')+'').slice(0,3500)}` } ] } ] } }}",
+        "options": {}
+      },
+      "id": "summarize_llm",
+      "name": "Summarize Articles (OpenAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1340,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.item.json;\nconst prev = $item(0).$node['Deduplicate'].json;\nlet txt = '';\nif (item.output_text) txt = item.output_text;\nif (!txt && Array.isArray(item.output)) {\n  for (const o of item.output) {\n    if (Array.isArray(o.content)) {\n      for (const c of o.content) { if (c.text) txt += c.text; }\n    }\n  }\n}\nlet parsed = {};\ntry { parsed = JSON.parse(txt); } catch {}\nreturn [{json:{\n  ...prev,\n  digest_headline: parsed.short_headline || prev.title,\n  digest_summary: parsed.summary || prev.summary,\n  digest_takeaway: parsed.one_sentence_takeaway || '',\n  digest_tags: parsed.tags || prev.tags || []\n}}];"
+      },
+      "id": "map_summary",
+      "name": "Map Summary Fields",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all().map(i=>i.json);\nconst mh = items.filter(i => /mental|psych|neuro/i.test((i.source_id||'') + ' ' + (i.digest_tags||[]).join(' '))).slice(0,10);\nconst ai = items.filter(i => /openai|deepmind|meta_ai|huggingface|ai|technologyreview|ars/i.test(i.source_id||'')).slice(0,10);\n\nfunction section(title, arr){\n  let out = `## ${title}\\n\\n`;\n  for (const a of arr){\n    out += `### ${a.digest_headline || a.title}\\n`;\n    out += `Source: ${a.source_id}\\n`;\n    out += `Link: ${a.url}\\n\\n`;\n    out += `${a.digest_summary || a.summary || ''}\\n\\n`;\n    out += `_Takeaway:_ ${a.digest_takeaway || ''}\\n\\n---\\n\\n`;\n  }\n  return out;\n}\n\nconst date = new Date().toISOString().slice(0,10);\nconst md = `# Daily Brain & Machine Digest 🧠🤖\\n_A daily bridge between mental health, psychology, and AI breakthroughs._\\n\\nDate: ${date}\\n\\n---\\n\\n` + section('🧠 Mental Health & Psychology', mh) + section('🤖 AI & Machine Intelligence', ai) + `## 🧩 Putting It Together\\n\\nPatterns to watch today: evidence quality, practical application, and where AI can support real-world mental health workflows responsibly.\\n\\n_Generated by OpenClaw + a slightly obsessed AI-first founder._\\n`;
+\nreturn [{json:{newsletter_markdown: md, file_name: `daily_mental_health_ai_digest_${date}.md`}}];"
+      },
+      "id": "build_newsletter",
+      "name": "Build Newsletter Markdown",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const fs = require('fs');\nconst path = require('path');\nconst outDir = path.join(process.cwd(),'out');\nif (!fs.existsSync(outDir)) fs.mkdirSync(outDir,{recursive:true});\nconst filePath = path.join(outDir, $json.file_name);\nfs.writeFileSync(filePath, $json.newsletter_markdown, 'utf8');\nreturn [{json:{...$json, output_path:filePath}}];"
+      },
+      "id": "write_file",
+      "name": "Write Digest File",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        90
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.NEWSLETTER_WEBHOOK_URL }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { content: $json.newsletter_markdown } }}",
+        "options": {}
+      },
+      "id": "post_webhook",
+      "name": "POST Digest Webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2220,
+        90
+      ]
+    }
+  ],
+  "connections": {
+    "Daily 7:00 AM ET": {
+      "main": [[{ "node": "Set Sources", "type": "main", "index": 0 }]]
+    },
+    "Manual Trigger": {
+      "main": [[{ "node": "Set Sources", "type": "main", "index": 0 }]]
+    },
+    "Set Sources": {
+      "main": [[{ "node": "Split Sources", "type": "main", "index": 0 }]]
+    },
+    "Split Sources": {
+      "main": [[{ "node": "Fetch RSS XML", "type": "main", "index": 0 }]]
+    },
+    "Fetch RSS XML": {
+      "main": [[{ "node": "Normalize + Filter 48h", "type": "main", "index": 0 }]]
+    },
+    "Normalize + Filter 48h": {
+      "main": [[{ "node": "Deduplicate", "type": "main", "index": 0 }]]
+    },
+    "Deduplicate": {
+      "main": [[{ "node": "Summarize Articles (OpenAI)", "type": "main", "index": 0 }]]
+    },
+    "Summarize Articles (OpenAI)": {
+      "main": [[{ "node": "Map Summary Fields", "type": "main", "index": 0 }]]
+    },
+    "Map Summary Fields": {
+      "main": [[{ "node": "Build Newsletter Markdown", "type": "main", "index": 0 }]]
+    },
+    "Build Newsletter Markdown": {
+      "main": [[{ "node": "Write Digest File", "type": "main", "index": 0 }]]
+    },
+    "Write Digest File": {
+      "main": [[{ "node": "POST Digest Webhook", "type": "main", "index": 0 }]]
+    }
+  },
+  "pinData": {}
+}
