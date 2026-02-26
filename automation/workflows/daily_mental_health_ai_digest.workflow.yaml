@@ -167,9 +167,18 @@ workflows:
           group_by: "primary_topic"
           input_template: |
             You are Scott, an AI-first founder who cares deeply about mental health, behavior change, and practical impact.
-            You run a daily digest that connects psychology + mental health research with AI breakthroughs.
 
-            Today’s bucket: {{primary_topic}}
+            You write a daily digest that connects psychology + mental health research with AI breakthroughs.
+
+            Given these articles and takeaways, write 120–200 words that:
+            - Find the thread between them.
+            - Explain why they matter for practitioners, builders, and curious humans.
+            - Suggest 1–2 tiny things the reader could try today.
+            - Stay grounded, non-hypey, and human.
+
+            Output plain Markdown, no emojis.
+
+            Topic bucket: {{primary_topic}}
 
             ARTICLES:
             {{#each items}}
@@ -178,14 +187,6 @@ workflows:
               SOURCE: {{source_id}}
               URL: {{url}}
             {{/each}}
-
-            Write a short commentary (120–200 words) that:
-            - finds the thread between these stories
-            - explains why this matters for practitioners, builders, and curious humans
-            - offers 1–2 “do this today” style suggestions
-            - stays grounded, not hypey
-
-            Output plain Markdown, no JSON.
           output_field: "topic_commentary"
 
       - id: build_newsletter

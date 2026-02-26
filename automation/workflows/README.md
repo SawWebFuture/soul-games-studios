@@ -16,6 +16,15 @@ Daily 7:00 AM ET digest pipeline:
 7. Build markdown newsletter
 8. Publish to file + webhook
 
+## How this fits your daily flow
+- OpenClaw runs this every morning.
+- It writes Markdown to a local file.
+- It also POSTs to your webhook endpoint.
+
+You can then:
+- Connect webhook output into Substack, Beehiiv, Mailbrew, or a custom API.
+- Or copy/paste the generated `.md` into Substack, LinkedIn, or your newsletter stack.
+
 ## Notes
 - This file is a **high-fidelity template** based on your requested structure.
 - Depending on your OpenClaw version, type names/params may need minor adaptation.
