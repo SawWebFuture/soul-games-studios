@@ -1,4 +1,4 @@
-import { Rocket, Shield, Activity, Target, CalendarCheck2 } from "lucide-react";
+import { Rocket, Shield, Activity, Target, CalendarCheck2, BookOpen } from "lucide-react";
 import { readStore } from "@/lib/store";
 import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -115,6 +115,17 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </section>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-sm flex items-center gap-2"><BookOpen size={16} /> Training Briefs</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-2 md:grid-cols-3 text-sm">
+          <a className="rounded-md border border-border p-3 hover:bg-muted" href="/docs/strategy-agent-training-brief.md" target="_blank" rel="noreferrer">Strategy Agent Brief</a>
+          <a className="rounded-md border border-border p-3 hover:bg-muted" href="/docs/content-agent-training-brief.md" target="_blank" rel="noreferrer">Content Agent Brief</a>
+          <a className="rounded-md border border-border p-3 hover:bg-muted" href="/docs/ops-agent-training-brief.md" target="_blank" rel="noreferrer">Ops Agent Brief</a>
+        </CardContent>
+      </Card>
     </main>
   );
 }
