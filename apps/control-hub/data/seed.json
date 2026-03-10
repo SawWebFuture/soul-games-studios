@@ -1,0 +1,21 @@
+{
+  "subagents": [
+    {
+      "id": "content-001",
+      "role": "Content Agent",
+      "status": "running",
+      "createdAt": "2026-03-09T13:00:00Z",
+      "lastUpdateAt": "2026-03-09T13:06:00Z",
+      "summary": "Drafting platform-specific post options"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-1",
+      "subagentId": "content-001",
+      "type": "created",
+      "at": "2026-03-09T13:00:00Z",
+      "message": "Subagent created by Reggie manager"
+    }
+  ]
+}
