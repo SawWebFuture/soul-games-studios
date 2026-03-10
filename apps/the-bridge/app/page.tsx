@@ -1,57 +1,79 @@
+import { Rocket, Shield, Activity } from "lucide-react";
 import { readStore } from "@/lib/store";
+import { isAuthed } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-function badge(status: string) {
-  const map: Record<string, string> = {
-    running: "#1d9bf0",
-    completed: "#19c37d",
-    failed: "#ff5d5d",
-    idle: "#9aa4bf",
-  };
-  return map[status] ?? "#9aa4bf";
+function statusClass(status: string) {
+  if (status === "running") return "bg-blue-500/20 text-blue-300 border-blue-400/40";
+  if (status === "completed") return "bg-emerald-500/20 text-emerald-300 border-emerald-400/40";
+  if (status === "failed") return "bg-red-500/20 text-red-300 border-red-400/40";
+  return "bg-zinc-500/20 text-zinc-300 border-zinc-400/40";
 }
 
 export default function HomePage() {
+  if (!isAuthed()) redirect("/login");
+
   const store = readStore();
   const sortedEvents = [...store.events].sort((a, b) => (a.at < b.at ? 1 : -1));
 
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: 24 }}>
-      <h1 style={{ marginBottom: 6 }}>The Bridge</h1>
-      <p style={{ marginTop: 0, color: "#9aa4bf" }}>Single view for subagents, creation events, and operating status.</p>
-
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-        <div style={{ background: "#111833", border: "1px solid #24305e", borderRadius: 12, padding: 16 }}>
-          <h2>Subagents</h2>
-          {store.subagents.length === 0 ? <p>No subagents yet.</p> : (
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {store.subagents.map((a) => (
-                <li key={a.id} style={{ padding: "10px 0", borderBottom: "1px solid #1c264a" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                    <strong>{a.role}</strong>
-                    <span style={{ background: badge(a.status), color: "#06101d", borderRadius: 999, padding: "2px 8px", fontWeight: 700 }}>{a.status}</span>
-                  </div>
-                  <div style={{ color: "#9aa4bf", fontSize: 13 }}>{a.id}</div>
-                  <div style={{ color: "#9aa4bf", fontSize: 13 }}>Created: {a.createdAt}</div>
-                </li>
-              ))}
-            </ul>
-          )}
+    <main className="max-w-6xl mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">The Bridge</h1>
+          <p className="text-muted-foreground">Command center for sub-agent operations.</p>
         </div>
+        <form action="/api/auth/logout" method="post">
+          <Button variant="secondary">Logout</Button>
+        </form>
+      </div>
 
-        <div style={{ background: "#111833", border: "1px solid #24305e", borderRadius: 12, padding: 16 }}>
-          <h2>Event Timeline</h2>
-          {sortedEvents.length === 0 ? <p>No events yet.</p> : (
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {sortedEvents.map((e) => (
-                <li key={e.id} style={{ padding: "10px 0", borderBottom: "1px solid #1c264a" }}>
-                  <div><strong>{e.type}</strong> · {e.subagentId}</div>
-                  <div style={{ color: "#9aa4bf", fontSize: 13 }}>{e.at}</div>
-                  <div style={{ color: "#c8d5ff", fontSize: 14 }}>{e.message}</div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Rocket size={16} /> Active</CardTitle></CardHeader>
+          <CardContent className="text-2xl font-semibold">{store.subagents.filter((s) => s.status === "running").length}</CardContent>
+        </Card>
+        <Card>
+          <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Shield size={16} /> Completed</CardTitle></CardHeader>
+          <CardContent className="text-2xl font-semibold">{store.subagents.filter((s) => s.status === "completed").length}</CardContent>
+        </Card>
+        <Card>
+          <CardHeader><CardTitle className="text-sm flex items-center gap-2"><Activity size={16} /> Total Events</CardTitle></CardHeader>
+          <CardContent className="text-2xl font-semibold">{store.events.length}</CardContent>
+        </Card>
+      </div>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader><CardTitle>Subagents</CardTitle></CardHeader>
+          <CardContent className="space-y-3">
+            {store.subagents.map((a) => (
+              <div key={a.id} className="rounded-lg border border-border p-3">
+                <div className="flex justify-between items-center">
+                  <p className="font-medium">{a.role}</p>
+                  <span className={`text-xs px-2 py-1 rounded-full border ${statusClass(a.status)}`}>{a.status}</span>
+                </div>
+                <p className="text-xs text-muted-foreground">{a.id}</p>
+                <p className="text-xs text-muted-foreground">Created: {a.createdAt}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader><CardTitle>Event Timeline</CardTitle></CardHeader>
+          <CardContent className="space-y-3 max-h-[420px] overflow-auto">
+            {sortedEvents.map((e) => (
+              <div key={e.id} className="rounded-lg border border-border p-3">
+                <p className="text-sm font-medium">{e.type} · {e.subagentId}</p>
+                <p className="text-xs text-muted-foreground">{e.at}</p>
+                <p className="text-sm">{e.message}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </section>
     </main>
   );

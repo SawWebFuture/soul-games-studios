@@ -34,6 +34,13 @@ Create `.env.local`:
 HUB_INGEST_TOKEN=choose-a-long-random-secret
 ```
 
+## Login (current)
+
+- Username: `Scott`
+- Password: `Startrek`
+
+This is currently a hardcoded MVP login. For production, move credentials to secure env-based auth (or Vercel/Auth provider).
+
 ## API endpoints
 
 ### GET `/api/subagents`
