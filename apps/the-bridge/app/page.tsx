@@ -2,6 +2,7 @@ import { Rocket, Shield, Activity, Target, CalendarCheck2, BookOpen } from "luci
 import { readStore } from "@/lib/store";
 import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +11,16 @@ function statusClass(status: string) {
   if (status === "completed") return "bg-emerald-500/20 text-emerald-300 border-emerald-400/40";
   if (status === "failed") return "bg-red-500/20 text-red-300 border-red-400/40";
   return "bg-zinc-500/20 text-zinc-300 border-zinc-400/40";
+}
+
+function subagentEmoji(role: string) {
+  const key = role.toLowerCase();
+  if (key.includes("content")) return "✍️";
+  if (key.includes("ops") || key.includes("operation")) return "🛠️";
+  if (key.includes("engineer") || key.includes("openhands")) return "🧠";
+  if (key.includes("strategy")) return "🧭";
+  if (key.includes("research")) return "🔬";
+  return "🤖";
 }
 
 const goalUpgrades = [
@@ -27,8 +38,8 @@ const dailyReportTemplate = [
   "Risk alert + mitigation",
 ];
 
-export default function HomePage() {
-  if (!isAuthed()) redirect("/login");
+export default async function HomePage() {
+  if (!(await isAuthed())) redirect("/login");
 
   const store = readStore();
   const sortedEvents = [...store.events].sort((a, b) => (a.at < b.at ? 1 : -1));
@@ -44,6 +55,18 @@ export default function HomePage() {
           <Button variant="secondary">Logout</Button>
         </form>
       </div>
+
+      <Card className="overflow-hidden">
+        <div className="relative aspect-[16/9] w-full">
+          <Image
+            src="/images/bridge-warp.jpg"
+            alt="Bridge warp-speed command view"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+      </Card>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
@@ -67,7 +90,7 @@ export default function HomePage() {
             {store.subagents.map((a) => (
               <div key={a.id} className="rounded-lg border border-border p-3">
                 <div className="flex justify-between items-center">
-                  <p className="font-medium">{a.role}</p>
+                  <p className="font-medium">{subagentEmoji(a.role)} {a.role}</p>
                   <span className={`text-xs px-2 py-1 rounded-full border ${statusClass(a.status)}`}>{a.status}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">{a.id}</p>
