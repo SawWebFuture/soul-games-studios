@@ -19,7 +19,7 @@ Central dashboard for Scott to view subagents, when they were created, and curre
 ## Run locally
 
 ```bash
-cd apps/control-hub
+cd apps/the-bridge
 npm install
 npm run dev
 ```
@@ -62,7 +62,7 @@ Body example:
 
 ## Vercel deploy notes
 
-- Root Directory: `apps/control-hub`
+- Root Directory: `apps/the-bridge`
 - Add env var: `HUB_INGEST_TOKEN`
 - (Recommended next) Move from JSON to managed DB for persistence across serverless invocations
 
