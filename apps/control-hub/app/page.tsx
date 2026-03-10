@@ -16,7 +16,7 @@ export default function HomePage() {
 
   return (
     <main style={{ maxWidth: 1100, margin: "0 auto", padding: 24 }}>
-      <h1 style={{ marginBottom: 6 }}>Soul Games — Control Hub</h1>
+      <h1 style={{ marginBottom: 6 }}>The Bridge</h1>
       <p style={{ marginTop: 0, color: "#9aa4bf" }}>Single view for subagents, creation events, and operating status.</p>
 
       <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 export const metadata = {
-  title: "Soul Games Control Hub",
-  description: "Sub-agent visibility and event timeline",
+  title: "The Bridge",
+  description: "Command view for sub-agent visibility and event timeline",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -1,4 +1,4 @@
-# Soul Games Control Hub
+# The Bridge
 
 Central dashboard for Scott to view subagents, when they were created, and current run status.
 
