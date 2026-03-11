@@ -3,27 +3,11 @@ import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
-
-const ideas = [
-  {
-    title: "OpenClaw App Starter Marketplace + Quality Guardian",
-    status: "New",
-    summary:
-      "Marketplace where contributors sell app starter kits; users buy outcomes. Add an AI Quality Guardian for pre-publish checks, runtime quality, and trust scoring.",
-  },
-  {
-    title: "24-hour flagship experiment loop",
-    status: "Active",
-    summary: "Run one flagship experiment per day from idea → publish → learnings to compound speed and execution quality.",
-  },
-  { title: "Zone Score performance system", status: "Active", summary: "Track Clarity, Speed, Energy, and Quality (1–10) after each launch and optimize trend weekly." },
-  { title: "70/20/10 experiment portfolio", status: "Active", summary: "Split experiments across proven formats (70%), adjacent bets (20%), and wildcards (10%) for balanced growth." },
-  { title: "Lean 4-agent operating model", status: "Active", summary: "Operate with Reggie + OpenHands Engineer + Content Agent + Ops Agent; add Research Agent after stable cadence." },
-  { title: "Standardized experiment rule pillars", status: "Active", summary: "Every experiment includes philosophy, single-button action, social share, email capture, collectors card, and public/subscriber easter eggs." },
-];
+import { ideas, totalScore } from "@/lib/ideas";
 
 function statusClass(status: string) {
   if (status === "New") return "border-indigo-500/40 bg-indigo-500/10 text-indigo-300";
+  if (status === "Exploring") return "border-amber-500/40 bg-amber-500/10 text-amber-300";
   return "border-emerald-500/40 bg-emerald-500/10 text-emerald-300";
 }
 
@@ -38,13 +22,18 @@ export default async function IdeasPage() {
         </CardHeader>
         <CardContent className="space-y-3">
           {ideas.map((idea) => (
-            <div key={idea.title} className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
+            <a key={idea.slug} href={`/ideas/${idea.slug}`} className="block rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 hover:bg-zinc-900/80">
               <div className="mb-2 flex items-center justify-between gap-3">
                 <p className="font-medium">{idea.title}</p>
-                <span className={`rounded-full border px-2 py-1 text-xs ${statusClass(idea.status)}`}>{idea.status}</span>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full border border-cyan-500/40 bg-cyan-500/10 px-2 py-1 text-xs text-cyan-300">
+                    Score {totalScore(idea.score)}/100
+                  </span>
+                  <span className={`rounded-full border px-2 py-1 text-xs ${statusClass(idea.status)}`}>{idea.status}</span>
+                </div>
               </div>
               <p className="text-sm text-zinc-300">{idea.summary}</p>
-            </div>
+            </a>
           ))}
         </CardContent>
       </Card>
