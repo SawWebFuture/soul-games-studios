@@ -59,11 +59,12 @@ export default async function HomePage() {
         </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle>Next Steps</CardTitle></CardHeader>
+          <CardHeader><CardTitle>Top 3 Roadmap Next Steps</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
-            <p className="flex items-center gap-2"><CheckCircle2 size={15} className="text-emerald-400" /> Review latest logs and close/resolve failed items.</p>
-            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Pick top 1 idea from Ideas Bank to move into today’s operation queue.</p>
-            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Update Daily Captain’s Report after next subagent cycle.</p>
+            <p className="flex items-center gap-2"><CheckCircle2 size={15} className="text-emerald-400" /> Pick 1 niche with painful, repeatable app needs.</p>
+            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Publish 10 high-quality starter kits with clear outcomes.</p>
+            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Ship Quality Guardian v1 (pre-publish checks + runtime monitoring).</p>
+            <a href="/roadmap" className="inline-block pt-2 text-xs text-indigo-300 hover:text-indigo-200">View full roadmap →</a>
           </CardContent>
         </Card>
       </div>
