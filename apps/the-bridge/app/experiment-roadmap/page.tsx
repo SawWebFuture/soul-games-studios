@@ -33,6 +33,16 @@ const growthPillars = [
     ],
   },
   {
+    title: "YouTube announcement → next project bridge",
+    points: [
+      "Publish one YouTube video per experiment launch (concept + reveal + lesson).",
+      "End every video with a hard handoff CTA to the next project/experiment.",
+      "Description must include: current experiment link, next project waitlist/link, and subscriber CTA.",
+      "Pin a comment with 'next mission' and deadline to create continuity.",
+      "KPI: YouTube CTR to next project, watch-to-click rate, and subscribers gained per video.",
+    ],
+  },
+  {
     title: "Retention + collaboration",
     points: [
       "Design each experiment for repeat behavior within 24–72h.",
@@ -51,12 +61,13 @@ const launchGate = [
   "Collector artifact set is complete (3 standard + 1 rare + 1 subscriber-only) and downloadable.",
   "Public and subscriber-only easter eggs are reachable.",
   "Tracking events and KPI owner are assigned.",
+  "YouTube announcement assets are ready (title, thumbnail, CTA to next project, pinned comment).",
   "Scott final approval received before scheduling/publishing.",
 ];
 
 const weeklyCadence = [
   "Monday: choose daily experiment themes for the week",
-  "Tuesday–Thursday: run 24-hour flagship loop daily",
+  "Tuesday–Thursday: run 24-hour flagship loop daily + publish YouTube launch video",
   "Friday: review Zone Score trend + KPI trend + retention blockers",
   "Saturday: ship one structural improvement (tooling, onboarding, or QA)",
   "Sunday: reset roadmap priorities and assign next week subagent owners",
