@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const AUTH_COOKIE = "bridge_auth";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (pathname.startsWith("/api") || pathname.startsWith("/_next") || pathname === "/login") {

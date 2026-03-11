@@ -1,11 +1,12 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { type ReactNode, useMemo, useState } from "react";
 
 type Burst = { id: number; vectors: Array<{ dx: number; dy: number; emoji: string }> };
 
-export function SurpriseLinkButton({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
+export function SurpriseLinkButton({ href, children, className }: { href: Route; children: ReactNode; className?: string }) {
   const [bursts, setBursts] = useState<Burst[]>([]);
 
   const emojis = useMemo(() => ["💥", "✨", "⚡", "🪐", "🌟"], []);
