@@ -1,4 +1,4 @@
-import { Activity, Rocket, Shield } from "lucide-react";
+import { Activity, ArrowRight, CheckCircle2, Database, Lightbulb, ListChecks, Rocket, ScrollText, Shield, Wrench } from "lucide-react";
 import Image from "next/image";
 import { readStore } from "@/lib/store";
 import { isAuthed } from "@/lib/auth";
@@ -9,6 +9,10 @@ import { BridgeShell } from "@/components/bridge-shell";
 export default async function HomePage() {
   if (!(await isAuthed())) redirect("/login");
   const store = readStore();
+
+  const running = store.subagents.filter((s) => s.status === "running").length;
+  const completed = store.subagents.filter((s) => s.status === "completed").length;
+  const latestEvent = [...store.events].sort((a, b) => (a.at < b.at ? 1 : -1))[0];
 
   return (
     <BridgeShell activeHref="/">
@@ -23,10 +27,45 @@ export default async function HomePage() {
         </Card>
 
         <section className="grid gap-4 md:grid-cols-3">
-          <Card className="border-zinc-800 bg-[#0c1016]"><CardHeader><CardTitle className="text-sm flex items-center gap-2"><Rocket size={16} /> Active</CardTitle></CardHeader><CardContent className="text-2xl font-semibold">{store.subagents.filter((s) => s.status === "running").length}</CardContent></Card>
-          <Card className="border-zinc-800 bg-[#0c1016]"><CardHeader><CardTitle className="text-sm flex items-center gap-2"><Shield size={16} /> Completed</CardTitle></CardHeader><CardContent className="text-2xl font-semibold">{store.subagents.filter((s) => s.status === "completed").length}</CardContent></Card>
+          <Card className="border-zinc-800 bg-[#0c1016]"><CardHeader><CardTitle className="text-sm flex items-center gap-2"><Rocket size={16} /> Active</CardTitle></CardHeader><CardContent className="text-2xl font-semibold">{running}</CardContent></Card>
+          <Card className="border-zinc-800 bg-[#0c1016]"><CardHeader><CardTitle className="text-sm flex items-center gap-2"><Shield size={16} /> Completed</CardTitle></CardHeader><CardContent className="text-2xl font-semibold">{completed}</CardContent></Card>
           <Card className="border-zinc-800 bg-[#0c1016]"><CardHeader><CardTitle className="text-sm flex items-center gap-2"><Activity size={16} /> Total Events</CardTitle></CardHeader><CardContent className="text-2xl font-semibold">{store.events.length}</CardContent></Card>
         </section>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle>Section Summary</CardTitle></CardHeader>
+          <CardContent className="grid gap-3 md:grid-cols-2">
+            <a href="/subagents" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><ListChecks size={15} /> Subagent Registry</p>
+              <p className="text-xs text-zinc-400 mt-1">{running} running · {completed} completed</p>
+            </a>
+            <a href="/logs" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><ScrollText size={15} /> Logs</p>
+              <p className="text-xs text-zinc-400 mt-1">Latest: {latestEvent ? `${latestEvent.type} · ${latestEvent.subagentId}` : "No events yet"}</p>
+            </a>
+            <a href="/database" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><Database size={15} /> Database</p>
+              <p className="text-xs text-zinc-400 mt-1">Primary core online (bridge-main-01)</p>
+            </a>
+            <a href="/operations" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><Wrench size={15} /> Operations</p>
+              <p className="text-xs text-zinc-400 mt-1">Daily loop + KPI + 70/20/10 portfolio active</p>
+            </a>
+            <a href="/ideas" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900 md:col-span-2">
+              <p className="text-sm font-medium flex items-center gap-2"><Lightbulb size={15} /> Ideas Bank</p>
+              <p className="text-xs text-zinc-400 mt-1">Includes marketplace + quality guardian concept and prior strategic ideas</p>
+            </a>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle>Next Steps</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            <p className="flex items-center gap-2"><CheckCircle2 size={15} className="text-emerald-400" /> Review latest logs and close/resolve failed items.</p>
+            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Pick top 1 idea from Ideas Bank to move into today’s operation queue.</p>
+            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Update Daily Captain’s Report after next subagent cycle.</p>
+          </CardContent>
+        </Card>
       </div>
     </BridgeShell>
   );
