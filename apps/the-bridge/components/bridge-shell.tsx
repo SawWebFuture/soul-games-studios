@@ -79,15 +79,17 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
             </div>
           </header>
 
-          <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-400 md:px-6">
-            <a href="/" className="hover:text-zinc-200">Home</a>
-            {current && current.href !== "/" ? (
-              <>
-                <span className="mx-2 text-zinc-600">/</span>
-                <a href={current.href} className="hover:text-zinc-200">{current.label}</a>
-              </>
-            ) : null}
-          </div>
+          {activeHref !== "/" ? (
+            <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-400 md:px-6">
+              <a href="/" className="hover:text-zinc-200">Home</a>
+              {current ? (
+                <>
+                  <span className="mx-2 text-zinc-600">/</span>
+                  <a href={current.href} className="hover:text-zinc-200">{current.label}</a>
+                </>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="p-4 md:p-6">{children}</div>
         </section>
