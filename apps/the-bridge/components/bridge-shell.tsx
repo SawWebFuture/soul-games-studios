@@ -79,6 +79,10 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
             </div>
           </header>
 
+          <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-300 md:px-6">
+            “Build simple, fun AI products that create real value for real people — while future-proofing our skills and growing a high-revenue business.”
+          </div>
+
           {activeHref !== "/" ? (
             <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-400 md:px-6">
               <a href="/" className="hover:text-zinc-200">Home</a>
