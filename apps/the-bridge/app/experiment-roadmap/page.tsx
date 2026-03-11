@@ -107,6 +107,25 @@ const websiteKpis = [
   "Returning visitor rate (7-day) target: ≥25%",
 ];
 
+const websiteBaseReview = [
+  "Already solid: Next.js site foundation, branded homepage, hero/about/features sections, SEO metadata, sitemap and robots.",
+  "Already solid: waitlist UI exists and is wired to POST /api/waitlist from the frontend.",
+  "Gap to fix first: /api/waitlist backend route is missing, so subscribe flow can fail in production.",
+  "Gap to fix next: experiments are shown as cards/text, but no dedicated experiment index/detail routes yet.",
+  "Gap to fix next: merch storefront and subscriber portal routes are not yet implemented.",
+  "Gap to fix next: YouTube -> next mission tracking links/UTM standardization not yet visible on site.",
+];
+
+const websiteBuildRoadmap = [
+  "Sprint 1 (Critical): implement /api/waitlist with storage + spam protection + confirmation message tracking.",
+  "Sprint 1 (Critical): create /experiments index page with live experiment entries and status badges.",
+  "Sprint 1 (Critical): create /experiments/[slug] detail pages with play CTA + share + email capture.",
+  "Sprint 2 (Revenue): launch /shop with 3–5 themed merch SKUs mapped to experiment universes.",
+  "Sprint 2 (Retention): launch /portal for subscribers (secret cards, early drops, private easter unlocks).",
+  "Sprint 2 (Acquisition): add YouTube handoff blocks on homepage + experiment pages (next mission links).",
+  "Sprint 3 (Optimization): add dashboard metrics for funnel conversion by channel/campaign.",
+];
+
 export default async function ExperimentRoadmapPage() {
   if (!(await isAuthed())) redirect("/login");
 
@@ -167,6 +186,20 @@ export default async function ExperimentRoadmapPage() {
             <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">Website KPI Targets</div>
             {websiteKpis.map((item) => (
               <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Website Base Review + Build Roadmap (from /website)</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">Current Base Review</div>
+            {websiteBaseReview.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
+            <div className="pt-2 text-xs uppercase tracking-wide text-zinc-400">Execution Roadmap</div>
+            {websiteBuildRoadmap.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
             ))}
           </CardContent>
         </Card>
