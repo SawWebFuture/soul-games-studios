@@ -10,6 +10,7 @@ const navItems: Item[] = [
   { label: "Database", icon: Database, href: "/database" },
   { label: "Logs", icon: Logs, href: "/logs" },
   { label: "Operations", icon: Wrench, href: "/operations" },
+  { label: "Roadmap", icon: Gauge, href: "/roadmap" },
   { label: "Settings", icon: Settings, href: "/settings" },
   { label: "Ideas Bank", icon: Gauge, href: "/ideas" },
 ];
