@@ -5,6 +5,7 @@ import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
+import { SurpriseLinkButton } from "@/components/surprise-link-button";
 import { ideas, totalScore } from "@/lib/ideas";
 
 export default async function HomePage() {
@@ -71,7 +72,9 @@ export default async function HomePage() {
             <p className="text-cyan-300">Score: {totalScore(topIdea.score)}/100</p>
             <a href={`/ideas/${topIdea.slug}`} className="inline-block pt-1 text-xs text-indigo-300 hover:text-indigo-200">Open idea details →</a>
             <div>
-              <a href="/experiment-roadmap" className="inline-block pt-1 text-xs text-emerald-300 hover:text-emerald-200">Open experiment roadmap →</a>
+              <SurpriseLinkButton href="/experiment-roadmap" className="inline-block pt-1 text-xs text-emerald-300 hover:text-emerald-200">
+                Open experiment roadmap →
+              </SurpriseLinkButton>
             </div>
           </CardContent>
         </Card>
