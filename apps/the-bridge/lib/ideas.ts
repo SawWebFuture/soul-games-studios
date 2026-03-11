@@ -6,16 +6,29 @@ export type IdeaScore = {
   qualityConsistency: number;
 };
 
+export type IdeaPillars = {
+  philosophicalConcept: string;
+  singleButtonCoreAction: string;
+  socialShare: string;
+  emailCapture: string;
+  collectorsCards: string;
+  publicEasterEgg: string;
+  subscriberOnlyEasterEgg: string;
+};
+
 export type Idea = {
   slug: string;
   title: string;
   status: "New" | "Active" | "Exploring";
   summary: string;
+  mainQuote: string;
   pros: string[];
   cons: string[];
   score: IdeaScore;
   // Required for every idea so score context is always explicit.
   scoreRationale: Record<keyof IdeaScore, string>;
+  // Required so every idea shows how it satisfies experiment-rule pillars.
+  pillars: IdeaPillars;
 };
 
 export const scoreWeights = {
@@ -43,6 +56,8 @@ export const ideas: Idea[] = [
     status: "New",
     summary:
       "Marketplace where contributors sell app starter kits; users buy outcomes. Add an AI Quality Guardian for pre-publish checks, runtime quality, and trust scoring.",
+    mainQuote:
+      "Turn app creation into trusted outcomes on demand: fast to ship, safe to buy, and easy to share.",
     pros: [
       "Strong marketplace upside with contributor flywheel",
       "Fits high-demand trend of AI-assisted app creation",
@@ -72,6 +87,15 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Current consistency is moderate due to contributor variance; the Quality Guardian is the key stabilizer.",
     },
+    pillars: {
+      philosophicalConcept: "Empower builders through leverage and trust, not complexity.",
+      singleButtonCoreAction: "Use a one-click 'Launch Starter' action for first-run output.",
+      socialShare: "Each kit publishes a share-ready output card/link.",
+      emailCapture: "Capture email after first successful outcome for updates and add-ons.",
+      collectorsCards: "Award builder badges/cards for completed outcomes.",
+      publicEasterEgg: "Public hidden badge tied to first successful deployment.",
+      subscriberOnlyEasterEgg: "Subscriber-only bonus template unlock path.",
+    },
   },
   {
     slug: "daily-flagship-loop",
@@ -79,6 +103,8 @@ export const ideas: Idea[] = [
     status: "Active",
     summary:
       "Run one flagship experiment per day from idea → publish → learnings to compound speed and execution quality.",
+    mainQuote:
+      "One flagship experiment every 24 hours: ship, learn, and sharpen the system daily.",
     pros: ["Builds execution muscle fast", "Creates compounding learning loop", "Forces clear prioritization"],
     cons: ["Can sacrifice depth for speed", "Risk of burnout without guardrails", "Needs strict postmortem discipline"],
     score: {
@@ -100,6 +126,15 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Moderate-high consistency when guardrails are followed (clear QA + postmortem), but quality can dip under speed pressure.",
     },
+    pillars: {
+      philosophicalConcept: "Compounding mastery through daily creative discipline.",
+      singleButtonCoreAction: "One core hold/click interaction drives the experiment.",
+      socialShare: "Every run outputs a shareable artifact and caption hook.",
+      emailCapture: "Post-reveal opt-in captures subscribers without blocking first value.",
+      collectorsCards: "Each day contributes new collectible cards to a larger set.",
+      publicEasterEgg: "One public hidden interaction unlocks bonus delight.",
+      subscriberOnlyEasterEgg: "Subscriber-only easter unlock gives a secret card/variant.",
+    },
   },
   {
     slug: "zone-score-system",
@@ -107,6 +142,8 @@ export const ideas: Idea[] = [
     status: "Active",
     summary:
       "Track Clarity, Speed, Energy, and Quality (1–10) after each launch and optimize trend weekly.",
+    mainQuote:
+      "What gets measured gets mastered: tune the team’s state as seriously as the product.",
     pros: ["Improves team self-awareness", "Easy to run daily", "Supports better retrospective decisions"],
     cons: ["Can become subjective without calibration", "May miss hard business metrics", "Needs consistent cadence"],
     score: {
@@ -128,6 +165,15 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "High consistency improvement potential when criteria are calibrated and reviewed regularly.",
     },
+    pillars: {
+      philosophicalConcept: "Inner state quality compounds outer execution quality.",
+      singleButtonCoreAction: "Single daily score submission captures team signal quickly.",
+      socialShare: "Share weekly trend snapshot internally or publicly.",
+      emailCapture: "Use insights emails for team/subscriber performance updates.",
+      collectorsCards: "Award milestone cards for streaks and quality thresholds.",
+      publicEasterEgg: "Public hidden score pattern unlocks bonus message.",
+      subscriberOnlyEasterEgg: "Subscriber-only benchmark insights unlock hidden tier card.",
+    },
   },
   {
     slug: "portfolio-702010",
@@ -135,6 +181,8 @@ export const ideas: Idea[] = [
     status: "Active",
     summary:
       "Split experiments across proven formats (70%), adjacent bets (20%), and wildcards (10%) for balanced growth.",
+    mainQuote:
+      "Protect the core, explore the edge, and always leave room for surprise.",
     pros: ["Balances risk and upside", "Protects core while exploring", "Prevents all-in betting"],
     cons: ["Can overcomplicate planning", "Requires strong idea pipeline", "May slow rapid pivots"],
     score: {
@@ -156,6 +204,15 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Supports steadier output quality by keeping core throughput protected while exploring edges.",
     },
+    pillars: {
+      philosophicalConcept: "Balance creates longevity: order for stability, chaos for discovery.",
+      singleButtonCoreAction: "One classify action assigns each experiment to 70/20/10 bucket.",
+      socialShare: "Share portfolio mix and rationale to build transparency.",
+      emailCapture: "Capture subscribers for portfolio updates and experiment invites.",
+      collectorsCards: "Release portfolio-era collector cards tied to each bucket type.",
+      publicEasterEgg: "Public hidden wildcard trigger unlocks an unexpected variant.",
+      subscriberOnlyEasterEgg: "Subscribers unlock private wildcard challenge and card.",
+    },
   },
   {
     slug: "lean-4-agent-model",
@@ -163,6 +220,8 @@ export const ideas: Idea[] = [
     status: "Active",
     summary:
       "Operate with Reggie + OpenHands Engineer + Content Agent + Ops Agent; add Research Agent after stable cadence.",
+    mainQuote:
+      "Small focused teams beat large confused teams — clarity first, scale second.",
     pros: ["Clear ownership and focus", "Lower coordination overhead", "Scales with staged specialization"],
     cons: ["Single points of failure in small team", "Role bottlenecks during spikes", "Requires tight handoff protocols"],
     score: {
@@ -184,6 +243,15 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Good consistency with strong handoff protocols, though resilience can dip during spikes or absences.",
     },
+    pillars: {
+      philosophicalConcept: "Alignment is a force multiplier; role clarity creates momentum.",
+      singleButtonCoreAction: "One clear assignment action routes each task to the right agent.",
+      socialShare: "Content agent produces share-ready outputs every cycle.",
+      emailCapture: "Ops ensures subscriber capture is implemented in each launch.",
+      collectorsCards: "Engineer/content pair standardize collectible generation.",
+      publicEasterEgg: "Team checklist enforces one public easter path per experiment.",
+      subscriberOnlyEasterEgg: "Team checklist enforces subscriber-only easter every launch.",
+    },
   },
   {
     slug: "experiment-rule-pillars",
@@ -191,6 +259,8 @@ export const ideas: Idea[] = [
     status: "Active",
     summary:
       "Every experiment includes philosophy, single-button action, social share, email capture, collectors card, and public/subscriber easter eggs.",
+    mainQuote:
+      "Creativity thrives with constraints: consistent pillars produce repeatable magic.",
     pros: ["Raises consistency across launches", "Improves brand and product coherence", "Makes QA easier"],
     cons: ["Could restrict creativity", "May not fit all experiment types", "Needs regular rule updates"],
     score: {
@@ -211,6 +281,15 @@ export const ideas: Idea[] = [
         "Improves efficiency by preventing costly misses in distribution, capture, and content structure.",
       qualityConsistency:
         "Very high consistency effect since standards normalize quality across the full experiment pipeline.",
+    },
+    pillars: {
+      philosophicalConcept: "Philosophy is a product feature, not an afterthought.",
+      singleButtonCoreAction: "Pillar explicitly requires one core interaction.",
+      socialShare: "Pillar explicitly requires social sharing artifact/path.",
+      emailCapture: "Pillar explicitly requires non-coercive email capture.",
+      collectorsCards: "Pillar explicitly requires collectible output.",
+      publicEasterEgg: "Pillar explicitly requires public easter egg.",
+      subscriberOnlyEasterEgg: "Pillar explicitly requires subscriber-only easter egg.",
     },
   },
 ];

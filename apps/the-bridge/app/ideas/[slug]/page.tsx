@@ -21,7 +21,24 @@ export default async function IdeaDetailPage({ params }: { params: Promise<{ slu
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
             <p>{idea.summary}</p>
+            <div className="rounded-md border border-indigo-500/40 bg-indigo-500/10 p-3 text-indigo-200">
+              <p className="text-xs uppercase tracking-wide text-indigo-300">Main Quote</p>
+              <p className="mt-1">“{idea.mainQuote}”</p>
+            </div>
             <p className="text-cyan-300">Total Score: {totalScore(idea.score)}/100</p>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">How this idea hits all required points</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Philosophical concept:</span> {idea.pillars.philosophicalConcept}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Single-button core action:</span> {idea.pillars.singleButtonCoreAction}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Social share:</span> {idea.pillars.socialShare}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Email capture:</span> {idea.pillars.emailCapture}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Collectors cards:</span> {idea.pillars.collectorsCards}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Public easter egg:</span> {idea.pillars.publicEasterEgg}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Subscriber-only easter egg:</span> {idea.pillars.subscriberOnlyEasterEgg}</div>
           </CardContent>
         </Card>
 
