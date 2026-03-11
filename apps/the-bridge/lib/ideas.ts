@@ -14,7 +14,8 @@ export type Idea = {
   pros: string[];
   cons: string[];
   score: IdeaScore;
-  scoreRationale?: Partial<Record<keyof IdeaScore, string>>;
+  // Required for every idea so score context is always explicit.
+  scoreRationale: Record<keyof IdeaScore, string>;
 };
 
 export const scoreWeights = {
@@ -58,6 +59,18 @@ export const ideas: Idea[] = [
       repeatUsage: 7,
       unitEconomics: 8,
       qualityConsistency: 6,
+    },
+    scoreRationale: {
+      painkiller:
+        "High painkiller potential for creators and buyers who want faster app outcomes with lower trust risk.",
+      timeToValue:
+        "Fast to first value because starter kits reduce setup friction and can deliver outcomes quickly.",
+      repeatUsage:
+        "Moderate-high repeat usage if templates are refreshed and teams keep shipping new use cases.",
+      unitEconomics:
+        "Strong marketplace economics with upside from distribution and quality-layer differentiation.",
+      qualityConsistency:
+        "Current consistency is moderate due to contributor variance; the Quality Guardian is the key stabilizer.",
     },
   },
   {
@@ -103,6 +116,18 @@ export const ideas: Idea[] = [
       unitEconomics: 6,
       qualityConsistency: 8,
     },
+    scoreRationale: {
+      painkiller:
+        "Useful internal painkiller for ambiguity and team drift, but less direct as a customer-facing value proposition.",
+      timeToValue:
+        "Very fast to implement and use; teams can start scoring immediately after launches.",
+      repeatUsage:
+        "Naturally recurring after each launch, which supports sustained behavioral adoption.",
+      unitEconomics:
+        "Low-cost system to run, though impact depends on disciplined follow-through on insights.",
+      qualityConsistency:
+        "High consistency improvement potential when criteria are calibrated and reviewed regularly.",
+    },
   },
   {
     slug: "portfolio-702010",
@@ -118,6 +143,18 @@ export const ideas: Idea[] = [
       repeatUsage: 8,
       unitEconomics: 7,
       qualityConsistency: 8,
+    },
+    scoreRationale: {
+      painkiller:
+        "Helps prevent strategic whiplash and overexposure to single bets, but it is more governance than direct customer painkiller.",
+      timeToValue:
+        "Moderate setup speed: framework is simple, but requires disciplined planning and categorization.",
+      repeatUsage:
+        "High recurring usefulness as an ongoing decision filter for weekly/monthly planning.",
+      unitEconomics:
+        "Improves capital allocation by reducing reckless bets while preserving room for upside.",
+      qualityConsistency:
+        "Supports steadier output quality by keeping core throughput protected while exploring edges.",
     },
   },
   {
@@ -135,6 +172,18 @@ export const ideas: Idea[] = [
       unitEconomics: 8,
       qualityConsistency: 7,
     },
+    scoreRationale: {
+      painkiller:
+        "Directly addresses execution chaos by clarifying ownership and reducing coordination drag.",
+      timeToValue:
+        "Fast to operate because team boundaries are clear and role overlap is intentionally limited.",
+      repeatUsage:
+        "Designed for daily use as the core operating structure for experiment execution.",
+      unitEconomics:
+        "High leverage model: small team, high output, lower overhead versus premature org expansion.",
+      qualityConsistency:
+        "Good consistency with strong handoff protocols, though resilience can dip during spikes or absences.",
+    },
   },
   {
     slug: "experiment-rule-pillars",
@@ -150,6 +199,18 @@ export const ideas: Idea[] = [
       repeatUsage: 8,
       unitEconomics: 7,
       qualityConsistency: 9,
+    },
+    scoreRationale: {
+      painkiller:
+        "Addresses inconsistency pain by ensuring each launch meets core strategic and product requirements.",
+      timeToValue:
+        "Moderate speed impact: rules add checklist overhead, but reduce downstream revision cycles.",
+      repeatUsage:
+        "High repeat utility because the pillars apply to every new experiment.",
+      unitEconomics:
+        "Improves efficiency by preventing costly misses in distribution, capture, and content structure.",
+      qualityConsistency:
+        "Very high consistency effect since standards normalize quality across the full experiment pipeline.",
     },
   },
 ];
