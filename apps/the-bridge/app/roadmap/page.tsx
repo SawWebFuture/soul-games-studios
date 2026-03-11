@@ -49,6 +49,24 @@ const dailyRhythm = [
   "Close loop: log result + next blocker",
 ];
 
+const marketIntelWorkflow = [
+  "Run Market Pattern Intelligence Agent (3 company teardowns: 2 winners + 1 near-winner)",
+  "Extract top 5 transferable patterns with evidence",
+  "Score Bridge fit (1–10) for each pattern",
+  "Commit top 3 actions for the next 7 days",
+  "Define KPI + owner + deadline for each action",
+];
+
+const productivityStack = [
+  "Supabase (The Bridge backend): auth, Postgres, realtime events, row-level security, edge functions",
+  "PostHog or Mixpanel: funnel + activation + retention analytics",
+  "Sentry: error monitoring and incident triage",
+  "n8n + OpenClaw cron: automations, reminders, and operator workflows",
+  "Notion: roadmap, decisions, and execution tracking",
+  "GitHub + Actions: CI/CD and release reliability",
+  "Stripe: monetization instrumentation (conversion, churn, MRR signals)",
+];
+
 export default async function RoadmapPage() {
   if (!(await isAuthed())) redirect("/login");
 
@@ -85,6 +103,36 @@ export default async function RoadmapPage() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
             {dailyRhythm.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader>
+            <CardTitle>Market Pattern Intelligence Agent (Weekly)</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {marketIntelWorkflow.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <a
+              href="/docs/market-pattern-intelligence-agent.md"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block rounded-md border border-indigo-500/40 bg-indigo-500/10 px-3 py-2 text-xs text-indigo-300 hover:bg-indigo-500/20"
+            >
+              Open agent prompt doc
+            </a>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader>
+            <CardTitle>Top Tools & Software Stack (Productivity + Efficiency)</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {productivityStack.map((item) => (
               <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
             ))}
           </CardContent>
