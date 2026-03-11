@@ -12,6 +12,7 @@ const navItems: Item[] = [
   { label: "Operations", icon: Wrench, href: "/operations" },
   { label: "Roadmap", icon: Gauge, href: "/roadmap" },
   { label: "Experiment Roadmap", icon: Gauge, href: "/experiment-roadmap" },
+  { label: "Website Roadmap", icon: Gauge, href: "/website-roadmap" },
   { label: "Scorecard", icon: Gauge, href: "/scorecard" },
   { label: "Chat", icon: MessageSquare, href: "/chat" },
   { label: "Settings", icon: Settings, href: "/settings" },
