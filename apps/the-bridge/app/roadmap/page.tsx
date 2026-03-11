@@ -61,7 +61,7 @@ export default async function RoadmapPage() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
             <p>
-              North Star: Build simple, fun AI products that create real value for real people — while future-proofing skills and growing a high-revenue business.
+              North Star: Build valuable, high-demand products and experiences — while future-proofing our skills and growing a high-revenue business we’re proud of.
             </p>
           </CardContent>
         </Card>

@@ -81,7 +81,7 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
           </header>
 
           <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-300 md:px-6">
-            “Build simple, fun AI products that create real value for real people — while future-proofing our skills and growing a high-revenue business.”
+            “Build valuable, high-demand products and experiences — while future-proofing our skills and growing a high-revenue business we’re proud of.”
           </div>
 
           {activeHref !== "/" ? (
