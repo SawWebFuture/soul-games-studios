@@ -91,6 +91,22 @@ const collectibleCardKpis = [
   "7-day return for collectors target: ≥30%",
 ];
 
+const websiteRollout = [
+  "Phase 1 (Now): launch stable home website with experiments index + experiment detail pages + primary subscribe CTA.",
+  "Phase 1 (Now): wire analytics for visit→experiment click→email subscription funnel.",
+  "Phase 2 (Next): launch merch storefront with 3–5 hero products linked to experiment themes.",
+  "Phase 2 (Next): add subscriber portal for early drops, secret cards, and private easter unlocks.",
+  "Phase 3 (Scale): build collector profile/progress view across all experiments.",
+  "Phase 3 (Scale): tie YouTube/social traffic directly to next mission pages on-site.",
+];
+
+const websiteKpis = [
+  "Home→Experiment CTR target: ≥35%",
+  "Experiment visitor→Email subscription target: ≥18%",
+  "Subscriber→Merch conversion target: ≥3% (initial)",
+  "Returning visitor rate (7-day) target: ≥25%",
+];
+
 export default async function ExperimentRoadmapPage() {
   if (!(await isAuthed())) redirect("/login");
 
@@ -137,6 +153,19 @@ export default async function ExperimentRoadmapPage() {
             ))}
             <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">KPI Targets</div>
             {collectibleCardKpis.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Soul Games Studios Website Rollout</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {websiteRollout.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">Website KPI Targets</div>
+            {websiteKpis.map((item) => (
               <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
             ))}
           </CardContent>
