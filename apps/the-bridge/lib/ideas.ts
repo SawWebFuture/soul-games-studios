@@ -6,14 +6,11 @@ export type IdeaScore = {
   qualityConsistency: number;
 };
 
-export type IdeaPillars = {
-  philosophicalConcept: string;
-  singleButtonCoreAction: string;
-  socialShare: string;
-  emailCapture: string;
-  collectorsCards: string;
-  publicEasterEgg: string;
-  subscriberOnlyEasterEgg: string;
+export type NorthStarFit = {
+  valuableExperience: string;
+  highDemandPotential: string;
+  futureProofSkills: string;
+  highRevenueProudBusiness: string;
 };
 
 export type Idea = {
@@ -27,8 +24,8 @@ export type Idea = {
   score: IdeaScore;
   // Required for every idea so score context is always explicit.
   scoreRationale: Record<keyof IdeaScore, string>;
-  // Required so every idea shows how it satisfies experiment-rule pillars.
-  pillars: IdeaPillars;
+  // Required so every idea is mapped to the company North Star.
+  northStarFit: NorthStarFit;
 };
 
 export const scoreWeights = {
@@ -87,14 +84,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Current consistency is moderate due to contributor variance; the Quality Guardian is the key stabilizer.",
     },
-    pillars: {
-      philosophicalConcept: "Empower builders through leverage and trust, not complexity.",
-      singleButtonCoreAction: "Use a one-click 'Launch Starter' action for first-run output.",
-      socialShare: "Each kit publishes a share-ready output card/link.",
-      emailCapture: "Capture email after first successful outcome for updates and add-ons.",
-      collectorsCards: "Award builder badges/cards for completed outcomes.",
-      publicEasterEgg: "Public hidden badge tied to first successful deployment.",
-      subscriberOnlyEasterEgg: "Subscriber-only bonus template unlock path.",
+    northStarFit: {
+      valuableExperience: "Delivers concrete outcomes quickly for builders and buyers.",
+      highDemandPotential: "Targets persistent demand for faster app shipping with quality guardrails.",
+      futureProofSkills: "Builds marketplace, QA automation, and AI-product operating skills.",
+      highRevenueProudBusiness: "Creates scalable marketplace + trust moat economics you can be proud to stand behind.",
     },
   },
   {
@@ -126,14 +120,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Moderate-high consistency when guardrails are followed (clear QA + postmortem), but quality can dip under speed pressure.",
     },
-    pillars: {
-      philosophicalConcept: "Compounding mastery through daily creative discipline.",
-      singleButtonCoreAction: "One core hold/click interaction drives the experiment.",
-      socialShare: "Every run outputs a shareable artifact and caption hook.",
-      emailCapture: "Post-reveal opt-in captures subscribers without blocking first value.",
-      collectorsCards: "Each day contributes new collectible cards to a larger set.",
-      publicEasterEgg: "One public hidden interaction unlocks bonus delight.",
-      subscriberOnlyEasterEgg: "Subscriber-only easter unlock gives a secret card/variant.",
+    northStarFit: {
+      valuableExperience: "Ships frequent experiments that produce immediate user-facing value.",
+      highDemandPotential: "Lets you rapidly test and lock onto formats with real demand signals.",
+      futureProofSkills: "Compounds execution, iteration, and launch discipline daily.",
+      highRevenueProudBusiness: "Creates a repeatable growth engine that can scale revenue through consistency.",
     },
   },
   {
@@ -165,14 +156,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "High consistency improvement potential when criteria are calibrated and reviewed regularly.",
     },
-    pillars: {
-      philosophicalConcept: "Inner state quality compounds outer execution quality.",
-      singleButtonCoreAction: "Single daily score submission captures team signal quickly.",
-      socialShare: "Share weekly trend snapshot internally or publicly.",
-      emailCapture: "Use insights emails for team/subscriber performance updates.",
-      collectorsCards: "Award milestone cards for streaks and quality thresholds.",
-      publicEasterEgg: "Public hidden score pattern unlocks bonus message.",
-      subscriberOnlyEasterEgg: "Subscriber-only benchmark insights unlock hidden tier card.",
+    northStarFit: {
+      valuableExperience: "Improves quality of shipped experiences by tightening feedback loops.",
+      highDemandPotential: "Supports consistent delivery in markets that reward reliability.",
+      futureProofSkills: "Builds measurement, retrospective, and performance-ops capability.",
+      highRevenueProudBusiness: "Protects margins and brand trust by reducing chaotic execution.",
     },
   },
   {
@@ -204,14 +192,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Supports steadier output quality by keeping core throughput protected while exploring edges.",
     },
-    pillars: {
-      philosophicalConcept: "Balance creates longevity: order for stability, chaos for discovery.",
-      singleButtonCoreAction: "One classify action assigns each experiment to 70/20/10 bucket.",
-      socialShare: "Share portfolio mix and rationale to build transparency.",
-      emailCapture: "Capture subscribers for portfolio updates and experiment invites.",
-      collectorsCards: "Release portfolio-era collector cards tied to each bucket type.",
-      publicEasterEgg: "Public hidden wildcard trigger unlocks an unexpected variant.",
-      subscriberOnlyEasterEgg: "Subscribers unlock private wildcard challenge and card.",
+    northStarFit: {
+      valuableExperience: "Balances dependable delivery with exploration of new user value.",
+      highDemandPotential: "Keeps core demand covered while testing adjacent opportunities.",
+      futureProofSkills: "Builds strategic portfolio management and adaptive planning skills.",
+      highRevenueProudBusiness: "Improves capital allocation to grow revenue without reckless bets.",
     },
   },
   {
@@ -243,14 +228,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Good consistency with strong handoff protocols, though resilience can dip during spikes or absences.",
     },
-    pillars: {
-      philosophicalConcept: "Alignment is a force multiplier; role clarity creates momentum.",
-      singleButtonCoreAction: "One clear assignment action routes each task to the right agent.",
-      socialShare: "Content agent produces share-ready outputs every cycle.",
-      emailCapture: "Ops ensures subscriber capture is implemented in each launch.",
-      collectorsCards: "Engineer/content pair standardize collectible generation.",
-      publicEasterEgg: "Team checklist enforces one public easter path per experiment.",
-      subscriberOnlyEasterEgg: "Team checklist enforces subscriber-only easter every launch.",
+    northStarFit: {
+      valuableExperience: "Raises output quality by giving each function clear ownership.",
+      highDemandPotential: "Increases throughput so you can meet demand faster.",
+      futureProofSkills: "Builds specialized but coordinated AI-native operating skills.",
+      highRevenueProudBusiness: "Enables scalable execution without bloated overhead.",
     },
   },
   {
@@ -282,14 +264,11 @@ export const ideas: Idea[] = [
       qualityConsistency:
         "Very high consistency effect since standards normalize quality across the full experiment pipeline.",
     },
-    pillars: {
-      philosophicalConcept: "Philosophy is a product feature, not an afterthought.",
-      singleButtonCoreAction: "Pillar explicitly requires one core interaction.",
-      socialShare: "Pillar explicitly requires social sharing artifact/path.",
-      emailCapture: "Pillar explicitly requires non-coercive email capture.",
-      collectorsCards: "Pillar explicitly requires collectible output.",
-      publicEasterEgg: "Pillar explicitly requires public easter egg.",
-      subscriberOnlyEasterEgg: "Pillar explicitly requires subscriber-only easter egg.",
+    northStarFit: {
+      valuableExperience: "Standardizes quality so every launch delivers meaningful user value.",
+      highDemandPotential: "Improves market consistency, making offers easier to trust and adopt.",
+      futureProofSkills: "Builds repeatable systems thinking and production discipline.",
+      highRevenueProudBusiness: "Supports scalable monetization with high standards and brand integrity.",
     },
   },
 ];

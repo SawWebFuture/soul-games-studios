@@ -30,15 +30,12 @@ export default async function IdeaDetailPage({ params }: { params: Promise<{ slu
         </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle className="text-base">How this idea hits all required points</CardTitle></CardHeader>
+          <CardHeader><CardTitle className="text-base">How this idea serves our North Star</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Philosophical concept:</span> {idea.pillars.philosophicalConcept}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Single-button core action:</span> {idea.pillars.singleButtonCoreAction}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Social share:</span> {idea.pillars.socialShare}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Email capture:</span> {idea.pillars.emailCapture}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Collectors cards:</span> {idea.pillars.collectorsCards}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Public easter egg:</span> {idea.pillars.publicEasterEgg}</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Subscriber-only easter egg:</span> {idea.pillars.subscriberOnlyEasterEgg}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Build valuable experiences:</span> {idea.northStarFit.valuableExperience}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">High-demand potential:</span> {idea.northStarFit.highDemandPotential}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Future-proof our skills:</span> {idea.northStarFit.futureProofSkills}</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3"><span className="text-zinc-100">Grow a high-revenue business we’re proud of:</span> {idea.northStarFit.highRevenueProudBusiness}</div>
           </CardContent>
         </Card>
 
