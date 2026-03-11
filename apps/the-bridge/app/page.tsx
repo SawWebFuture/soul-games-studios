@@ -9,6 +9,7 @@ import {
   Logs,
   Rocket,
   Search,
+  Menu,
   Settings,
   Shield,
   Target,
@@ -104,11 +105,41 @@ export default async function HomePage() {
               </div>
 
               <div className="flex items-center gap-2">
+                <details className="relative md:hidden">
+                  <summary className="list-none rounded-md border border-zinc-700 bg-zinc-900 p-2 text-zinc-300 cursor-pointer">
+                    <Menu size={16} />
+                  </summary>
+                  <div className="absolute right-0 mt-2 w-64 rounded-lg border border-zinc-800 bg-[#0d1118] p-3 shadow-2xl">
+                    <p className="mb-2 text-xs uppercase tracking-wide text-zinc-500">Navigation</p>
+                    <div className="space-y-1">
+                      {navItems.map((item) => (
+                        <a key={item.label} href="#" className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-zinc-300 hover:bg-zinc-800/80">
+                          <item.icon size={14} />
+                          {item.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div className="mt-3 border-t border-zinc-800 pt-3 space-y-2">
+                      <a href="/ideas" className="block rounded-md border border-indigo-500/40 bg-indigo-500/10 px-3 py-2 text-xs text-indigo-300 hover:bg-indigo-500/20 text-center">
+                        Ideas Bank
+                      </a>
+                      <form action="/api/auth/logout" method="post">
+                        <Button variant="secondary" className="w-full border-zinc-700 bg-zinc-900 hover:bg-zinc-800">
+                          Logout
+                        </Button>
+                      </form>
+                    </div>
+                  </div>
+                </details>
+
+                <a href="/ideas" className="hidden rounded-md border border-indigo-500/40 bg-indigo-500/10 px-3 py-1.5 text-xs text-indigo-300 hover:bg-indigo-500/20 md:inline-block">
+                  Ideas Bank
+                </a>
                 <div className="hidden items-center gap-2 rounded-md border border-zinc-700 bg-zinc-900/80 px-2 py-1 text-zinc-400 md:flex">
                   <Search size={14} />
                   <span className="text-xs">Search</span>
                 </div>
-                <form action="/api/auth/logout" method="post">
+                <form action="/api/auth/logout" method="post" className="hidden md:block">
                   <Button variant="secondary" className="border-zinc-700 bg-zinc-900 hover:bg-zinc-800">
                     Logout
                   </Button>
