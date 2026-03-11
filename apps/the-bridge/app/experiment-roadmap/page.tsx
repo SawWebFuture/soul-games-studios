@@ -48,7 +48,7 @@ const launchGate = [
   "Single-button core action works on first run.",
   "Public share path is live and tested.",
   "Email capture is non-coercive and functional.",
-  "Collector artifact is generated and downloadable.",
+  "Collector artifact set is complete (3 standard + 1 rare + 1 subscriber-only) and downloadable.",
   "Public and subscriber-only easter eggs are reachable.",
   "Tracking events and KPI owner are assigned.",
   "Scott final approval received before scheduling/publishing.",
@@ -60,6 +60,24 @@ const weeklyCadence = [
   "Friday: review Zone Score trend + KPI trend + retention blockers",
   "Saturday: ship one structural improvement (tooling, onboarding, or QA)",
   "Sunday: reset roadmap priorities and assign next week subagent owners",
+];
+
+const collectibleCardFlow = [
+  "Card set size per experiment: 5 total cards (3 standard + 1 rare + 1 subscriber-only secret).",
+  "Guaranteed drop: user always earns 1 standard card at reveal completion.",
+  "Chance layer: 20% chance rare card on first completion; +10% luck bonus on second completion in 24h.",
+  "Subscriber path: unlock subscriber-only secret card after email confirmation + subscriber easter completion.",
+  "Distribution outputs: downloadable PNG card + social caption + unique card ID.",
+  "Data model: experiment_slug, card_id, rarity, unlocked_at, source_channel, user_identifier.",
+  "Quality gate: every card must pass readability, mobile crop safety, and brand consistency checks.",
+];
+
+const collectibleCardKpis = [
+  "Reveal→Card claim rate target: ≥75%",
+  "Card claim→Share rate target: ≥25%",
+  "Card claim→Email subscription target: ≥18%",
+  "Subscriber secret card unlock target: ≥35% of new subscribers",
+  "7-day return for collectors target: ≥30%",
 ];
 
 export default async function ExperimentRoadmapPage() {
@@ -99,6 +117,19 @@ export default async function ExperimentRoadmapPage() {
             </CardContent>
           </Card>
         ))}
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Collectible Card System (Drilldown)</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {collectibleCardFlow.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">KPI Targets</div>
+            {collectibleCardKpis.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
+          </CardContent>
+        </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
           <CardHeader><CardTitle className="text-base">Pre-Publish Launch Gate (Must Pass)</CardTitle></CardHeader>
