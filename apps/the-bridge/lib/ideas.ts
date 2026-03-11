@@ -14,6 +14,7 @@ export type Idea = {
   pros: string[];
   cons: string[];
   score: IdeaScore;
+  scoreRationale?: Partial<Record<keyof IdeaScore, string>>;
 };
 
 export const scoreWeights = {
@@ -73,6 +74,18 @@ export const ideas: Idea[] = [
       repeatUsage: 9,
       unitEconomics: 7,
       qualityConsistency: 7,
+    },
+    scoreRationale: {
+      painkiller:
+        "Strong internal painkiller for execution drift: creates daily focus and reduces context switching, but not yet an external customer painkiller by itself.",
+      timeToValue:
+        "Very high time-to-value: the team can ship, learn, and adjust in one day, which compounds quickly.",
+      repeatUsage:
+        "Designed for daily repetition; cadence itself creates habit loops and a reliable learning rhythm.",
+      unitEconomics:
+        "Good economics because it reuses the same team/system daily, though quality costs can rise if rushed experiments increase rework.",
+      qualityConsistency:
+        "Moderate-high consistency when guardrails are followed (clear QA + postmortem), but quality can dip under speed pressure.",
     },
   },
   {

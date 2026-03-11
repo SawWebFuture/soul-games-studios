@@ -5,6 +5,7 @@ import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
+import { ideas, totalScore } from "@/lib/ideas";
 
 export default async function HomePage() {
   if (!(await isAuthed())) redirect("/login");
@@ -13,6 +14,7 @@ export default async function HomePage() {
   const running = store.subagents.filter((s) => s.status === "running").length;
   const completed = store.subagents.filter((s) => s.status === "completed").length;
   const latestEvent = [...store.events].sort((a, b) => (a.at < b.at ? 1 : -1))[0];
+  const topIdea = [...ideas].sort((a, b) => totalScore(b.score) - totalScore(a.score))[0];
 
   return (
     <BridgeShell activeHref="/">
@@ -55,6 +57,19 @@ export default async function HomePage() {
               <p className="text-sm font-medium flex items-center gap-2"><Lightbulb size={15} /> Ideas Bank</p>
               <p className="text-xs text-zinc-400 mt-1">Includes marketplace + quality guardian concept and prior strategic ideas</p>
             </a>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle>Top Idea Right Now</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            <p className="flex items-center gap-2">
+              <Lightbulb size={15} className="text-amber-400" />
+              <span className="font-medium">{topIdea.title}</span>
+            </p>
+            <p>{topIdea.summary}</p>
+            <p className="text-cyan-300">Score: {totalScore(topIdea.score)}/100</p>
+            <a href={`/ideas/${topIdea.slug}`} className="inline-block pt-1 text-xs text-indigo-300 hover:text-indigo-200">Open idea details →</a>
           </CardContent>
         </Card>
 

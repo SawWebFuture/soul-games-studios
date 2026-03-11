@@ -44,11 +44,26 @@ export default async function IdeaDetailPage({ params }: { params: Promise<{ slu
         <Card className="border-zinc-800 bg-[#0c1016]">
           <CardHeader><CardTitle className="text-base">Score Breakdown</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">Painkiller use case: {idea.score.painkiller}/10 · weight {scoreWeights.painkiller}%</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">Time-to-value: {idea.score.timeToValue}/10 · weight {scoreWeights.timeToValue}%</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">Repeat usage: {idea.score.repeatUsage}/10 · weight {scoreWeights.repeatUsage}%</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">Unit economics: {idea.score.unitEconomics}/10 · weight {scoreWeights.unitEconomics}%</div>
-            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">Quality consistency: {idea.score.qualityConsistency}/10 · weight {scoreWeights.qualityConsistency}%</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
+              <p>Painkiller use case: {idea.score.painkiller}/10 · weight {scoreWeights.painkiller}%</p>
+              {idea.scoreRationale?.painkiller ? <p className="mt-1 text-xs text-zinc-400">Why: {idea.scoreRationale.painkiller}</p> : null}
+            </div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
+              <p>Time-to-value: {idea.score.timeToValue}/10 · weight {scoreWeights.timeToValue}%</p>
+              {idea.scoreRationale?.timeToValue ? <p className="mt-1 text-xs text-zinc-400">Why: {idea.scoreRationale.timeToValue}</p> : null}
+            </div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
+              <p>Repeat usage: {idea.score.repeatUsage}/10 · weight {scoreWeights.repeatUsage}%</p>
+              {idea.scoreRationale?.repeatUsage ? <p className="mt-1 text-xs text-zinc-400">Why: {idea.scoreRationale.repeatUsage}</p> : null}
+            </div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
+              <p>Unit economics: {idea.score.unitEconomics}/10 · weight {scoreWeights.unitEconomics}%</p>
+              {idea.scoreRationale?.unitEconomics ? <p className="mt-1 text-xs text-zinc-400">Why: {idea.scoreRationale.unitEconomics}</p> : null}
+            </div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
+              <p>Quality consistency: {idea.score.qualityConsistency}/10 · weight {scoreWeights.qualityConsistency}%</p>
+              {idea.scoreRationale?.qualityConsistency ? <p className="mt-1 text-xs text-zinc-400">Why: {idea.scoreRationale.qualityConsistency}</p> : null}
+            </div>
           </CardContent>
         </Card>
       </div>
