@@ -15,6 +15,8 @@ const navItems: Item[] = [
 ];
 
 export function BridgeShell({ activeHref, children }: { activeHref: string; children: ReactNode }) {
+  const current = navItems.find((i) => i.href === activeHref);
+
   return (
     <main className="min-h-screen bg-[#090b10] text-zinc-100">
       <div className="grid min-h-screen md:grid-cols-[250px_1fr]">
@@ -45,7 +47,7 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
           <header className="sticky top-0 z-30 border-b border-zinc-800/80 bg-[#0a0d12]/95 backdrop-blur">
             <div className="flex items-center justify-between px-4 py-3 md:px-6">
               <div className="flex items-center gap-3">
-                <p className="text-sm text-zinc-300">The Bridge</p>
+                <a href="/" className="text-sm text-zinc-300 hover:text-white">The Bridge</a>
                 <span className="rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300">
                   PRODUCTION
                 </span>
@@ -76,6 +78,16 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
               </div>
             </div>
           </header>
+
+          <div className="border-b border-zinc-800/70 bg-[#0a0d12]/70 px-4 py-2 text-xs text-zinc-400 md:px-6">
+            <a href="/" className="hover:text-zinc-200">Home</a>
+            {current && current.href !== "/" ? (
+              <>
+                <span className="mx-2 text-zinc-600">/</span>
+                <a href={current.href} className="hover:text-zinc-200">{current.label}</a>
+              </>
+            ) : null}
+          </div>
 
           <div className="p-4 md:p-6">{children}</div>
         </section>
