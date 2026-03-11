@@ -1,4 +1,4 @@
-import { Database, Gauge, LayoutGrid, Logs, Menu, Search, Settings, Workflow, Wrench } from "lucide-react";
+import { Database, Gauge, LayoutGrid, Logs, Menu, MessageSquare, Search, Settings, Workflow, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ReactNode } from "react";
 
@@ -11,6 +11,7 @@ const navItems: Item[] = [
   { label: "Logs", icon: Logs, href: "/logs" },
   { label: "Operations", icon: Wrench, href: "/operations" },
   { label: "Roadmap", icon: Gauge, href: "/roadmap" },
+  { label: "Chat", icon: MessageSquare, href: "/chat" },
   { label: "Settings", icon: Settings, href: "/settings" },
   { label: "Ideas Bank", icon: Gauge, href: "/ideas" },
 ];
