@@ -11,6 +11,8 @@ const navItems: Item[] = [
   { label: "Logs", icon: Logs, href: "/logs" },
   { label: "Operations", icon: Wrench, href: "/operations" },
   { label: "Roadmap", icon: Gauge, href: "/roadmap" },
+  { label: "Experiment Roadmap", icon: Gauge, href: "/experiment-roadmap" },
+  { label: "Scorecard", icon: Gauge, href: "/scorecard" },
   { label: "Chat", icon: MessageSquare, href: "/chat" },
   { label: "Settings", icon: Settings, href: "/settings" },
   { label: "Ideas Bank", icon: Gauge, href: "/ideas" },
