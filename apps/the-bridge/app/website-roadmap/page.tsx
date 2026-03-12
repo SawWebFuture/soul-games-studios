@@ -29,6 +29,11 @@ const promptPack = [
       "Cinematic hero image for an AI-first creative studio, calm intentional futuristic aesthetic, soft volumetric light, cosmic gradients, subtle geometric overlays, high contrast focal center, clean negative space for headline text, premium brand feel, no people, no logos, ultra-detailed, 16:9",
   },
   {
+    title: "Feature Tabs Imagery (Identity / Experiments / Systems)",
+    prompt:
+      "Create a cohesive 3-image set for website feature tabs (Identity Tools, Web Experiments, Studio Systems), calm futuristic AI-first art direction, premium editorial lighting, deep navy + indigo + teal + soft violet palette, each image with clear center-left negative space for text overlay, visually distinct subject per tab but consistent style language, no text, no logos, web-ready 16:9",
+  },
+  {
     title: "Experiments section tiles",
     prompt:
       "Four cohesive concept art tiles for experimental digital products, playful philosophical technology vibe, each tile representing identity artifacts, creator systems, AI collaboration, collectible outcomes, visually distinct but same color language, modern UI-friendly composition, no text, 1:1",
