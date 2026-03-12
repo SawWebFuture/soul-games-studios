@@ -1,4 +1,4 @@
-import { Database, Gauge, LayoutGrid, Logs, Menu, MessageSquare, Search, Settings, Workflow, Wrench } from "lucide-react";
+import { CalendarDays, Database, FileText, Gauge, LayoutGrid, Logs, Menu, MessageSquare, Search, Settings, Workflow, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ReactNode } from "react";
 
@@ -13,6 +13,8 @@ const navItems: Item[] = [
   { label: "Roadmap", icon: Gauge, href: "/roadmap" },
   { label: "Experiment Roadmap", icon: Gauge, href: "/experiment-roadmap" },
   { label: "Website Roadmap", icon: Gauge, href: "/website-roadmap" },
+  { label: "Blog Roadmap", icon: FileText, href: "/blog-roadmap" },
+  { label: "Content Calendar", icon: CalendarDays, href: "/calendar" },
   { label: "Scorecard", icon: Gauge, href: "/scorecard" },
   { label: "Chat", icon: MessageSquare, href: "/chat" },
   { label: "Settings", icon: Settings, href: "/settings" },

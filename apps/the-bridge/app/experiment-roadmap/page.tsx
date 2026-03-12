@@ -201,6 +201,9 @@ export default async function ExperimentRoadmapPage() {
             {websiteBuildRoadmap.map((item) => (
               <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
             ))}
+            <div className="pt-2 text-xs uppercase tracking-wide text-zinc-400">Content planning</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Blog content backlog and outlines are tracked in <a href="/blog-roadmap" className="text-indigo-300 hover:text-indigo-200">/blog-roadmap</a>.</div>
+            <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Weekly publishing schedule and Supabase connection plan are tracked in <a href="/calendar" className="text-indigo-300 hover:text-indigo-200">/calendar</a>.</div>
           </CardContent>
         </Card>
 
