@@ -126,6 +126,25 @@ const websiteBuildRoadmap = [
   "Sprint 3 (Optimization): add dashboard metrics for funnel conversion by channel/campaign.",
 ];
 
+const trendOperatingFlow = [
+  "Step 1 — Daily trend scan (30-45 min): TikTok Creative Center, YouTube Trending, X, Reddit rising, Google Trends.",
+  "Step 2 — Score trends quickly (1-5): velocity, gameability, shareability, brand fit, monetization path.",
+  "Step 3 — Select top 1-2 only (no overloading).",
+  "Step 4 — Convert each selected trend into a one-page game brief (hook, one-button action, reveal, share, email, cards, easter paths).",
+  "Step 5 — Run 24-hour build -> launch -> distribution loop.",
+  "Step 6 — Publish YouTube announcement and bridge to next mission.",
+  "Step 7 — Apply 48-hour kill/scale rule based on KPI floors.",
+  "Step 8 — Log learnings and feed best patterns into next trend cycle.",
+];
+
+const trendKpiFloors = [
+  "Trend post CTR floor: >= 3-5%",
+  "Experiment completion floor: >= 35%",
+  "Share rate floor: >= 20%",
+  "Email capture floor: >= 15-18%",
+  "If all floors are met: graduate to scale iteration.",
+];
+
 export default async function ExperimentRoadmapPage() {
   if (!(await isAuthed())) redirect("/login");
 
@@ -204,6 +223,19 @@ export default async function ExperimentRoadmapPage() {
             <div className="pt-2 text-xs uppercase tracking-wide text-zinc-400">Content planning</div>
             <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Blog content backlog and outlines are tracked in <a href="/blog-roadmap" className="text-indigo-300 hover:text-indigo-200">/blog-roadmap</a>.</div>
             <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Weekly publishing schedule and Supabase connection plan are tracked in <a href="/calendar" className="text-indigo-300 hover:text-indigo-200">/calendar</a>.</div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Trend is your Friend — Operating Flow</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {trendOperatingFlow.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">KPI Floors (Kill / Scale Rule)</div>
+            {trendKpiFloors.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
           </CardContent>
         </Card>
 
