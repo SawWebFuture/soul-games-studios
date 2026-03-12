@@ -3,6 +3,14 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
 
+const mvpFocus = [
+  "Run 1 flagship experiment/day (or 3-4/week) — no extra product branches.",
+  "Keep one conversion path: email capture after reveal.",
+  "Keep one distribution loop: YouTube + one social platform.",
+  "Track one scoreboard only: CTR, completion rate, email conversion.",
+  "Use 30-day kill/scale rule: if no metric lift, pause; if lift appears, double down.",
+];
+
 const loop24h = [
   "00:00–02:00 — Select concept + define one core KPI",
   "02:00–08:00 — Build the single-button core interaction",
@@ -164,6 +172,28 @@ export default async function ExperimentRoadmapPage() {
         </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">MVP First (Next 30 Days)</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {mvpFocus.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Trend is your Friend — Operating Flow</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {trendOperatingFlow.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">KPI Floors (Kill / Scale Rule)</div>
+            {trendKpiFloors.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
           <CardHeader><CardTitle className="text-base">24-Hour Build → Publish Loop</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm text-zinc-300">
             {loop24h.map((item) => (
@@ -182,6 +212,24 @@ export default async function ExperimentRoadmapPage() {
             </CardContent>
           </Card>
         ))}
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Pre-Publish Launch Gate (Must Pass)</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {launchGate.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">□ {item}</div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Weekly Operating Cadence</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {weeklyCadence.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+          </CardContent>
+        </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
           <CardHeader><CardTitle className="text-base">Collectible Card System (Drilldown)</CardTitle></CardHeader>
@@ -223,37 +271,6 @@ export default async function ExperimentRoadmapPage() {
             <div className="pt-2 text-xs uppercase tracking-wide text-zinc-400">Content planning</div>
             <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Blog content backlog and outlines are tracked in <a href="/blog-roadmap" className="text-indigo-300 hover:text-indigo-200">/blog-roadmap</a>.</div>
             <div className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ Weekly publishing schedule and Supabase connection plan are tracked in <a href="/calendar" className="text-indigo-300 hover:text-indigo-200">/calendar</a>.</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle className="text-base">Trend is your Friend — Operating Flow</CardTitle></CardHeader>
-          <CardContent className="space-y-2 text-sm text-zinc-300">
-            {trendOperatingFlow.map((item) => (
-              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
-            ))}
-            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">KPI Floors (Kill / Scale Rule)</div>
-            {trendKpiFloors.map((item) => (
-              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle className="text-base">Pre-Publish Launch Gate (Must Pass)</CardTitle></CardHeader>
-          <CardContent className="space-y-2 text-sm text-zinc-300">
-            {launchGate.map((item) => (
-              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">□ {item}</div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle className="text-base">Weekly Operating Cadence</CardTitle></CardHeader>
-          <CardContent className="space-y-2 text-sm text-zinc-300">
-            {weeklyCadence.map((item) => (
-              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
-            ))}
           </CardContent>
         </Card>
       </div>
