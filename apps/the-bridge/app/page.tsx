@@ -1,4 +1,4 @@
-import { Activity, CalendarDays, CheckCircle2, Database, FileText, Flame, Lightbulb, ListChecks, Rocket, ScrollText, Shield, TrendingUp, Wrench } from "lucide-react";
+import { Activity, Brain, CalendarDays, CheckCircle2, Database, FileText, Flame, Lightbulb, ListChecks, Rocket, ScrollText, Shield, TrendingUp, Wrench } from "lucide-react";
 import Image from "next/image";
 import { readStore } from "@/lib/store";
 import { isAuthed } from "@/lib/auth";
@@ -85,7 +85,7 @@ export default async function HomePage() {
 
         <Card className="border-zinc-800 bg-[#0c1016]">
           <CardHeader><CardTitle>Roadmaps & Content Planning</CardTitle></CardHeader>
-          <CardContent className="grid gap-3 md:grid-cols-2">
+          <CardContent className="grid gap-3 md:grid-cols-3">
             <a href="/website-roadmap" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
               <p className="text-sm font-medium flex items-center gap-2"><Wrench size={15} /> Website Roadmap</p>
               <p className="text-xs text-zinc-400 mt-1">Section-by-section build plan + visual prompts.</p>
@@ -101,6 +101,10 @@ export default async function HomePage() {
             <a href="/operations" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
               <p className="text-sm font-medium flex items-center gap-2"><ListChecks size={15} /> Operations</p>
               <p className="text-xs text-zinc-400 mt-1">Execution rhythms, ownership, and daily loop controls.</p>
+            </a>
+            <a href="/prompt-engineering" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900 md:col-span-3">
+              <p className="text-sm font-medium flex items-center gap-2"><Brain size={15} /> Prompt Engineering Playbook</p>
+              <p className="text-xs text-zinc-400 mt-1">Best practices, reusable templates, anti-patterns, and a monthly update loop.</p>
             </a>
           </CardContent>
         </Card>

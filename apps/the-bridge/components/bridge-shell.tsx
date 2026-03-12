@@ -1,25 +1,44 @@
-import { CalendarDays, Database, FileText, Gauge, LayoutGrid, Logs, Menu, MessageSquare, Search, Settings, Workflow, Wrench } from "lucide-react";
+import { Brain, CalendarDays, Database, FileText, Gauge, LayoutGrid, Logs, Menu, MessageSquare, Search, Settings, Workflow, Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { ReactNode } from "react";
 
 type Item = { label: string; href: string; icon: any };
+type NavGroup = { title: string; items: Item[] };
 
-const navItems: Item[] = [
-  { label: "Project Overview", icon: LayoutGrid, href: "/" },
-  { label: "Subagent Registry", icon: Workflow, href: "/subagents" },
-  { label: "Database", icon: Database, href: "/database" },
-  { label: "Logs", icon: Logs, href: "/logs" },
-  { label: "Operations", icon: Wrench, href: "/operations" },
-  { label: "Roadmap", icon: Gauge, href: "/roadmap" },
-  { label: "Experiment Roadmap", icon: Gauge, href: "/experiment-roadmap" },
-  { label: "Website Roadmap", icon: Gauge, href: "/website-roadmap" },
-  { label: "Blog Roadmap", icon: FileText, href: "/blog-roadmap" },
-  { label: "Content Calendar", icon: CalendarDays, href: "/calendar" },
-  { label: "Scorecard", icon: Gauge, href: "/scorecard" },
-  { label: "Chat", icon: MessageSquare, href: "/chat" },
-  { label: "Settings", icon: Settings, href: "/settings" },
-  { label: "Ideas Bank", icon: Gauge, href: "/ideas" },
+const navGroups: NavGroup[] = [
+  {
+    title: "Command",
+    items: [
+      { label: "Project Overview", icon: LayoutGrid, href: "/" },
+      { label: "Roadmap", icon: Gauge, href: "/roadmap" },
+      { label: "Scorecard", icon: Gauge, href: "/scorecard" },
+      { label: "Operations", icon: Wrench, href: "/operations" },
+      { label: "Ideas Bank", icon: Gauge, href: "/ideas" },
+    ],
+  },
+  {
+    title: "Build + Growth",
+    items: [
+      { label: "Experiment Roadmap", icon: Gauge, href: "/experiment-roadmap" },
+      { label: "Website Roadmap", icon: Gauge, href: "/website-roadmap" },
+      { label: "Blog Roadmap", icon: FileText, href: "/blog-roadmap" },
+      { label: "Content Calendar", icon: CalendarDays, href: "/calendar" },
+      { label: "Prompt Engineering", icon: Brain, href: "/prompt-engineering" },
+    ],
+  },
+  {
+    title: "Systems",
+    items: [
+      { label: "Subagent Registry", icon: Workflow, href: "/subagents" },
+      { label: "Database", icon: Database, href: "/database" },
+      { label: "Logs", icon: Logs, href: "/logs" },
+      { label: "Chat", icon: MessageSquare, href: "/chat" },
+      { label: "Settings", icon: Settings, href: "/settings" },
+    ],
+  },
 ];
+
+const navItems = navGroups.flatMap((group) => group.items);
 
 export function BridgeShell({ activeHref, children }: { activeHref: string; children: ReactNode }) {
   const current = navItems.find((i) => i.href === activeHref);
@@ -32,20 +51,27 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
             <div className="h-2 w-2 rounded-full bg-emerald-400" />
             <p className="text-sm font-semibold">Soul Games Studios</p>
           </div>
-          <nav className="space-y-1">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
-                  item.href === activeHref
-                    ? "bg-zinc-800/90 text-white"
-                    : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-                }`}
-              >
-                <item.icon size={15} />
-                {item.label}
-              </a>
+          <nav className="space-y-4">
+            {navGroups.map((group) => (
+              <div key={group.title}>
+                <p className="mb-1 px-3 text-[10px] uppercase tracking-wider text-zinc-500">{group.title}</p>
+                <div className="space-y-1">
+                  {group.items.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
+                        item.href === activeHref
+                          ? "bg-zinc-800/90 text-white"
+                          : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+                      }`}
+                    >
+                      <item.icon size={15} />
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </aside>
@@ -64,14 +90,21 @@ export function BridgeShell({ activeHref, children }: { activeHref: string; chil
                   <summary className="list-none cursor-pointer rounded-md border border-zinc-700 bg-zinc-900 p-2 text-zinc-300">
                     <Menu size={16} />
                   </summary>
-                  <div className="absolute right-0 mt-2 w-64 space-y-1 rounded-lg border border-zinc-800 bg-[#0d1118] p-3 shadow-2xl">
-                    {navItems.map((item) => (
-                      <a key={item.label} href={item.href} className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-zinc-300 hover:bg-zinc-800/80">
-                        <item.icon size={14} />
-                        {item.label}
-                      </a>
+                  <div className="absolute right-0 mt-2 w-72 space-y-3 rounded-lg border border-zinc-800 bg-[#0d1118] p-3 shadow-2xl">
+                    {navGroups.map((group) => (
+                      <div key={group.title}>
+                        <p className="mb-1 px-2 text-[10px] uppercase tracking-wider text-zinc-500">{group.title}</p>
+                        <div className="space-y-1">
+                          {group.items.map((item) => (
+                            <a key={item.label} href={item.href} className="flex items-center gap-2 rounded-md px-2 py-2 text-sm text-zinc-300 hover:bg-zinc-800/80">
+                              <item.icon size={14} />
+                              {item.label}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
                     ))}
-                    <form action="/api/auth/logout" method="post" className="pt-2">
+                    <form action="/api/auth/logout" method="post" className="pt-1">
                       <Button variant="secondary" className="w-full border-zinc-700 bg-zinc-900 hover:bg-zinc-800">Logout</Button>
                     </form>
                   </div>

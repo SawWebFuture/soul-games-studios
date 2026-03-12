@@ -2,6 +2,8 @@ import { isAuthed } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
+import Link from "next/link";
+import { websiteSectionBuildPlan } from "@/lib/website-roadmap";
 
 const recommendedGenerators = [
   "Midjourney — strongest cinematic mood and premium visual polish.",
@@ -100,101 +102,6 @@ const blogKpis = [
   "Average read time: ≥2m 30s",
 ];
 
-const websiteSectionBuildPlan = [
-  {
-    section: "Header / Navigation",
-    mustHave: [
-      "✅ Logo + clear brand wordmark",
-      "✅ Primary nav links (About, Experiments, Waitlist/Subscribe)",
-      "✅ Persistent CTA button (Get Updates / Join Waitlist)",
-      "✅ Mobile menu behavior + sticky header",
-    ],
-  },
-  {
-    section: "Hero + Slides",
-    mustHave: [
-      "🟡 One clear value proposition headline",
-      "✅ Supporting subheadline tied to North Star",
-      "⬜ Primary CTA + secondary CTA",
-      "✅ Hero visual/slide set with readable text-safe areas",
-      "✅ Slide controls + accessibility labels",
-    ],
-  },
-  {
-    section: "About",
-    mustHave: [
-      "✅ Who Soul Games Studios is (short and sharp)",
-      "✅ Studio philosophy quote / belief statement",
-      "✅ Brand-trust visual (about image)",
-      "✅ Bridge sentence connecting philosophy to experiments",
-    ],
-  },
-  {
-    section: "Experiments",
-    mustHave: [
-      "⬜ Experiments overview grid with active statuses",
-      "🟡 Each card includes name, 1-line value, and CTA",
-      "⬜ Link to dedicated experiment pages (/experiments/[slug])",
-      "⬜ Share hooks + email capture handoff",
-    ],
-  },
-  {
-    section: "Collectible Cards",
-    mustHave: [
-      "⬜ Explain card system (standard/rare/subscriber secret)",
-      "⬜ Visual sample card(s)",
-      "⬜ How users unlock cards",
-      "⬜ CTA into latest experiment to start collecting",
-    ],
-  },
-  {
-    section: "YouTube / Next Mission Bridge",
-    mustHave: [
-      "⬜ Latest launch video embed or link",
-      "⬜ Pinned next-mission CTA block",
-      "⬜ UTM-tracked links to next project",
-      "⬜ Optional short recap bullets from latest drop",
-    ],
-  },
-  {
-    section: "Subscribe Portal",
-    mustHave: [
-      "⬜ Functional waitlist/subscribe form backed by API",
-      "✅ Clear incentive (drops, cards, private unlocks)",
-      "✅ Success state and trust copy",
-      "⬜ Consent/privacy microcopy",
-    ],
-  },
-  {
-    section: "Merch",
-    mustHave: [
-      "⬜ Initial 3-5 hero products",
-      "⬜ Experiment-themed merchandising tie-ins",
-      "⬜ Clear pricing + CTA",
-      "⬜ Subscriber perk mention (early access/discount)",
-    ],
-  },
-  {
-    section: "Blog / Updates",
-    mustHave: [
-      "⬜ Blog index page (/blog)",
-      "⬜ Individual post route (/blog/[slug])",
-      "⬜ Categories/tags (build logs, launches, lessons, roadmap)",
-      "⬜ CTA from each post to experiments + subscribe portal",
-      "⬜ Weekly publishing cadence (minimum 1 post/week)",
-    ],
-  },
-  {
-    section: "Footer",
-    mustHave: [
-      "✅ Brand close + short mission line",
-      "⬜ Social/channel links",
-      "⬜ Legal links (privacy/terms)",
-      "🟡 Low-noise visual accent",
-    ],
-  },
-];
-
 export default async function WebsiteRoadmapPage() {
   if (!(await isAuthed())) redirect("/login");
 
@@ -227,14 +134,21 @@ export default async function WebsiteRoadmapPage() {
           <CardContent className="space-y-3 text-sm text-zinc-300">
             <p className="text-xs text-zinc-400">Legend: ✅ done · 🟡 partial · ⬜ not started</p>
             {websiteSectionBuildPlan.map((item) => (
-              <div key={item.section} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
-                <p className="text-zinc-100">{item.section}</p>
+              <Link
+                key={item.slug}
+                href={`/website-roadmap/${item.slug}`}
+                className="block rounded-md border border-zinc-800 bg-zinc-900/40 p-3 transition hover:border-zinc-600 hover:bg-zinc-900"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-zinc-100">{item.section}</p>
+                  <span className="text-xs text-cyan-300">Open Cursor prompt →</span>
+                </div>
                 <div className="mt-2 space-y-1">
                   {item.mustHave.map((line) => (
                     <p key={line} className="text-xs text-zinc-400">{line}</p>
                   ))}
                 </div>
-              </div>
+              </Link>
             ))}
           </CardContent>
         </Card>
