@@ -84,6 +84,22 @@ const styleTokens = [
   "ultra clean edges, no artifacts, production-ready",
 ];
 
+const blogRollout = [
+  "Phase 1: launch /blog index and /blog/[slug] pages with clean reading UX.",
+  "Phase 1: publish 3 foundation posts (studio mission, experiment system, latest launch recap).",
+  "Phase 2: connect YouTube -> Blog (embed latest video + summary + links).",
+  "Phase 2: connect Blog -> Email (weekly digest automation of new posts).",
+  "Phase 2: connect Blog -> Experiments (every post ends with current mission CTA).",
+  "Phase 3: SEO optimization (metadata, internal links, topic clusters, schema).",
+];
+
+const blogKpis = [
+  "Organic sessions growth (MoM): ≥15%",
+  "Blog post -> Experiment click-through: ≥12%",
+  "Blog reader -> Email subscribe conversion: ≥5%",
+  "Average read time: ≥2m 30s",
+];
+
 const websiteSectionBuildPlan = [
   {
     section: "Header / Navigation",
@@ -159,6 +175,16 @@ const websiteSectionBuildPlan = [
     ],
   },
   {
+    section: "Blog / Updates",
+    mustHave: [
+      "⬜ Blog index page (/blog)",
+      "⬜ Individual post route (/blog/[slug])",
+      "⬜ Categories/tags (build logs, launches, lessons, roadmap)",
+      "⬜ CTA from each post to experiments + subscribe portal",
+      "⬜ Weekly publishing cadence (minimum 1 post/week)",
+    ],
+  },
+  {
     section: "Footer",
     mustHave: [
       "✅ Brand close + short mission line",
@@ -224,6 +250,19 @@ export default async function WebsiteRoadmapPage() {
                 <p className="mt-1 text-xs text-zinc-400">Purpose: {item.purpose}</p>
                 <p className="mt-1 text-xs text-zinc-500">Asset: {item.asset}</p>
               </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle className="text-base">Blog Rollout Plan (Why not just YouTube + Email)</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {blogRollout.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">→ {item}</div>
+            ))}
+            <div className="pt-1 text-xs uppercase tracking-wide text-zinc-400">Blog KPI Targets</div>
+            {blogKpis.map((item) => (
+              <div key={item} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">• {item}</div>
             ))}
           </CardContent>
         </Card>
