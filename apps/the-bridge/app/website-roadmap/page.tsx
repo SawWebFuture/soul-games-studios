@@ -11,14 +11,15 @@ const recommendedGenerators = [
 ];
 
 const websiteShotList = [
-  { section: "Hero Banner", purpose: "Immediate brand emotion + clarity", ratio: "16:9" },
-  { section: "About Section Visual", purpose: "Signal-from-noise philosophy", ratio: "3:2" },
-  { section: "Feature Tabs Imagery", purpose: "Identity tools + experiments + systems", ratio: "16:9" },
-  { section: "Experiments Grid Thumbnails", purpose: "Clickable experiment cards", ratio: "1:1" },
-  { section: "Subscribe CTA Backdrop", purpose: "Warm conversion-focused visual", ratio: "16:9" },
-  { section: "YouTube Handoff Art", purpose: "Next mission bridge visual", ratio: "16:9" },
-  { section: "Merch Showcase Mockups", purpose: "Revenue-ready product visuals", ratio: "4:5" },
-  { section: "Footer Accent", purpose: "Subtle polished close", ratio: "21:9" },
+  { section: "Hero Banner", purpose: "Immediate brand emotion + clarity", ratio: "16:9", done: true, asset: "Hero_Banner.png" },
+  { section: "About Section Visual", purpose: "Signal-from-noise philosophy", ratio: "3:2", done: true, asset: "About_section_visual.png" },
+  { section: "Feature Tabs Imagery", purpose: "Identity tools + experiments + systems", ratio: "16:9", done: false, asset: "(pending dedicated set)" },
+  { section: "Experiments Grid Thumbnails", purpose: "Clickable experiment cards", ratio: "1:1", done: true, asset: "Experiments_Section_Tile_001.png" },
+  { section: "Subscribe CTA Backdrop", purpose: "Warm conversion-focused visual", ratio: "16:9", done: true, asset: "Subscribe_CTA_backdrop.png" },
+  { section: "YouTube Handoff Art", purpose: "Next mission bridge visual", ratio: "16:9", done: true, asset: "YouTube_handoff_visual.png" },
+  { section: "Collectible Card Backdrop", purpose: "Card rarity / reward visual system", ratio: "3:4", done: true, asset: "Collectible_card_backdrop.png" },
+  { section: "Merch Showcase Mockups", purpose: "Revenue-ready product visuals", ratio: "4:5", done: true, asset: "Merch_mockup_scene.png" },
+  { section: "Footer Accent", purpose: "Subtle polished close", ratio: "21:9", done: true, asset: "Footer_accent.png" },
 ];
 
 const promptPack = [
@@ -110,8 +111,11 @@ export default async function WebsiteRoadmapPage() {
           <CardContent className="space-y-2 text-sm text-zinc-300">
             {websiteShotList.map((item) => (
               <div key={item.section} className="rounded-md border border-zinc-800 bg-zinc-900/40 p-3">
-                <p><span className="text-zinc-100">{item.section}</span> · {item.ratio}</p>
+                <p>
+                  <span className="text-zinc-100">{item.done ? "✅" : "⬜"} {item.section}</span> · {item.ratio}
+                </p>
                 <p className="mt-1 text-xs text-zinc-400">Purpose: {item.purpose}</p>
+                <p className="mt-1 text-xs text-zinc-500">Asset: {item.asset}</p>
               </div>
             ))}
           </CardContent>
