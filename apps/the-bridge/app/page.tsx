@@ -1,4 +1,4 @@
-import { Activity, ArrowRight, CheckCircle2, Database, Lightbulb, ListChecks, Rocket, ScrollText, Shield, Wrench } from "lucide-react";
+import { Activity, CalendarDays, CheckCircle2, Database, FileText, Flame, Lightbulb, ListChecks, Rocket, ScrollText, Shield, TrendingUp, Wrench } from "lucide-react";
 import Image from "next/image";
 import { readStore } from "@/lib/store";
 import { isAuthed } from "@/lib/auth";
@@ -7,6 +7,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BridgeShell } from "@/components/bridge-shell";
 import { SurpriseLinkButton } from "@/components/surprise-link-button";
 import { ideas, totalScore } from "@/lib/ideas";
+
+const mvp30DayFocus = [
+  "Run 1 flagship experiment/day (or 3–4/week).",
+  "Keep one conversion path: email capture after reveal.",
+  "Use one distribution loop: YouTube + one social platform.",
+  "Track one scoreboard: CTR, completion, email conversion.",
+  "Apply kill/scale weekly: pause flat bets, double down on winners.",
+];
 
 export default async function HomePage() {
   if (!(await isAuthed())) redirect("/login");
@@ -36,28 +44,29 @@ export default async function HomePage() {
         </section>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle>Section Summary</CardTitle></CardHeader>
-          <CardContent className="grid gap-3 md:grid-cols-2">
-            <a href="/subagents" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
-              <p className="text-sm font-medium flex items-center gap-2"><ListChecks size={15} /> Subagent Registry</p>
-              <p className="text-xs text-zinc-400 mt-1">{running} running · {completed} completed</p>
-            </a>
-            <a href="/logs" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
-              <p className="text-sm font-medium flex items-center gap-2"><ScrollText size={15} /> Logs</p>
-              <p className="text-xs text-zinc-400 mt-1">Latest: {latestEvent ? `${latestEvent.type} · ${latestEvent.subagentId}` : "No events yet"}</p>
-            </a>
-            <a href="/database" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
-              <p className="text-sm font-medium flex items-center gap-2"><Database size={15} /> Database</p>
-              <p className="text-xs text-zinc-400 mt-1">Primary core online (bridge-main-01)</p>
-            </a>
-            <a href="/operations" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
-              <p className="text-sm font-medium flex items-center gap-2"><Wrench size={15} /> Operations</p>
-              <p className="text-xs text-zinc-400 mt-1">Daily loop + KPI + 70/20/10 portfolio active</p>
-            </a>
-            <a href="/ideas" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900 md:col-span-2">
-              <p className="text-sm font-medium flex items-center gap-2"><Lightbulb size={15} /> Ideas Bank</p>
-              <p className="text-xs text-zinc-400 mt-1">Includes marketplace + quality guardian concept and prior strategic ideas</p>
-            </a>
+          <CardHeader><CardTitle>MVP First — 30 Day Focus</CardTitle></CardHeader>
+          <CardContent className="space-y-2 text-sm text-zinc-300">
+            {mvp30DayFocus.map((item, idx) => (
+              <p key={item} className="flex items-center gap-2"><CheckCircle2 size={15} className={idx === 0 ? "text-emerald-400" : "text-indigo-400"} /> {item}</p>
+            ))}
+            <div className="pt-1">
+              <SurpriseLinkButton href="/experiment-roadmap" className="text-xs text-emerald-300 hover:text-emerald-200">Open MVP-aligned experiment roadmap →</SurpriseLinkButton>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle>Trend is your Friend — Daily Ops</CardTitle></CardHeader>
+          <CardContent className="grid gap-3 md:grid-cols-2 text-sm text-zinc-300">
+            <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+              <p className="font-medium flex items-center gap-2"><TrendingUp size={15} /> Daily trend scan + score</p>
+              <p className="text-xs text-zinc-400 mt-1">Scan, score, pick top 1–2, convert to one-page game briefs.</p>
+            </div>
+            <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3">
+              <p className="font-medium flex items-center gap-2"><Flame size={15} /> 48h kill/scale rule</p>
+              <p className="text-xs text-zinc-400 mt-1">Scale winners above KPI floors, archive flat experiments fast.</p>
+            </div>
+            <a href="/experiment-roadmap" className="text-xs text-indigo-300 hover:text-indigo-200 md:col-span-2">View full Trend operating flow →</a>
           </CardContent>
         </Card>
 
@@ -71,21 +80,46 @@ export default async function HomePage() {
             <p>{topIdea.summary}</p>
             <p className="text-cyan-300">Score: {totalScore(topIdea.score)}/100</p>
             <a href={`/ideas/${topIdea.slug}`} className="inline-block pt-1 text-xs text-indigo-300 hover:text-indigo-200">Open idea details →</a>
-            <div>
-              <SurpriseLinkButton href="/experiment-roadmap" className="inline-block pt-1 text-xs text-emerald-300 hover:text-emerald-200">
-                Open experiment roadmap →
-              </SurpriseLinkButton>
-            </div>
           </CardContent>
         </Card>
 
         <Card className="border-zinc-800 bg-[#0c1016]">
-          <CardHeader><CardTitle>Top 3 Roadmap Next Steps</CardTitle></CardHeader>
-          <CardContent className="space-y-2 text-sm text-zinc-300">
-            <p className="flex items-center gap-2"><CheckCircle2 size={15} className="text-emerald-400" /> Pick 1 niche with painful, repeatable app needs.</p>
-            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Publish 10 high-quality starter kits with clear outcomes.</p>
-            <p className="flex items-center gap-2"><ArrowRight size={15} className="text-indigo-400" /> Ship Quality Guardian v1 (pre-publish checks + runtime monitoring).</p>
-            <a href="/roadmap" className="inline-block pt-2 text-xs text-indigo-300 hover:text-indigo-200">View full roadmap →</a>
+          <CardHeader><CardTitle>Roadmaps & Content Planning</CardTitle></CardHeader>
+          <CardContent className="grid gap-3 md:grid-cols-2">
+            <a href="/website-roadmap" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><Wrench size={15} /> Website Roadmap</p>
+              <p className="text-xs text-zinc-400 mt-1">Section-by-section build plan + visual prompts.</p>
+            </a>
+            <a href="/blog-roadmap" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><FileText size={15} /> Blog Roadmap</p>
+              <p className="text-xs text-zinc-400 mt-1">10 priority posts optimized for AI search discoverability.</p>
+            </a>
+            <a href="/calendar" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><CalendarDays size={15} /> Content Calendar</p>
+              <p className="text-xs text-zinc-400 mt-1">Weekly publishing cadence, Supabase-ready connection plan.</p>
+            </a>
+            <a href="/operations" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><ListChecks size={15} /> Operations</p>
+              <p className="text-xs text-zinc-400 mt-1">Execution rhythms, ownership, and daily loop controls.</p>
+            </a>
+          </CardContent>
+        </Card>
+
+        <Card className="border-zinc-800 bg-[#0c1016]">
+          <CardHeader><CardTitle>System Snapshot</CardTitle></CardHeader>
+          <CardContent className="grid gap-3 md:grid-cols-2">
+            <a href="/subagents" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><ListChecks size={15} /> Subagent Registry</p>
+              <p className="text-xs text-zinc-400 mt-1">{running} running · {completed} completed</p>
+            </a>
+            <a href="/logs" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900">
+              <p className="text-sm font-medium flex items-center gap-2"><ScrollText size={15} /> Logs</p>
+              <p className="text-xs text-zinc-400 mt-1">Latest: {latestEvent ? `${latestEvent.type} · ${latestEvent.subagentId}` : "No events yet"}</p>
+            </a>
+            <a href="/database" className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-3 hover:bg-zinc-900 md:col-span-2">
+              <p className="text-sm font-medium flex items-center gap-2"><Database size={15} /> Database</p>
+              <p className="text-xs text-zinc-400 mt-1">Primary core online (bridge-main-01)</p>
+            </a>
           </CardContent>
         </Card>
       </div>
