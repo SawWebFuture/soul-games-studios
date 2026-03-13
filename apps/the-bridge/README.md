@@ -32,7 +32,19 @@ Create `.env.local`:
 
 ```bash
 HUB_INGEST_TOKEN=choose-a-long-random-secret
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=YOUR_PUBLISHABLE_OR_ANON_KEY
+# Optional server-only admin operations:
+# SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
+
+Health check endpoint:
+
+- `GET /api/health/supabase` returns `{ ok: true }` when Supabase credentials are valid.
+
+To initialize DB tables, run SQL in:
+
+- `data/supabase-schema.sql`
 
 ## Login (current)
 
